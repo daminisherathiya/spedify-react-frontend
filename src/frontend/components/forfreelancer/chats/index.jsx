@@ -4,10 +4,8 @@ import { Img_02, Img_03, Img_05 } from "../../imagepath";
 import io from 'socket.io-client'
 import jwt_decode from "jwt-decode";
 import Axios from "../../../../apiClient";
-const ME = 'https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745';
-const OTHER = 'https://cdn5.vectorstock.com/i/1000x1000/51/99/icon-of-user-avatar-for-web-site-or-mobile-app-vector-3125199.jpg'
+import { ME, OTHER } from "../../../../keys";
 const localData = JSON.parse(localStorage.getItem('@user')) || { token: '' };
-console.log('localData', localData);
 const initSocket = () => {
   const socket = io('http://localhost:80/chats', {
     auth: {
@@ -86,6 +84,7 @@ const Chats = (props) => {
     const decoded = jwt_decode(localData.token);
     // console.log('decoded', decoded);
     setCurrentUser(decoded)
+    localStorage.setItem('@decoded', JSON.stringify(decoded))
     Axios.get(`/api/v1/chats/getChatsByUser`)
       .then(res => {
         const dbChats = (res.data.doc.chats || []).map((chat, index) => ({ ...chat, selected: index === 0 }));

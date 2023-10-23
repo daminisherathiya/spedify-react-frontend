@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Logo, Img_04, avatar_1, Avatar_1, Top_icon, Reg_icon, Lock_icon, loader_icon, Logo_img, } from '../imagepath';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ME } from "../../../keys";
 
 
 const Header = (props) => {
@@ -75,6 +76,8 @@ const Header = (props) => {
     }
   }
   window.addEventListener('scroll', changeBackground);
+  const currentUser = localStorage.getItem('@decoded') ? JSON.parse(localStorage.getItem('@decoded')) : {};
+
   return (
     <>
 
@@ -195,7 +198,7 @@ const Header = (props) => {
                   <Link to="#" className={isSideMenu === "forfreelancer" ? "subdrop" : ""} onClick={() => toggleSidebar(isSideMenu === "forfreelancer" ? "" : "forfreelancer")} onMouseEnter={() => setSideMenu("forfreelancer")}>  For Freelancer <i><FontAwesomeIcon icon={faChevronDown} /></i></Link>
                   {isSideMenu === "forfreelancer" ?
 
-                    <ul className="submenu"style={{ display: isSideMenu === 'forfreelancer' ? 'block' : 'none' }}>
+                    <ul className="submenu" style={{ display: isSideMenu === 'forfreelancer' ? 'block' : 'none' }}>
                       <li className={`has-submenu ${pathname === "project" || pathname === "project-details" ? "active" : ""}`}>
                         <Link to="#" className={isSideMenu2 === "projects" ? "subdrop" : ""} onClick={() => toggleSidebar2(isSideMenu2 === "projects" ? "" : "projects")}>Projects</Link>
                         {isSideMenu2 === "projects" ?
@@ -377,9 +380,10 @@ const Header = (props) => {
                   <li className="nav-item dropdown has-arrow account-item">
                     <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                       <span className="user-img">
-                        <img src={Avatar_1} alt="" />
+                        {/* <img src={Avatar_1} alt="" /> */}
+                        <img src={ME} alt="" />
                       </span>
-                      <span>George</span>
+                      <span>{currentUser.username || ''}</span>
                     </Link>
                     <div className="dropdown-menu emp">
                       <div className="drop-head">Account Details</div>

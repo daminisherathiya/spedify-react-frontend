@@ -39,7 +39,7 @@ const Register = (props) => {
       if (response.data.statusCode === 200) {
         const myData = response.data.doc;
         localStorage.setItem("@user", JSON.stringify(myData))
-        history.push('/chats', myData)
+        history.push('/freelancer-chats', myData)
       }
     } catch (error) {
       console.log('[onSubmit].error', error)
