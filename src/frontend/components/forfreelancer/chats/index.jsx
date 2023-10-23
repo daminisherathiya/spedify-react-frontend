@@ -41,6 +41,43 @@ const Chats = (props) => {
   const [currentUser, setCurrentUser] = React.useState({});
   const [chats, setChats] = React.useState([]);
   const [room, setRoom] = React.useState('');
+  const [message, setMessage] = React.useState('');
+
+  const sendMessage = () => {
+    if (message !== '') {
+      const createdAt = Date.now();
+      // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
+      socket.emit('send_message', { sender: currentUser, _id: room, room, seen: false, text: message, createdAt, attachments: [] });
+      setMessage('');
+    }
+  };
+  useEffect(() => {
+    socket.on('receive_message', (data) => {
+      console.log('receive_message', data);
+      if (room !== data._id) return;
+      // if (room !== data._id) return chatListCB(data);
+      const updateChat = chats.map((chat, index) => {
+        if (chat._id === data._id) {
+          chat.messages = [
+            ...chat.messages,
+            {
+              text: data.text,
+              sender: data.sender,
+              attachments: data.attachments,
+              seen: data.seen,
+              _id: data._id,
+              createdAt: data.createdAt,
+            }
+          ]
+        }
+        return chat;
+      })
+      setChats(updateChat)
+    });
+
+    // Remove event listener on component unmount
+    return () => socket.off('receive_message');
+  }, [socket, room]);
   useEffect(() => {
     document.body.className = 'chat-page';
     return () => { document.body.className = ''; }
@@ -64,7 +101,7 @@ const Chats = (props) => {
   console.log('chats', chats);
   const onChatSelect = (chat, index) => {
     const mdu = chats.map((c, j) => {
-      if (c._id === chat._id) return { ...c, selected: !c.selected, unreadCount: 0 };
+      if (c._id === chat._id) return { ...c, selected: true, unreadCount: 0 };
       else return { ...c, selected: false }
     })
     setChats(mdu);
@@ -129,10 +166,10 @@ const Chats = (props) => {
                                   {lastMessage.text}{" "}
                                 </div>
                               </div>
-                              <div>
+                              {/* <div>
                                 <div className="last-chat-time block">05 min</div>
                                 <div className="badge bgg-yellow badge-pill">11</div>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         })
@@ -196,7 +233,7 @@ const Chats = (props) => {
                             return <li key={`msg-index-${msgIndex}`} className={`media ${isCurrentUser ? 'sent' : 'received'} d-flex`}>
                               <div className="avatar flex-shrink-0">
                                 <img
-                                  src={OTHER}
+                                  src={isCurrentUser ? ME : OTHER}
                                   alt="User Image"
                                   className="avatar-img rounded-circle"
                                 />
@@ -218,56 +255,6 @@ const Chats = (props) => {
                             </li>
                           })
                         }
-                        {/* <li className="media received d-flex">
-                          <div className="avatar flex-shrink-0">
-                            <img
-                              src={OTHER}
-                              alt="User Image"
-                              className="avatar-img rounded-circle"
-                            />
-                          </div>
-                          <div className="media-body flex-grow-1">
-                            <div className="msg-box">
-                              <div>
-                                <p>Good morning.....</p>
-                                <ul className="chat-msg-info">
-                                  <li>
-                                    <div className="chat-time">
-                                      <span>10:00 AM</span>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li className="media sent d-flex">
-                          <div className="avatar flex-shrink-0">
-                            <img
-                              // src={Img_05}
-                              src={ME}
-                              alt="User Image"
-                              className="avatar-img rounded-circle"
-                            />
-                          </div>
-                          <div className="media-body flex-grow-1">
-                            <div className="msg-box">
-                              <div>
-                                <p>
-                                  Good morning, How are you? What about our next
-                                  meeting?
-                                </p>
-                                <ul className="chat-msg-info">
-                                  <li>
-                                    <div className="chat-time">
-                                      <span>10:02 AM</span>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </li> */}
                       </ul>
                     </div>
                   </div>
@@ -285,6 +272,12 @@ const Chats = (props) => {
                         type="text"
                         className="input-msg-send form-control"
                         placeholder="Reply..."
+                        onChange={(e) => setMessage(e.target.value)}
+                        value={message}
+                        onKeyUp={(e) => {
+                          console.log('onKeyUp', e.key)
+                          if (e.key === 'Enter') sendMessage(e.target.value)
+                        }}
                       />
                       <div className="btn-file btn">
                         <i className="far fa-grin fa-1x" />
@@ -296,6 +289,7 @@ const Chats = (props) => {
                       <button
                         type="button"
                         className="btn btn-primary msg-send-btn rounded-pill"
+                        onClick={sendMessage}
                       >
                         <i className="fab fa-telegram-plane" />
                       </button>
