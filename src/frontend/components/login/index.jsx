@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
 import Axios from '../../../apiClient';
 
-const Login = ({history}) => {
+const Login = ({ history }) => {
   const [user, setUser] = React.useState({});
   const onChange = e => {
     e.persist();
@@ -15,7 +15,9 @@ const Login = ({history}) => {
       if (response.data.statusCode === 200) {
         const myData = response.data.doc;
         localStorage.setItem("@user", JSON.stringify(myData))
-        history.push('/freelancer-chats', myData)
+        setTimeout(() => {
+          history.push('/freelancer-chats', myData)
+        }, 500);
       }
     } catch (error) {
       console.log('[onSubmit].error', error)

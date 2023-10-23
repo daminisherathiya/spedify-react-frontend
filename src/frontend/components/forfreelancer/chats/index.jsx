@@ -5,8 +5,8 @@ import io from 'socket.io-client'
 import jwt_decode from "jwt-decode";
 import Axios from "../../../../apiClient";
 import { ME, OTHER } from "../../../../keys";
-const localData = JSON.parse(localStorage.getItem('@user')) || { token: '' };
 const initSocket = () => {
+  const localData = JSON.parse(localStorage.getItem('@user')) || { token: '' };
   const socket = io('http://localhost:80/chats', {
     auth: {
       token: localData.token
@@ -36,6 +36,7 @@ const initSocket = () => {
 const socket = initSocket();
 const Chats = (props) => {
   // console.log('[Chats].Props', props);
+  const messagesScrollRef = React.useRef(null)
   const [currentUser, setCurrentUser] = React.useState({});
   const [chats, setChats] = React.useState([]);
   const [room, setRoom] = React.useState('');
@@ -81,6 +82,7 @@ const Chats = (props) => {
     return () => { document.body.className = ''; }
   });
   useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('@user'));
     const decoded = jwt_decode(localData.token);
     // console.log('decoded', decoded);
     setCurrentUser(decoded)
@@ -97,6 +99,9 @@ const Chats = (props) => {
       })
       .catch(err => console.log('login error', err))
   }, [])
+  React.useEffect(() => {
+    messagesScrollRef.current.scrollTop = messagesScrollRef.current.scrollHeight
+  }, [chats])
   console.log('chats', chats);
   const onChatSelect = (chat, index) => {
     const mdu = chats.map((c, j) => {
@@ -224,7 +229,7 @@ const Chats = (props) => {
                     </div>
                   </div>
                   <div className="chat-body">
-                    <div className="chat-scroll">
+                    <div className="chat-scroll" ref={messagesScrollRef}>
                       <ul className="list-unstyled">
                         {
                           (selectedChat.messages || []).map((message, msgIndex) => {
