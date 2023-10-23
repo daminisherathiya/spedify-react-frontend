@@ -41,6 +41,8 @@ const Chats = (props) => {
   const [chats, setChats] = React.useState([]);
   const [room, setRoom] = React.useState('');
   const [message, setMessage] = React.useState('');
+  const [typingUser, setTypingUser] = React.useState(null);
+
 
   const sendMessage = () => {
     if (message !== '') {
@@ -102,6 +104,16 @@ const Chats = (props) => {
   React.useEffect(() => {
     messagesScrollRef.current.scrollTop = messagesScrollRef.current.scrollHeight
   }, [chats])
+  React.useEffect(() => {
+    socket.on("user_typing", user => {
+      console.log('user', user);
+      console.log('currentUser', currentUser);
+      if (user._id !== currentUser._id) {
+        setTypingUser(user)
+      }
+    })
+    return () => socket.off("user_typing")
+  }, [currentUser])
   console.log('chats', chats);
   const onChatSelect = (chat, index) => {
     const mdu = chats.map((c, j) => {
@@ -260,6 +272,10 @@ const Chats = (props) => {
                           })
                         }
                       </ul>
+                    {
+                      typingUser &&
+                      <p style={{ color: 'lightgrey' }}>{`${typingUser.username} is typing...`}</p>
+                    }
                     </div>
                   </div>
                   <div className="chat-footer">
@@ -273,6 +289,8 @@ const Chats = (props) => {
                         />
                       </div>
                       <input
+                        onFocus={() => socket.emit('user_typing', { ...currentUser, room })}
+                        onBlur={() => setTypingUser(null)}
                         type="text"
                         className="input-msg-send form-control"
                         placeholder="Reply..."
