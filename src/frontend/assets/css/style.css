@@ -11374,25 +11374,25 @@ label.file-upload  input[type="file"] {
 .chat-cont-left .chat-users-list {
     background-color: #fff;
 }
-.chat-cont-left .chat-users-list a.media {
+.chat-cont-left .chat-users-list div.media {
     background: #fff;
     box-shadow: 0px 4px 4px #f5f8ff;
     margin: 10px;
     padding: 10px 15px;
     transition: all 0.2s ease 0s;
 }
-.chat-cont-left .chat-users-list a.media:last-child {
+.chat-cont-left .chat-users-list div.media:last-child {
 	border-bottom: 0;
 }
-.chat-cont-left .chat-users-list a.media .media-img-wrap {
+.chat-cont-left .chat-users-list div.media .media-img-wrap {
     margin-right: 15px;
     position: relative;
 }
-.chat-cont-left .chat-users-list a.media .media-img-wrap .avatar {
+.chat-cont-left .chat-users-list div.media .media-img-wrap .avatar {
     height: 45px;
     width: 45px;
 }
-.chat-cont-left .chat-users-list a.media .media-img-wrap .status {
+.chat-cont-left .chat-users-list div.media .media-img-wrap .status {
 	bottom: 7px;
 	height: 10px;
 	right: 4px;
@@ -11400,7 +11400,7 @@ label.file-upload  input[type="file"] {
 	width: 10px;
 	border: 2px solid #fff;
 }
-.chat-cont-left .chat-users-list a.media .media-body {
+.chat-cont-left .chat-users-list div.media .media-body {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -11408,38 +11408,38 @@ label.file-upload  input[type="file"] {
 	-webkit-justify-content: space-between;
 	-ms-flex-pack: space-between;
 }
-.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-name, 
-.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-last-chat {
+.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-name, 
+.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-last-chat {
     max-width: 250px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-name {
+.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-name {
     color: #FE4A23;
 	font-weight: 600;
 	font-size: 14px;
     text-transform: capitalize;
 }
-.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-last-chat {
+.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-last-chat {
     color: #232323;
     font-size: 12px;
     line-height: 24px;
 }
-.chat-cont-left .chat-users-list a.media .media-body > div:last-child {
+.chat-cont-left .chat-users-list div.media .media-body > div:last-child {
     text-align: right;
 }
-.chat-cont-left .chat-users-list a.media .media-body > div:last-child .last-chat-time {
+.chat-cont-left .chat-users-list div.media .media-body > div:last-child .last-chat-time {
     color: #8a8a8a;
     font-size: 13px;
 }
-.chat-cont-left .chat-users-list a.media:hover {
+.chat-cont-left .chat-users-list div.media:hover {
 	background-color: #f5f5f6;
 }
-.chat-cont-left .chat-users-list a.media.read-chat .media-body > div:last-child .last-chat-time {
+.chat-cont-left .chat-users-list div.media.read-chat .media-body > div:last-child .last-chat-time {
 	color: #8a8a8a;
 }
-.chat-cont-left .chat-users-list a.media.active {
+.chat-cont-left .chat-users-list div.media.active {
 	background-color: #f5f5f6;
 }
 .chat-cont-right {
@@ -17621,8 +17621,8 @@ input.select2-search__field {
 }
 
 @media only screen and (max-width: 1399px) {
-	.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-name, 
-	.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-last-chat {
+	.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-name, 
+	.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-last-chat {
 		max-width: 180px;
 	}
 }
@@ -20294,8 +20294,8 @@ input.select2-search__field {
 	.card-top .dev-text {
 		padding: 5px;
 	}
-	.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-name, 
-	.chat-cont-left .chat-users-list a.media .media-body > div:first-child .user-last-chat {
+	.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-name, 
+	.chat-cont-left .chat-users-list div.media .media-body > div:first-child .user-last-chat {
 		max-width: 160px;
 	}
 	.section-features, .section-features, .section-specialities {

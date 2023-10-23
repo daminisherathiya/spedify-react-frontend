@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Img_02, Img_03, Img_05 } from "../../imagepath";
 import io from 'socket.io-client'
 import jwt_decode from "jwt-decode";
+import Axios from "../../../../apiClient";
 const ME = 'https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745';
 const OTHER = 'https://cdn5.vectorstock.com/i/1000x1000/51/99/icon-of-user-avatar-for-web-site-or-mobile-app-vector-3125199.jpg'
 const localData = JSON.parse(localStorage.getItem('@user')) || { token: '' };
@@ -37,7 +38,9 @@ const initSocket = () => {
 const socket = initSocket();
 const Chats = (props) => {
   // console.log('[Chats].Props', props);
-  const [currentUser, setCurrentUser] = React.useState({})
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [chats, setChats] = React.useState([]);
+  const [room, setRoom] = React.useState('');
   useEffect(() => {
     document.body.className = 'chat-page';
     return () => { document.body.className = ''; }
@@ -46,21 +49,29 @@ const Chats = (props) => {
     const decoded = jwt_decode(localData.token);
     // console.log('decoded', decoded);
     setCurrentUser(decoded)
+    Axios.get(`/api/v1/chats/getChatsByUser`)
+      .then(res => {
+        const dbChats = (res.data.doc.chats || []).map((chat, index) => ({ ...chat, selected: index === 0 }));
+        if (dbChats.length) {
+          const firstChat = dbChats[0];
+          socket.emit('join_room', { username: decoded.username, room: firstChat._id })
+          setRoom(firstChat._id)
+          setChats(dbChats)
+        } else setChats([])
+      })
+      .catch(err => console.log('login error', err))
   }, [])
-  // React.useEffect(() => {
-  //   const localData = JSON.parse(localStorage.getItem('@token'));
-  //   axios.get(`${BASE_URL}/api/v1/chats/getChatsByUser`)
-  //     .then(res => {
-  //       const dbChats = (res.data.doc.chats || []).map((chat, index) => ({ ...chat, selected: index === 0 }));
-  //       if (dbChats.length) {
-  //         const firstChat = dbChats[0];
-  //         socket.emit('join_room', { username, room: firstChat._id })
-  //         setRoom(firstChat._id)
-  //         setChats(dbChats)
-  //       } else setChats([])
-  //     })
-  //     .catch(err => console.log('login error', err))
-  // }, [])
+  console.log('chats', chats);
+  const onChatSelect = (chat, index) => {
+    const mdu = chats.map((c, j) => {
+      if (c._id === chat._id) return { ...c, selected: !c.selected, unreadCount: 0 };
+      else return { ...c, selected: false }
+    })
+    setChats(mdu);
+    setRoom(chat._id)
+    socket.emit('join_room', { username: currentUser.username, room: chat._id })
+  }
+  const selectedChat = (chats || []).find(c => c.selected) || {};
   return (
     <>
       {/* Content */}
@@ -92,29 +103,40 @@ const Chats = (props) => {
                   </div>
                   <div className="chat-users-list">
                     <div className="chat-scroll">
-                      <Link to=";" className="media d-flex">
-                        <div className="media-img-wrap flex-shrink-0">
-                          <div className="avatar avatar-away">
-                            <img
-                              src={OTHER}
-                              alt="User Image"
-                              className="avatar-img rounded-circle"
-                            />
-                          </div>
-                        </div>
-                        <div className="media-body flex-grow-1">
-                          <div>
-                            <div className="user-name">Andrew Glover </div>
-                            <div className="user-last-chat">
-                              It seems logical that the{" "}
+                      {
+                        (chats || []).map((chat, index) => {
+                          const chatUser = (chat.usersRef || []).filter(u => u._id !== currentUser._id)[0];
+                          const messages = chat.messages;
+                          const lastMessage = messages[messages.length - 1]
+                          return <div
+                            style={{ cursor: 'pointer' }}
+                            key={`chat-key-${index}`}
+                            className={`media d-flex ${chat.selected ? 'active' : ''}`}
+                            onClick={() => onChatSelect(chat)}>
+                            <div className="media-img-wrap flex-shrink-0">
+                              <div className="avatar avatar-away">
+                                <img
+                                  src={OTHER}
+                                  alt="User Image"
+                                  className="avatar-img rounded-circle"
+                                />
+                              </div>
+                            </div>
+                            <div className="media-body flex-grow-1">
+                              <div>
+                                <div className="user-name">{chatUser.username}</div>
+                                <div className="user-last-chat">
+                                  {lastMessage.text}{" "}
+                                </div>
+                              </div>
+                              <div>
+                                <div className="last-chat-time block">05 min</div>
+                                <div className="badge bgg-yellow badge-pill">11</div>
+                              </div>
                             </div>
                           </div>
-                          <div>
-                            <div className="last-chat-time block">05 min</div>
-                            <div className="badge bgg-yellow badge-pill">11</div>
-                          </div>
-                        </div>
-                      </Link>
+                        })
+                      }
                     </div>
                   </div>
                 </div>
@@ -168,10 +190,38 @@ const Chats = (props) => {
                   <div className="chat-body">
                     <div className="chat-scroll">
                       <ul className="list-unstyled">
-                        <li className="media received d-flex">
+                        {
+                          (selectedChat.messages || []).map((message, msgIndex) => {
+                            const isCurrentUser = message.sender._id === currentUser._id;
+                            return <li key={`msg-index-${msgIndex}`} className={`media ${isCurrentUser ? 'sent' : 'received'} d-flex`}>
+                              <div className="avatar flex-shrink-0">
+                                <img
+                                  src={OTHER}
+                                  alt="User Image"
+                                  className="avatar-img rounded-circle"
+                                />
+                              </div>
+                              <div className="media-body flex-grow-1">
+                                <div className="msg-box">
+                                  <div>
+                                    <p>{message.text}</p>
+                                    <ul className="chat-msg-info">
+                                      <li>
+                                        <div className="chat-time">
+                                          <span>10:00 AM</span>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          })
+                        }
+                        {/* <li className="media received d-flex">
                           <div className="avatar flex-shrink-0">
                             <img
-                              src={Img_02}
+                              src={OTHER}
                               alt="User Image"
                               className="avatar-img rounded-circle"
                             />
@@ -217,30 +267,7 @@ const Chats = (props) => {
                               </div>
                             </div>
                           </div>
-                        </li>
-                        <li className="media received d-flex">
-                          <div className="avatar flex-shrink-0">
-                            <img
-                              src={Img_02}
-                              alt="User Image"
-                              className="avatar-img rounded-circle"
-                            />
-                          </div>
-                          <div className="media-body flex-grow-1">
-                            <div className="msg-box">
-                              <div>
-                                <p>I am good thanks</p>
-                                <ul className="chat-msg-info">
-                                  <li>
-                                    <div className="chat-time">
-                                      <span>10:03 AM</span>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </div>
