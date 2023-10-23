@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
+import Axios from '../../../apiClient';
 
 const Register = (props) => {
-
+  // console.log('[props]', props);
+  const { history } = props;
   useEffect(() => {
 
     document.body.className = 'account-page';
@@ -11,7 +13,37 @@ const Register = (props) => {
   });
   const [user, setUser] = React.useState({});
   const onChange = e => {
-
+    e.persist();
+    setUser({ ...user, [e.target.id]: e.target.value })
+  }
+  const [enums, setEnums] = React.useState({})
+  const getEnums = async () => {
+    const response = await Axios.get('/api/v1/enums');
+    setEnums(response.data.enums)
+  }
+  React.useEffect(() => {
+    getEnums()
+  }, [])
+  const enumSelection = (enumKey, enumIndex) => {
+    let enm = enums[enumKey];
+    enm = enm.map((en, j) => {
+      if (j === enumIndex) return { ...en, active: true }
+      return { ...en, active: false };
+    })
+    enums[enumKey] = enm;
+    setEnums({ ...enums })
+  }
+  const onSubmit = async () => {
+    try {
+      const response = await Axios.post('api/v1/users/signup', user);
+      if (response.data.statusCode === 200) {
+        const myData = response.data.doc;
+        localStorage.setItem("@user", JSON.stringify(myData))
+        history.push('/chats', myData)
+      }
+    } catch (error) {
+      console.log('[onSubmit].error', error)
+    }
   }
   return (
     <>
@@ -37,24 +69,17 @@ const Register = (props) => {
                     </div>
                     <nav className="user-tabs mb-4">
                       <ul role="tablist" className="nav nav-pills nav-justified">
-                        <li className="nav-item">
-                          <Link
-                            to="#developer"
-                            data-bs-toggle="tab"
-                            className="nav-link active"
-                          >
-                            FREELANCER
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="#company"
-                            data-bs-toggle="tab"
-                            className="nav-link"
-                          >
-                            COMPANY
-                          </Link>
-                        </li>
+                        {
+                          (enums.UserRoles || []).map((role, index) => (
+                            <li
+                              key={`role-index-${index}`}
+                              className={`nav-item nav-link ${role.active ? "active" : index === 0 ? 'active' : ''}`}
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => enumSelection('UserRoles', index)}>
+                              {role.value}
+                            </li>
+                          ))
+                        }
                       </ul>
                     </nav>
                     <div className="tab-content pt-0">
@@ -63,13 +88,13 @@ const Register = (props) => {
                         id="developer"
                         className="tab-pane fade active show"
                       >
-                        <form action='/template-reactjs/onboard-screen'>
+                        <form>
                           <div className="form-group form-focus">
-                            <input type="email" className="form-control floating" id="username" />
+                            <input type="email" className="form-control floating" id="username" onChange={onChange} />
                             <label className="focus-label">User Name</label>
                           </div>
                           <div className="form-group form-focus">
-                            <input type="email" className="form-control floating" id="email" />
+                            <input type="email" className="form-control floating" id="email" onChange={onChange} />
                             <label className="focus-label">Email </label>
                           </div>
                           <div className="form-group form-focus">
@@ -77,6 +102,7 @@ const Register = (props) => {
                               type="password"
                               className="form-control floating"
                               id="password"
+                              onChange={onChange}
                             />
                             <label className="focus-label">Password</label>
                           </div>
@@ -85,12 +111,18 @@ const Register = (props) => {
                               type="password"
                               className="form-control floating"
                               id="confirmPassword"
+                              onChange={onChange}
                             />
                             <label className="focus-label">Confirm Password</label>
                           </div>
                           <div className="dont-have">
                             <label className="custom_check">
-                              <input type="checkbox" name="rem_password" />
+                              <input
+                                type="checkbox"
+                                name="rem_password"
+                                id="agree"
+                                onChange={onChange}
+                              />
                               <span className="checkmark" /> You agree to the
                               Spedify{" "}
                               <Link to="/privacy-policy">
@@ -101,7 +133,8 @@ const Register = (props) => {
                           </div>
                           <button
                             className="btn btn-primary btn-block btn-lg login-btn"
-                            type="submit"
+                            type="button"
+                            onClick={onSubmit}
                           >
                             Agree TO JOIN
                           </button>
@@ -230,7 +263,7 @@ const Register = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
       {/* /Page Content */}
     </>
   )

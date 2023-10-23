@@ -90,7 +90,7 @@ import SayAbout from "../home/slider/say-about";
 import config from "config";
 import FooterFour from "../footer/index-four";
 import TrustedBestCompany from "./slider/trustedbestcompany";
-import TopReviewFour from "./slider/Top-fourSpedify";
+import TopReviewFour from "./slider/Top-fourKofejob";
 import OurBlogFour from "./slider/Ourblog-four";
 import PopularProjects from "./slider/popularprojects";
 import CountUp from "react-countup";

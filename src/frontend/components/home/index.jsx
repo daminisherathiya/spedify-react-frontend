@@ -21,6 +21,7 @@ import CountUp from "react-countup";
 
 const Home = () => {
   const [scroll, setScroll] = useState(true);
+  const history = useHistory();
   //Aos
   const [count, setCount] = useState(10);
   const interval = 1000; // Interval in milliseconds
@@ -45,6 +46,7 @@ const Home = () => {
     { id: 2, text: 'Freelancers', },
   ];
   useEffect(() => {
+    // if (localStorage.getItem('@user')) history.push('/chats')
     document.body.classList.add("home-page");
     return () => document.body.classList.remove("home-page");
   }, []);
@@ -62,15 +64,14 @@ const Home = () => {
 
   }, []);
   useEffect(() => {
-  setTimeout(function () {
-		$('#global-loader');
-		setTimeout(function () {
-			$("#global-loader").fadeOut("slow");
-		}, 100);
-	}, 500);
-},[]);
-const history=useHistory();
-  const eventclick=()=>{history.push("/project");}
+    setTimeout(function () {
+      $('#global-loader');
+      setTimeout(function () {
+        $("#global-loader").fadeOut("slow");
+      }, 100);
+    }, 500);
+  }, []);
+  const eventclick = () => { history.push("/project"); }
   return (
     <>
       <>
@@ -89,11 +90,11 @@ const history=useHistory();
               <div className="col-md-8 col-lg-7">
                 <div className="banner-content aos" data-aos="fade-up">
                   <div className="rating d-flex">
-                  <i className="fas fa-star checked" />
-                  <i className="fas fa-star checked" />
-                  <i className="fas fa-star checked" />
-                  <i className="fas fa-star checked" />
-                  <i className="fas fa-star checked" />
+                    <i className="fas fa-star checked" />
+                    <i className="fas fa-star checked" />
+                    <i className="fas fa-star checked" />
+                    <i className="fas fa-star checked" />
+                    <i className="fas fa-star checked" />
                     {/* <FontAwesomeIcon icon={checked ? solidStar : regularStar} />
                     <FontAwesomeIcon icon={checked ? solidStar : regularStar} />
                     <FontAwesomeIcon icon={checked ? solidStar : regularStar} />
@@ -569,7 +570,7 @@ const history=useHistory();
         {/* Top Instructor */}
         <TopDevelopers />
         {/* / Review */}
-        <Reviews/>
+        <Reviews />
         {/* App Version */}
         <section className="section app-version">
           <div className="container">
