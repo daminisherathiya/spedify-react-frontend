@@ -39,12 +39,14 @@ const Chats = (props) => {
   // console.log('[Chats].Props', props);
   const [currentUser, setCurrentUser] = React.useState({})
   useEffect(() => {
-    const decoded = jwt_decode(localData.token);
-    // console.log('decoded', decoded);
-    setCurrentUser(decoded)
     document.body.className = 'chat-page';
     return () => { document.body.className = ''; }
   });
+  useEffect(() => {
+    const decoded = jwt_decode(localData.token);
+    // console.log('decoded', decoded);
+    setCurrentUser(decoded)
+  }, [])
   // React.useEffect(() => {
   //   const localData = JSON.parse(localStorage.getItem('@token'));
   //   axios.get(`${BASE_URL}/api/v1/chats/getChatsByUser`)
