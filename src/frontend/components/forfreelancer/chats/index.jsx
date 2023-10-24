@@ -5,6 +5,8 @@ import io from 'socket.io-client'
 import jwt_decode from "jwt-decode";
 import Axios from "../../../../apiClient";
 import { ME, OTHER } from "../../../../keys";
+import msgSound from '../../../assets/message.mp3'
+const audio = new Audio(msgSound);
 const initSocket = () => {
   const localData = JSON.parse(localStorage.getItem('@user')) || { token: '' };
   const socket = io('http://localhost:80/chats', {
@@ -28,13 +30,11 @@ const initSocket = () => {
   socket.on('connect_msg', (data) => {
     console.log('connect_msg', data); // prints the message associated with the error
   });
-  socket.on('user_joined', data => {
-    console.log('user_joined', data);
-  })
   return socket;
 }
 const socket = initSocket();
 const Chats = (props) => {
+  // const audioPlayer = React.useRef();
   // console.log('[Chats].Props', props);
   const messagesScrollRef = React.useRef(null)
   const [currentUser, setCurrentUser] = React.useState({});
@@ -42,13 +42,15 @@ const Chats = (props) => {
   const [room, setRoom] = React.useState('');
   const [message, setMessage] = React.useState('');
   const [typingUser, setTypingUser] = React.useState(null);
+  const selectedChat = (chats || []).find(c => c.selected) || {};
+  const [onlineUsers, setOnlineUsers] = React.useState([])
 
 
   const sendMessage = () => {
     if (message !== '') {
       const createdAt = Date.now();
       // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
-      socket.emit('send_message', { sender: currentUser, _id: room, room, seen: false, text: message, createdAt, attachments: [] });
+      socket.emit('send_message', { sender: currentUser, _id: room, room, seen: true, text: message, createdAt, attachments: [] });
       setMessage('');
       setTypingUser(null)
     }
@@ -56,19 +58,18 @@ const Chats = (props) => {
   useEffect(() => {
     socket.on('receive_message', (data) => {
       console.log('receive_message', data);
+      audio.play()
       setTypingUser(null)
-      if (room !== data._id) return;
-      // if (room !== data._id) return chatListCB(data);
       const updateChat = chats.map((chat, index) => {
         if (chat._id === data._id) {
           chat.messages = [
             ...chat.messages,
             {
+              _id: data._id,
               text: data.text,
               sender: data.sender,
               attachments: data.attachments,
-              seen: data.seen,
-              _id: data._id,
+              seen: selectedChat._id === data._id,
               createdAt: data.createdAt,
             }
           ]
@@ -93,31 +94,40 @@ const Chats = (props) => {
     localStorage.setItem('@decoded', JSON.stringify(decoded))
     Axios.get(`/api/v1/chats/getChatsByUser`)
       .then(res => {
-        // const dbChats = (res.data.doc.chats || []).map((chat, index) => ({ ...chat, selected: index === 0, messages: index === 0 ? chat.messages.map(m => ({ ...m, seen: true })): chat.messages }));
-        const dbChats = (res.data.doc.chats || []).map((chat, index) => ({ ...chat, selected: index === 0 }));
+        const dbChats = (res.data.doc.chats || []).map((chat, index) => {
+          socket.emit('join_room', { userId: decoded._id, _id: decoded._id, username: decoded.username, room: chat._id })
+          return { ...chat, selected: index === 0 }
+        });
         if (dbChats.length) {
           const firstChat = dbChats[0];
-          socket.emit('join_room', { username: decoded.username, room: firstChat._id })
           setRoom(firstChat._id)
           setChats(dbChats)
         } else setChats([])
       })
       .catch(err => console.log('login error', err))
+    return () => socket.off("join_room")
   }, [])
+
   React.useEffect(() => {
     messagesScrollRef.current.scrollTop = messagesScrollRef.current.scrollHeight
   }, [chats])
   React.useEffect(() => {
     socket.on("user_typing", user => {
-      console.log('user', user);
-      console.log('currentUser', currentUser);
       if (user._id !== currentUser._id) {
         setTypingUser(user)
       }
     })
-    return () => socket.off("user_typing")
+    socket.on("user_joined", user => {
+      console.log('[user_joined].user', user);
+      if (user.userId !== currentUser._id) {
+        setOnlineUsers([...onlineUsers, user.userId])
+      }
+    })
+    return () => {
+      socket.off("user_typing")
+      socket.off("user_joined")
+    }
   }, [currentUser])
-  console.log('chats', chats);
   const onChatSelect = (chat, index) => {
     const mdu = chats.map((c, j) => {
       if (c._id === chat._id) return { ...c, selected: true, messages: c.messages.map(m => ({ ...m, seen: true })), unreadCount: 0 };
@@ -128,11 +138,18 @@ const Chats = (props) => {
     socket.emit('join_room', { username: currentUser.username, room: chat._id });
     socket.emit('seen_msgs', chat._id)
   }
-  function formatDateFromTimestamp(timestamp) {
+  const formatDateFromTimestamp = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleString();
   }
-  const selectedChat = (chats || []).find(c => c.selected) || {};
+  const getChatUser = chat => {
+    const chatUser = (chat.usersRef || []).filter(u => u._id !== currentUser._id)[0] || { username: "" };
+    console.log('chatUser', chatUser);
+    return chatUser;
+  }
+  // console.log('selectedChat', selectedChat);
+  // console.log('chats', chats);
+  console.log('onlineUsers', onlineUsers);
   return (
     <>
       {/* Content */}
@@ -166,7 +183,7 @@ const Chats = (props) => {
                     <div className="chat-scroll">
                       {
                         (chats || []).map((chat, index) => {
-                          const chatUser = (chat.usersRef || []).filter(u => u._id !== currentUser._id)[0];
+                          const chatUser = getChatUser(chat);
                           const messages = chat.messages;
                           const lastMessage = messages[messages.length - 1];
                           const unreadMsgs = messages.filter(msg => !msg.seen).length;
@@ -176,7 +193,7 @@ const Chats = (props) => {
                             className={`media d-flex ${chat.selected ? 'active' : ''}`}
                             onClick={() => onChatSelect(chat)}>
                             <div className="media-img-wrap flex-shrink-0">
-                              <div className="avatar avatar-away">
+                              <div className={`avatar avatar-${onlineUsers.includes(chatUser._id) ? 'online' : 'away'}`}>
                                 <img
                                   src={OTHER}
                                   alt="User Image"
@@ -204,6 +221,7 @@ const Chats = (props) => {
                   </div>
                 </div>
                 {/* /Chat Left */}
+
                 {/* Chat Right */}
                 <div className="chat-cont-right">
                   <div className="chat-header">
@@ -216,17 +234,17 @@ const Chats = (props) => {
                     </Link>
                     <div className="media d-flex">
                       <div className="media-img-wrap flex-shrink-0">
-                        <div className="avatar avatar-online">
+                        <div className={`avatar avatar-${onlineUsers.includes(getChatUser(selectedChat)._id) ? 'online' : 'away'}`}>
                           <img
                             // src={Img_05}
-                            src={ME}
+                            src={OTHER}
                             alt="User Image"
                             className="avatar-img rounded-circle"
                           />
                         </div>
                       </div>
                       <div className="media-body flex-grow-1">
-                        <div className="user-name">{currentUser.username} </div>
+                        <div className="user-name">{getChatUser(selectedChat).username} </div>
                         <div className="user-status">online</div>
                       </div>
                     </div>
@@ -421,6 +439,7 @@ const Chats = (props) => {
             </div>
           </div>
         </div>
+        {/* <audio ref={audioPlayer} src={'https://commondatastorage.googleapis.com/codeskulptor-assets/Collision8-Bit.ogg'} style={{ display: "none" }} /> */}
       </div>
       {/* Video Call Modal */}
     </>
