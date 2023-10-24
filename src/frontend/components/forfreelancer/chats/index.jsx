@@ -50,11 +50,13 @@ const Chats = (props) => {
       // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
       socket.emit('send_message', { sender: currentUser, _id: room, room, seen: false, text: message, createdAt, attachments: [] });
       setMessage('');
+      setTypingUser(null)
     }
   };
   useEffect(() => {
     socket.on('receive_message', (data) => {
       console.log('receive_message', data);
+      setTypingUser(null)
       if (room !== data._id) return;
       // if (room !== data._id) return chatListCB(data);
       const updateChat = chats.map((chat, index) => {
@@ -91,6 +93,7 @@ const Chats = (props) => {
     localStorage.setItem('@decoded', JSON.stringify(decoded))
     Axios.get(`/api/v1/chats/getChatsByUser`)
       .then(res => {
+        // const dbChats = (res.data.doc.chats || []).map((chat, index) => ({ ...chat, selected: index === 0, messages: index === 0 ? chat.messages.map(m => ({ ...m, seen: true })): chat.messages }));
         const dbChats = (res.data.doc.chats || []).map((chat, index) => ({ ...chat, selected: index === 0 }));
         if (dbChats.length) {
           const firstChat = dbChats[0];
@@ -117,12 +120,17 @@ const Chats = (props) => {
   console.log('chats', chats);
   const onChatSelect = (chat, index) => {
     const mdu = chats.map((c, j) => {
-      if (c._id === chat._id) return { ...c, selected: true, unreadCount: 0 };
+      if (c._id === chat._id) return { ...c, selected: true, messages: c.messages.map(m => ({ ...m, seen: true })), unreadCount: 0 };
       else return { ...c, selected: false }
     })
     setChats(mdu);
     setRoom(chat._id)
-    socket.emit('join_room', { username: currentUser.username, room: chat._id })
+    socket.emit('join_room', { username: currentUser.username, room: chat._id });
+    socket.emit('seen_msgs', chat._id)
+  }
+  function formatDateFromTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
   }
   const selectedChat = (chats || []).find(c => c.selected) || {};
   return (
@@ -160,7 +168,8 @@ const Chats = (props) => {
                         (chats || []).map((chat, index) => {
                           const chatUser = (chat.usersRef || []).filter(u => u._id !== currentUser._id)[0];
                           const messages = chat.messages;
-                          const lastMessage = messages[messages.length - 1]
+                          const lastMessage = messages[messages.length - 1];
+                          const unreadMsgs = messages.filter(msg => !msg.seen).length;
                           return <div
                             style={{ cursor: 'pointer' }}
                             key={`chat-key-${index}`}
@@ -179,13 +188,14 @@ const Chats = (props) => {
                               <div>
                                 <div className="user-name">{chatUser.username}</div>
                                 <div className="user-last-chat">
-                                  {lastMessage.text}{" "}
+                                  {lastMessage?.text}{" "}
                                 </div>
                               </div>
-                              {/* <div>
-                                <div className="last-chat-time block">05 min</div>
-                                <div className="badge bgg-yellow badge-pill">11</div>
-                              </div> */}
+                              <div>
+                                {/* <div className="last-chat-time block">05 min</div> */}
+                                {unreadMsgs > 0 ? <div className="badge bgg-yellow badge-pill"><p style={{ fontSize: 8 }}>{unreadMsgs}</p></div> : null}
+
+                              </div>
                             </div>
                           </div>
                         })
@@ -261,7 +271,7 @@ const Chats = (props) => {
                                     <ul className="chat-msg-info">
                                       <li>
                                         <div className="chat-time">
-                                          <span>10:00 AM</span>
+                                          <span>{formatDateFromTimestamp(message.createdAt)}</span>
                                         </div>
                                       </li>
                                     </ul>
@@ -272,11 +282,11 @@ const Chats = (props) => {
                           })
                         }
                       </ul>
+                    </div>
                     {
                       typingUser &&
                       <p style={{ color: 'lightgrey' }}>{`${typingUser.username} is typing...`}</p>
                     }
-                    </div>
                   </div>
                   <div className="chat-footer">
                     <div className="input-group">
@@ -289,12 +299,13 @@ const Chats = (props) => {
                         />
                       </div>
                       <input
-                        onFocus={() => socket.emit('user_typing', { ...currentUser, room })}
-                        onBlur={() => setTypingUser(null)}
                         type="text"
                         className="input-msg-send form-control"
                         placeholder="Reply..."
-                        onChange={(e) => setMessage(e.target.value)}
+                        onChange={(e) => {
+                          socket.emit('user_typing', { ...currentUser, room })
+                          setMessage(e.target.value)
+                        }}
                         value={message}
                         onKeyUp={(e) => {
                           console.log('onKeyUp', e.key)
