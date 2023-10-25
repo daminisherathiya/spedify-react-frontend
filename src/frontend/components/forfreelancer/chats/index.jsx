@@ -58,7 +58,7 @@ const Chats = (props) => {
   useEffect(() => {
     socket.on('receive_message', (data) => {
       console.log('receive_message', data);
-      audio.play()
+      // audio.play()
       setTypingUser(null)
       const updateChat = chats.map((chat, index) => {
         if (chat._id === data._id) {
@@ -127,7 +127,7 @@ const Chats = (props) => {
       socket.off("user_typing")
       socket.off("user_joined")
     }
-  }, [currentUser])
+  }, [currentUser, onlineUsers])
   const onChatSelect = (chat, index) => {
     const mdu = chats.map((c, j) => {
       if (c._id === chat._id) return { ...c, selected: true, messages: c.messages.map(m => ({ ...m, seen: true })), unreadCount: 0 };
