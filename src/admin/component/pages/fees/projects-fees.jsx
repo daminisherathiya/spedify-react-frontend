@@ -111,7 +111,7 @@ const ProjectsFees = () => {
                             <h3 className="page-title">Projects Fees</h3>
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item">
-                                    <Link to="index.html">Home</Link>
+                                    <Link to="/">Home</Link>
                                 </li>
                                 <li className="breadcrumb-item">
                                     <Link to="fees.html">Fees</Link>

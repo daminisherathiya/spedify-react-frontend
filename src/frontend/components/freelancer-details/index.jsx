@@ -20,7 +20,7 @@ const FreelancerDetails =()=>{
                                 <div className="breadcrumb-list">
                                     <nav aria-label="breadcrumb" className="page-breadcrumb">
                                         <ol className="breadcrumb">
-                                            <li className="breadcrumb-item"><Link to ="#"><img src={home_icon} alt="" /> Home</Link></li>
+                                            <li className="breadcrumb-item"><Link to ="/"><img src={home_icon} alt="" /> Home</Link></li>
                                             <li className="breadcrumb-item" aria-current="page">Developer details</li>
                                         </ol>
                                     </nav>

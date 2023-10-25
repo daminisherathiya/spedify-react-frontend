@@ -54,7 +54,7 @@ const Developer = (props) => {
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="index.html">
+                      <Link to="/">
                         <img src={home_icon} alt="" /> Home
                       </Link>
                     </li>
@@ -397,7 +397,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_1}
                             alt="User Image"
@@ -409,7 +409,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">George Wells</Link>
+                          <Link to="/developer-details/userId">George Wells</Link>
                         </h3>
                         <div className="freelance-specific">UI/UX Designer</div>
                         <div className="freelance-location">
@@ -446,7 +446,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -466,7 +466,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_2}
                             alt="User Image"
@@ -478,7 +478,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Timothy Smith</Link>
+                          <Link to="/developer-details/userId">Timothy Smith</Link>
                         </h3>
                         <div className="freelance-specific">PHP Developer</div>
                         <div className="freelance-location">
@@ -515,7 +515,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -535,7 +535,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_3}
                             alt="User Image"
@@ -547,7 +547,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Janet Paden</Link>
+                          <Link to="/developer-details/userId">Janet Paden</Link>
                         </h3>
                         <div className="freelance-specific">Graphic Designer</div>
                         <div className="freelance-location">
@@ -584,7 +584,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -604,7 +604,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_4}
                             alt="User Image"
@@ -616,7 +616,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">James Douglas</Link>
+                          <Link to="/developer-details/userId">James Douglas</Link>
                         </h3>
                         <div className="freelance-specific">iOS Developer</div>
                         <div className="freelance-location">
@@ -653,7 +653,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -673,7 +673,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_5}
                             alt="User Image"
@@ -685,7 +685,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Floyd Lewis</Link>
+                          <Link to="/developer-details/userId">Floyd Lewis</Link>
                         </h3>
                         <div className="freelance-specific">SEO Developer</div>
                         <div className="freelance-location">
@@ -722,7 +722,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -742,7 +742,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_6}
                             alt="User Image"
@@ -754,7 +754,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Jacqueline Daye</Link>
+                          <Link to="/developer-details/userId">Jacqueline Daye</Link>
                         </h3>
                         <div className="freelance-specific">SM Developer</div>
                         <div className="freelance-location">
@@ -791,7 +791,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -811,7 +811,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_7}
                             alt="User Image"
@@ -823,7 +823,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Crystal Kemper</Link>
+                          <Link to="/developer-details/userId">Crystal Kemper</Link>
                         </h3>
                         <div className="freelance-specific">Network Engineer</div>
                         <div className="freelance-location">
@@ -860,7 +860,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -880,7 +880,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_8}
                             alt="User Image"
@@ -892,7 +892,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Tony Ingle</Link>
+                          <Link to="/developer-details/userId">Tony Ingle</Link>
                         </h3>
                         <div className="freelance-specific">Business Analyst</div>
                         <div className="freelance-location">
@@ -929,7 +929,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -949,7 +949,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_9}
                             alt="User Image"
@@ -961,7 +961,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Kathleen Kaiser</Link>
+                          <Link to="/developer-details/userId">Kathleen Kaiser</Link>
                         </h3>
                         <div className="freelance-specific">IT Project Manager</div>
                         <div className="freelance-location">
@@ -998,7 +998,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -1018,7 +1018,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_10}
                             alt="User Image"
@@ -1030,7 +1030,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Veronica Cheek</Link>
+                          <Link to="/developer-details/userId">Veronica Cheek</Link>
                         </h3>
                         <div className="freelance-specific">Software Architect</div>
                         <div className="freelance-location">
@@ -1067,7 +1067,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -1087,7 +1087,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_11}
                             alt="User Image"
@@ -1099,7 +1099,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Andrew Glover</Link>
+                          <Link to="/developer-details/userId">Andrew Glover</Link>
                         </h3>
                         <div className="freelance-specific">Software Developer</div>
                         <div className="freelance-location">
@@ -1136,7 +1136,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >
@@ -1156,7 +1156,7 @@ const Developer = (props) => {
                         <i className="fas fa-star" />
                       </Link>
                       <div className="freelance-img">
-                        <Link to="company-profile.html">
+                        <Link to="/developer-details/userId">
                           <img
                             src={Avatar_12}
                             alt="User Image"
@@ -1168,7 +1168,7 @@ const Developer = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h3>
-                          <Link to="company-profile.html">Mickey Bernier</Link>
+                          <Link to="/developer-details/userId">Mickey Bernier</Link>
                         </h3>
                         <div className="freelance-specific">QA Engineer</div>
                         <div className="freelance-location">
@@ -1205,7 +1205,7 @@ const Developer = (props) => {
                     </div>
                     <div className="cart-hover">
                       <Link
-                        to="company-profile.html"
+                        to="/developer-details/userId"
                         className="btn-cart"
                         tabIndex={-1}
                       >

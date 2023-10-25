@@ -39,7 +39,7 @@ const DeveloperProfile = (props) => {
             <nav aria-label="breadcrumb" className="page-breadcrumb">
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <Link to="index.html">
+                  <Link to="/">
                     <img src={home_icon} alt="" /> Home
                   </Link>
                 </li>

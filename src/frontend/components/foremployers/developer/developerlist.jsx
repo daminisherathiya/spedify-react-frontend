@@ -20,7 +20,7 @@ import {Logo,Img_02,Img_03,Img_04,Img_05 } from "../../imagepath";
               <nav aria-label="breadcrumb" className="page-breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <Link to="index.html">
+                    <Link to="/">
                       <i className="fas fa-home" /> Home
                     </Link>
                   </li>

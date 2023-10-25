@@ -93,7 +93,7 @@ const Header = (props) => {
                   <span />
                 </span>
               </Link>
-              <Link to="/index" className="navbar-brand logo">
+              <Link to="/" className="navbar-brand logo">
                 <img src={Logo_img} className="img-fluid" alt="Logo" />
               </Link>
             </div>
@@ -107,7 +107,7 @@ const Header = (props) => {
                 </Link>
               </div>
               <ul className="main-nav">
-                <li className={`has-submenu ${pathname.includes("index") || pathname.includes("index-two") || pathname.includes("index-three") || pathname.includes("index-four") || pathname.includes("index-five") ? "active" : ""}`}>
+                {/* <li className={`has-submenu ${pathname.includes("index") || pathname.includes("index-two") || pathname.includes("index-three") || pathname.includes("index-four") || pathname.includes("index-five") ? "active" : ""}`}>
                   <Link to="#0" className={`hoverdrop ${isSideMenu === "home" ? "subdrop" : ""}`} onClick={() => toggleSidebar(isSideMenu === "home" ? "" : "home")} onMouseEnter={() => setSideMenu("home")} >Home <i><FontAwesomeIcon icon={faChevronDown} /></i></Link>
                   {isSideMenu === "home" ?
                     <ul className="submenu" style={{ display: isSideMenu === 'home' ? 'block' : 'none' }} >
@@ -119,9 +119,9 @@ const Header = (props) => {
                     </ul>
                     : ""
                   }
-                </li>
+                </li> */}
 
-                <li className={`has-submenu ${pathname === "developer" || pathname === "company-profile" || pathname === "developer-details" || pathname === "company-project" || pathname === "company-gallery" || pathname === "company-review" || pathname === "company-details" || pathname === "dashboard" ||
+                {/* <li className={`has-submenu ${pathname === "developer" || pathname === "company-profile" || pathname === "developer-details" || pathname === "company-project" || pathname === "company-gallery" || pathname === "company-review" || pathname === "company-details" || pathname === "dashboard" ||
                   pathname === "manage-projects" || pathname === "favourites" || pathname === "invited-freelancer" || pathname === "membership-plans" ||
                   pathname === "milestones" || pathname === "chats" || pathname === "review" || pathname === "deposit-funds" ||
                   pathname === "withdraw-money" || pathname === "transaction-history" || pathname === "verify-identity" ||
@@ -186,6 +186,7 @@ const Header = (props) => {
                     : ""
                   }
                 </li>
+
                 <li className={`has-submenu ${pathname === "project" || pathname === "developer-profile" || pathname === "project-details" || pathname === "freelancer-dashboard" || pathname === "freelancer-details" || pathname === "company-profile" ||
                   pathname === "freelancer-project-proposals" || pathname === "freelancer-favourites" || pathname === "freelancer-invitations" || pathname === "freelancer-membership" ||
                   pathname === "freelancer-change-password" || pathname === "freelancer-chats" || pathname === "freelancer-review" ||
@@ -254,8 +255,9 @@ const Header = (props) => {
                       </li>
                     </ul>
                     : ""}
-                </li>
-                <li className={`has-submenu ${pathname === "about" || pathname === "blank-page" || pathname === "404-page" ||
+                </li> */}
+
+                {/* <li className={`has-submenu ${pathname === "about" || pathname === "blank-page" || pathname === "404-page" ||
                   pathname === "user-account-details" || pathname === "login" || pathname === "register" ||
                   pathname === "forgot-password" || pathname === "change-password" || pathname === "freelancer-invoices" ||
                   pathname === "view-invoice" ? "active" : ""}`}>
@@ -304,8 +306,9 @@ const Header = (props) => {
                       </li>
                     </ul>
                     : ""}
-                </li>
-                <li className={`has-submenu ${pathname === "blog-list" || pathname === "blog-grid" ||
+                </li> */}
+
+                {/* <li className={`has-submenu ${pathname === "blog-list" || pathname === "blog-grid" ||
                   pathname === "blog-details" ? "active" : ""}`}>
                   <Link to="#" className={isSideMenu === "blog" ? "subdrop" : ""} onClick={() => toggleSidebar(isSideMenu === "blog" ? "" : "blog")} onMouseEnter={() => setSideMenu("blog")}>Blog <i><FontAwesomeIcon icon={faChevronDown} /></i></Link>
                   {isSideMenu === "blog" ?
@@ -324,9 +327,24 @@ const Header = (props) => {
 
                     : ""
                   }
-                </li>
-                <li>
+                </li> */}
+
+                {/* <li>
                   <Link to="/admin/login" target="_blank">Admin</Link>
+                </li> */}
+
+                <li className={pathname === "about" ? "active" : ""}>
+                  <Link to="/about">About us</Link>
+                </li>
+
+                <li className={pathname === "blog-grid" ? "active" : ""}>
+                  <Link to="/blog-grid">Blogs</Link>
+                </li>
+                <li className={pathname === "chats" ? "active" : ""}>
+                  <Link to="/chats">Messages</Link>
+                </li>
+                <li className={pathname === "faq" ? "active" : ""}>
+                  <Link to="/faq">FAQ</Link>
                 </li>
               </ul>
             </div>
@@ -369,13 +387,14 @@ const Header = (props) => {
                   </div>
                 </li>
                 {/* /User Menu */}
-                <li>
+
+                {/* <li>
                   <Link to="/post-project" className="login-btn">
                     Post a Project{" "}
                   </Link>
-                </li>
+                </li> */}
 
-              </ul> : pathname === "freelancer-invoices" || pathname === "project" || pathname === "view-invoice" || pathname.includes("freelancer-") ?
+              </ul> : pathname === "freelancer-invoices" || pathname === "project" || pathname === "view-invoice" || pathname.includes("freelancer-") || currentUser ?
                 <ul className="nav header-navbar-rht">
                   <li className="nav-item dropdown has-arrow account-item">
                     <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
@@ -410,11 +429,11 @@ const Header = (props) => {
                       </Link>
                     </div>
                   </li>
-                  <li className={pathname === "post-project" ? "active" : ""}>
+                  {/* <li className={pathname === "post-project" ? "active" : ""}>
                     <Link to="/post-project" className="login-btn">
                       Post a Project{" "}
                     </Link>
-                  </li>
+                  </li> */}
                 </ul> : pathname === "chats" || pathname === "verify-identity" ?
                   <ul className="nav header-navbar-rht">
                     <li className="nav-item dropdown has-arrow account-item">
@@ -446,16 +465,16 @@ const Header = (props) => {
                         </Link>
                       </div>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="/post-project" className="login-btn">
                         Post a Project{" "}
                       </Link>
-                    </li>
+                    </li> */}
                   </ul> :
                   <ul className="nav header-navbar-rht reg-head">
                     <li><Link to="/register" className="reg-btn"><img src={Reg_icon} className="me-1" alt="icon" />{" "} Register</Link></li>
                     <li><Link to="/login" className="log-btn"> <img src={Lock_icon} className="me-1" alt="icon" />{" "}Login</Link></li>
-                    <li><Link to="post-project" className="login-btn">Post a Project{" "} </Link></li>
+                    {/* <li><Link to="post-project" className="login-btn">Post a Project{" "} </Link></li> */}
                   </ul>
 
             }

@@ -35,7 +35,7 @@ module.exports = {
     // global app config object
     config: JSON.stringify({
       apiUrl: "",
-      publicPath: "/template-reactjs/",
+      publicPath: "/",
       //  publicPath : '/template3/'
     }),
   },
@@ -100,8 +100,8 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       title: "Hot Module Replacement",
-      template: "./public/index.html",
-      filename: "./index.html",
+      template: "./public//",
+      filename: ".//",
       favicon: "./public/favicon.png",
     }),
     new MiniCssExtractPlugin({

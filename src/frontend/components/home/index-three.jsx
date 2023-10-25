@@ -184,7 +184,7 @@ const Home3 = () => {
       <div className="main-wrapper">
         {/* Start Navigation */}
         {/* Header */}
-        <HeaderThree />
+        {/* <HeaderThree /> */}
         {/* /Header */}
         {/* Home Banner  */}
         <div className="home-banner home-three">

@@ -105,8 +105,7 @@ const HeaderTwo = (props) => {
               </Link>
             </div>
             <ul className="main-nav main-two">
-              <li className={`has-submenu ${pathname === "index-two" || pathname === "index-three" || pathname === "index-four" ? "active" : ""}`}>
-                {/* <li className={`has-submenu ${pathname.includes("index") || pathname.includes("index-two") || pathname.includes("index-three") || pathname.includes("index-four") || pathname.includes("index-five") ? "active" : ""}`}> */}
+              {/* <li className={`has-submenu ${pathname === "index-two" || pathname === "index-three" || pathname === "index-four" ? "active" : ""}`}>
                 <Link to="#0" className={isSideMenu === "home" ? "subdrop" : ""} onClick={() => toggleSidebar(isSideMenu === "home" ? "" : "home")}  onMouseEnter={() => setSideMenu("home")}>Home <i className="fas fa-chevron-down" /></Link>
                 {isSideMenu === "home" ?
                   <ul className="submenu"style={{ display: isSideMenu === 'home' ? 'block' : 'none' }} >
@@ -118,7 +117,7 @@ const HeaderTwo = (props) => {
                   </ul>
                   : ""
                 }
-              </li>
+              </li> */}
 
               <li className={`has-submenu ${pathname === "developer" || pathname === "developer-details" || pathname === "dashboard" ||
                 pathname === "manage-projects" || pathname === "favourites" || pathname === "invited-freelancer" || pathname === "membership-plans" ||
