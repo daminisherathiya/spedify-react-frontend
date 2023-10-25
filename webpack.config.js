@@ -100,8 +100,8 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       title: "Hot Module Replacement",
-      template: "./public//",
-      filename: ".//",
+      template: "./public/index.html",
+      filename: "./index.html",
       favicon: "./public/favicon.png",
     }),
     new MiniCssExtractPlugin({
