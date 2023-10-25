@@ -128,6 +128,8 @@ import Faq from "./components/faq/faq";
 import Favouritelist from "./components/foremployers/favourites/favouritelist";
 import OnboardScreen from "./components/pages/onboardScreen";
 import { useHistory } from 'react-router-dom';
+import { useUserContext } from "../context/UserContext";
+import ProtectedRoute from "./ProtectedRoute";
 // import PostJob from "./components/jobs/post-job";
 
 
@@ -142,9 +144,12 @@ if (
 }
 const AppContainer = function (props) {
   const history = useHistory();
+  const { state } = useUserContext();
+  const isLoggedIn = state.isLoggedIn;
+  // console.log('userState', state);
   if (props) {
     const location = history.location.pathname.split("/")[1];
-    console.log('location', location);
+    // console.log('location', location);
 
     return (
       <Router basename={`${config.publicPath}`}>
@@ -230,7 +235,7 @@ const AppContainer = function (props) {
 
             (
               <>
-                <Header {...props} />
+                <Header {...props} userState={state} />
                 <Switch>
                   {/* home */}
                   <Route exact path="/" component={Home3} />
@@ -243,7 +248,7 @@ const AppContainer = function (props) {
                   <Route exact path="/post-project" component={PostProject} />
                   <Route exact path="/company-project" component={CompanyProject} />
                   {/* For Employer */}
-                  <Route exact path="/developer" component={Developer} />
+                  <Route exact path="/search/talent/:query" component={Developer} />
                   <Route exact path="/developer-details/:userId" component={DeveloperDetails} />
                   <Route exact path="/developer-list" component={DeveloperList} />
                   <Route exact path="/dashboard" component={Dashboard} />
@@ -262,7 +267,7 @@ const AppContainer = function (props) {
                   <Route exact path="/favourites-list" component={Favouritelist} />
                   <Route exact path="/invited-favourites" component={Invitations} />
                   <Route exact path="/membership-plans" component={Membership} />
-                  <Route exact path="/chats" component={Chats} />
+                  <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/chats" component={Chats} />
                   <Route exact path="/review" component={Review} />
                   <Route exact path="/deposit-funds" component={DepositFunds} />
                   <Route exact path="/withdraw-money" component={Withdrawmoney} />
@@ -276,7 +281,7 @@ const AppContainer = function (props) {
                   <Route exact path="/company-gallery" component={CompanyGallery} />
                   <Route exact path="/company-review" component={CompanyReview} />
                   {/* For Freelancer */}
-                  <Route exact path="/project" component={Project} />
+                  <Route exact path="/search/work/:query" component={Project} />
                   <Route exact path="/project-details" component={ProjectDetails} />
                   <Route exact path="/freelancer-dashboard" component={FreelancerDashboard} />
                   <Route exact path="/freelancer-project-proposals" component={FreelancerProjectproposal} />
@@ -297,7 +302,7 @@ const AppContainer = function (props) {
                   <Route exact path="/freelancer-delete-account" component={FreelancerDeleteAccount} />
                   <Route exact path="/freelancer-profile" component={FreelancerProfile} />
                   <Route exact path="/freelancer-details" component={FreelancerDetails} />
-                  <Route exact path="/freelancer-chats" component={Chats} />
+                  <Route exact path="/chats" component={Chats} />
                   <Route exact path="/freelancer-review" component={FreelancerReview} />
                   <Route exact path="/freelancer-portfolio" component={FreelancerPortfolio} />
                   <Route exact path="/freelancer-withdraw-money" component={FreelancerWithdrawmoney} />

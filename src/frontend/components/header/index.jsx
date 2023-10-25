@@ -4,14 +4,16 @@ import { Logo, Img_04, avatar_1, Avatar_1, Top_icon, Reg_icon, Lock_icon, loader
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ME } from "../../../keys";
+import { useHistory } from "react-router-dom";
 
 
 const Header = (props) => {
+  const history = useHistory();
   const [isSideMenu, setSideMenu] = useState("");
   const [isSideMenu1, setSideMenu1] = useState("");
   const [isSideMenu2, setSideMenu2] = useState("");
   const [isSideMenu3, setSideMenu3] = useState("");
-
+  const isLoggedIn = props.userState.isLoggedIn;
   const toggleSidebar = (value) => {
     setSideMenu(value)
   }
@@ -34,8 +36,8 @@ const Header = (props) => {
     root.classList.remove("menu-opened");
   };
 
-  const pathname = props.location.pathname.split("/")[1];
-
+  const pathname = history.location.pathname.split("/")[1];
+  console.log('[header].pathname', pathname);
   // const exclusionArray = [
   //   "/onboard-screen",
   //   "/onboard-screen-employer"
@@ -76,8 +78,11 @@ const Header = (props) => {
     }
   }
   window.addEventListener('scroll', changeBackground);
-  const currentUser = localStorage.getItem('@decoded') ? JSON.parse(localStorage.getItem('@decoded')) : {};
-
+  const currentUser = localStorage.getItem('@decoded') ? JSON.parse(localStorage.getItem('@decoded')) : isLoggedIn ? {} : null;
+  const onLogout = () => {
+    localStorage.clear();
+    window.location.href = '/'
+  }
   return (
     <>
 
@@ -340,12 +345,15 @@ const Header = (props) => {
                 <li className={pathname === "blog-grid" ? "active" : ""}>
                   <Link to="/blog-grid">Blogs</Link>
                 </li>
-                <li className={pathname === "chats" ? "active" : ""}>
-                  <Link to="/chats">Messages</Link>
-                </li>
                 <li className={pathname === "faq" ? "active" : ""}>
                   <Link to="/faq">FAQ</Link>
                 </li>
+                {
+                  isLoggedIn &&
+                  <li className={pathname === "chats" ? "active" : ""}>
+                    <Link to="/chats">Messages</Link>
+                  </li>
+                }
               </ul>
             </div>
             {pathname === "user-account-details" || pathname === "dashboard" || pathname === "manage-projects" || pathname === "pending-projects" || pathname === "ongoing-projects"
@@ -381,9 +389,9 @@ const Header = (props) => {
                       {" "}
                       <i className="material-icons">settings</i> Profile Settings
                     </Link>
-                    <Link className="dropdown-item" to="/">
-                      <i className="material-icons">power_settings_new</i> Logout
-                    </Link>
+                    <div className="dropdown-item" onClick={onLogout} style={{ cursor: 'pointer' }}>
+                      <i className="material-icons">power_settings_new</i> Logoutasdfasf
+                    </div>
                   </div>
                 </li>
                 {/* /User Menu */}
@@ -424,9 +432,9 @@ const Header = (props) => {
                         {" "}
                         <i className="material-icons">settings</i> Profile Settings
                       </Link>
-                      <Link className="dropdown-item" to="/">
+                      <div className="dropdown-item" onClick={onLogout} style={{ cursor: 'pointer' }}>
                         <i className="material-icons">power_settings_new</i> Logout
-                      </Link>
+                      </div>
                     </div>
                   </li>
                   {/* <li className={pathname === "post-project" ? "active" : ""}>
@@ -460,9 +468,9 @@ const Header = (props) => {
                           {" "}
                           <i className="material-icons">settings</i> Profile Settings
                         </Link>
-                        <Link className="dropdown-item" to="/">
+                        <div className="dropdown-item" onClick={onLogout} style={{ cursor: 'pointer' }}>
                           <i className="material-icons">power_settings_new</i> Logout
-                        </Link>
+                        </div>
                       </div>
                     </li>
                     {/* <li>

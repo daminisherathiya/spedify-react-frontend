@@ -88,8 +88,8 @@ import { useHistory } from "react-router-dom";
 const Home3 = () => {
   const [scroll, setScroll] = useState(true);
   const options1 = [
-    { id: 1, text: "Projects" },
-    { id: 2, text: "Freelancers" },
+    { id: 1, text: "Talent" },
+    { id: 2, text: "Work" },
   ];
   //Aos
 
@@ -168,7 +168,8 @@ const Home3 = () => {
   }, []);
   const history = useHistory();
   const eventclick = () => {
-    history.push("/project");
+    // history.push("/search/work/q=Special Education");
+    history.push("/search/talent/q=Mudassir");
   };
 
   return (
@@ -244,7 +245,7 @@ const Home3 = () => {
                   <h5>TRUSED BY OVER 2M+ USERS</h5>
                 </div>
                 <h1>
-                  Get the Perfect Developers &amp; <br /> Projects{" "}
+                  Get the Perfect Advocates/Providers &amp; <br /> Work{" "}
                 </h1>
                 <form
                   className="form"
@@ -260,7 +261,7 @@ const Home3 = () => {
                           className="select form-control"
                           data={options1}
                           options={{
-                            placeholder: "Projects",
+                            placeholder: "Talent",
                           }}
                         />
                       </span>

@@ -73,7 +73,7 @@ const Register = (props) => {
                           (enums.UserRoles || []).map((role, index) => (
                             <li
                               key={`role-index-${index}`}
-                              className={`nav-item nav-link ${role.active ? "active" : index === 0 ? 'active' : ''}`}
+                              className={`nav-item nav-link ${role.active ? "active" : ''}`}
                               style={{ cursor: 'pointer' }}
                               onClick={() => enumSelection('UserRoles', index)}>
                               {role.value}

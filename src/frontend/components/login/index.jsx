@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
 import Axios from '../../../apiClient';
+import { useUserContext } from '../../../context/UserContext';
 
 const Login = ({ history }) => {
+  const { dispatch } = useUserContext();
   const [user, setUser] = React.useState({});
   const onChange = e => {
     e.persist();
@@ -14,6 +16,7 @@ const Login = ({ history }) => {
       const response = await Axios.post('api/v1/users/login', user);
       if (response.data.statusCode === 200) {
         const myData = response.data.doc;
+        dispatch({ type: 'LOGIN', payload: myData });
         localStorage.setItem("@user", JSON.stringify(myData))
         setTimeout(() => {
           history.push('/freelancer-chats', myData)
