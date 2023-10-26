@@ -7,7 +7,7 @@ export const useEnumsContext = () => {
 };
 
 export const EnumsProvider = ({ children }) => {
-    const initialState = {};
+    const initialState = { enums: [] };
 
     const [state, dispatch] = useReducer(enumsReducer, initialState);
 

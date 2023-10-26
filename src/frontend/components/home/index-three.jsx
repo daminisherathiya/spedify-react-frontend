@@ -84,14 +84,14 @@ import CountUp from "react-countup";
 import { FiArrowRight } from "react-icons/fi";
 
 import { useHistory } from "react-router-dom";
+import { useEnumsContext } from "../../../context/EnumsContext";
 
 const Home3 = () => {
   const [scroll, setScroll] = useState(true);
-  const [query, setQury] = useState({})
-  const options1 = [
-    { id: 1, text: "Talent" },
-    { id: 2, text: "Work" },
-  ];
+  const [query, setQury] = useState({});
+  const { state } = useEnumsContext();
+  console.log('Enums.state', state);
+  const options1 = state.UserRoles || []
   //Aos
 
   useEffect(() => {
@@ -262,7 +262,7 @@ const Home3 = () => {
                           className="select form-control"
                           data={options1}
                           options={{
-                            placeholder: "Talent",
+                            placeholder: "Parent",
                           }}
                         />
                       </span>
