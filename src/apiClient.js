@@ -1,12 +1,13 @@
 import Axios from 'axios';
 import { BASE_URL } from './keys';
+import { PreferencesKeys, getItem } from './preferences/Preferences';
 Axios.interceptors.request.use(
-    config => {
+   async config => {
         config.baseURL = BASE_URL;
-        const user = localStorage.getItem("@user") ? JSON.parse(localStorage.getItem("@user")) : false;
-        console.log('axios.user', user);
-        if (user) {
-            config.headers['Authorization'] = `Bearer ${user.token}`;
+        const authKey = await getItem(PreferencesKeys.authKey) || false;
+        console.log('axios.authKey', authKey);
+        if (authKey) {
+            config.headers['Authorization'] = `Bearer ${authKey.token}`;
         }
         return config;
     },

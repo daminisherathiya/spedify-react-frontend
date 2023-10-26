@@ -6,9 +6,10 @@ import jwt_decode from "jwt-decode";
 import Axios from "../../../../apiClient";
 import { ME, OTHER } from "../../../../keys";
 import msgSound from '../../../assets/message.mp3'
+import { PreferencesKeys, getItem } from "../../../../preferences/Preferences";
 const audio = new Audio(msgSound);
-const initSocket = () => {
-  const localData = JSON.parse(localStorage.getItem('@user')) || { token: '' };
+const initSocket = async () => {
+  const localData = getItem(PreferencesKeys.authKey) || { token: '' };
   const socket = io('http://localhost:80/chats', {
     auth: {
       token: localData.token

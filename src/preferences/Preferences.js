@@ -11,7 +11,7 @@ export const PreferencesKeys = {
 
 export const setItem = async (storageKey, data) => {
     try {
-        const { encryptedData, iv } = await encryptData(data, encryptionKey);
+        const { encryptedData, iv } = await encryptData(JSON.stringify(data), encryptionKey);
         localStorage.setItem(storageKey, JSON.stringify({
             data: JSON.stringify(Array.from(new Uint8Array(encryptedData))),
             iv: JSON.stringify(Array.from(iv)),
@@ -29,13 +29,10 @@ export const getItem = async (storageKey) => {
         storageData = localStorage.getItem(`${storageKey}`);
         if (storageData) {
             if (isJSONStringValid(storageData)) {
-                const parsedData = JSON.parse(storageData);
-                console.log('parsedData', JSON.parse(parsedData.iv));
-                const data = await decryptData({
-                    data: new Uint8Array(JSON.parse(parsedData.data)),
-                    iv: new Uint8Array(JSON.parse(parsedData.iv)),
-                }, encryptionKey);
-                console.log('JSON.parse(data)', data);
+                storageData = JSON.parse(await decryptData({
+                    data: new Uint8Array(JSON.parse(JSON.parse(storageData).data)),
+                    iv: new Uint8Array(JSON.parse(JSON.parse(storageData).iv)),
+                }, encryptionKey));
             }
         }
         console.log('[getItem]', storageData);
@@ -48,7 +45,7 @@ export const getItem = async (storageKey) => {
 export const removeItem = () => {
 
 }
-(async () => {
-    await setItem("M", { name: "Mudassir" });
-    await getItem("M");
-})()
+// (async () => {
+//     await setItem("M", { name: "Mudassir" });
+//     await getItem("M");
+// })()

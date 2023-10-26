@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
 import Axios from '../../../apiClient';
+import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 
 const Register = (props) => {
   // console.log('[props]', props);
@@ -38,8 +39,8 @@ const Register = (props) => {
       const response = await Axios.post('api/v1/users/signup', user);
       if (response.data.statusCode === 200) {
         const myData = response.data.doc;
-        localStorage.setItem("@user", JSON.stringify(myData))
-        history.push('/freelancer-chats', myData)
+        await setItem(PreferencesKeys.authKey, myData)
+        history.push('/')
       }
     } catch (error) {
       console.log('[onSubmit].error', error)
