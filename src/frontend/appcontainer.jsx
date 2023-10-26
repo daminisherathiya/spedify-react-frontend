@@ -250,7 +250,7 @@ const AppContainer = function (props) {
                   {/* For Employer */}
                   <Route exact path="/search/talent/:query" component={Developer} />
                   <Route exact path="/developer-details/:userId" component={DeveloperDetails} />
-                  <Route exact path="/developer-list" component={DeveloperList} />
+                  <Route exact path="/search/talent/:query/developer-list" component={DeveloperList} />
                   <Route exact path="/dashboard" component={Dashboard} />
                   <Route exact path="/edit-project" component={EditProject} />
                   <Route exact path="/manage-projects" component={Manageprojects} />

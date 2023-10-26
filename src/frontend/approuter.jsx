@@ -6,8 +6,10 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 import config from "config";
 import { UserProvider } from '../context/UserContext.jsx';
-
+import { EnumsProvider, useEnumsContext } from '../context/EnumsContext.jsx';
+import '../preferences/Preferences.js'
 const AppRouter = (props) => {
+    const { dispatch } = useEnumsContext();
     return (
         <>
             <Router basename={`${config.publicPath}`}>
@@ -20,4 +22,4 @@ const AppRouter = (props) => {
 }
 
 
-export default AppRouter;
+export default () => <EnumsProvider> <AppRouter /></EnumsProvider>;

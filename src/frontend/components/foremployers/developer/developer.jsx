@@ -361,12 +361,12 @@ const Developer = (props) => {
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-flex">
                     <ul className="list-grid d-flex align-items-center">
                       <li>
-                        <Link to="developer" className="favour-active">
+                        <Link to="/search/talent/sdf" className="favour-active">
                           <i className="fas fa-th-large" />
                         </Link>
                       </li>
                       <li>
-                        <Link to="developer-list">
+                        <Link to="/search/talent/asdf/developer-list">
                           <i className="fas fa-list" />
                         </Link>
                       </li>

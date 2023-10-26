@@ -87,6 +87,7 @@ import { useHistory } from "react-router-dom";
 
 const Home3 = () => {
   const [scroll, setScroll] = useState(true);
+  const [query, setQury] = useState({})
   const options1 = [
     { id: 1, text: "Talent" },
     { id: 2, text: "Work" },
