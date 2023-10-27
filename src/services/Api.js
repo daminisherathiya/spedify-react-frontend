@@ -1,28 +1,22 @@
-import Axios from 'axios';
-import { getItem, setItem, PreferencesKeys } from '../preferences/Preferences';
-import { BASE_URL } from '../keys';
-Axios.interceptors.request.use(
-    config => {
-        config.baseURL = `${BASE_URL}`;
-        const { token } = getItem(PreferencesKeys.authKey) || false;
-        if (token) {
-            config.headers['Authorization'] = 'Bearer ' + token.authToken;
-        }
-        return config;
-    },
-
-    function (error) {
-        return Promise.reject(error)
-    });
-
-Axios.interceptors.response.use(function (response) {
-    return response;
-}, function (error) {
-    const { response } = error;
-    if (response && response.status && response.status === 500) {
-        console.log(response.request)
-        setItem(PreferencesKeys.axiosErrKey, { error: response, url: response.config.url })
+import Axios from '../Axios';
+const Post = async (url = '', payload = {}, headers = {}) => {
+    try {
+        const response = await Axios.post(`${url}`, payload, { headers: { ...headers } });
+        return response.data;
+    } catch (error) {
+        throw error;
     }
-    return Promise.reject(error);
-});
-export default Axios;
+}
+const Get = async (url = '', headers = {}) => {
+    try {
+        const response = await Axios.get(`${url}`, { headers: { ...headers } });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export {
+    Post,
+    Get
+}

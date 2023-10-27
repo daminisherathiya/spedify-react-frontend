@@ -8,7 +8,7 @@ import config from "config";
 import { UserProvider } from '../context/UserContext.jsx';
 import { EnumsProvider, useEnumsContext } from '../context/EnumsContext.jsx';
 import '../preferences/Preferences.js'
-import Axios from '../apiClient.js';
+import Axios from '../Axios.js';
 const AppRouter = (props) => {
     const { dispatch } = useEnumsContext();
     const getEnums = async () => {

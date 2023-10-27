@@ -25,7 +25,7 @@ import {Logo,Img_02,Img_03,Img_04,Img_05 } from "../../imagepath";
                     </Link>
                   </li>
                   <li className="breadcrumb-item" aria-current="page">
-                    Developers
+                    Talents
                   </li>
                 </ol>
               </nav>

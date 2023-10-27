@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
-import Axios from '../../../apiClient';
+import Axios from '../../../Axios';
 import { useUserContext } from '../../../context/UserContext';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 

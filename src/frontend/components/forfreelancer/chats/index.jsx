@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Img_02, Img_03, Img_05 } from "../../imagepath";
 import io from 'socket.io-client'
 import jwt_decode from "jwt-decode";
-import Axios from "../../../../apiClient";
+import Axios from "../../../../Axios";
 import { ME, OTHER } from "../../../../keys";
 import msgSound from '../../../assets/message.mp3'
 import { PreferencesKeys, getItem } from "../../../../preferences/Preferences";

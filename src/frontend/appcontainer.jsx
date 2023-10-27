@@ -10,8 +10,8 @@ import PostProject from "./components/postproject";
 import Home from "./components/home";
 
 //For Employee
-import Developer from "./components/foremployers/developer/developer";
-import DeveloperDetails from "./components/foremployers/developer/developer_details";
+import AdvocateTalents from "./components/foremployers/talent/talent";
+import DeveloperDetails from "./components/foremployers/talent/talentDetails";
 import Dashboard from "./components/foremployers/dashboard";
 import EditProject from "./components/foremployers/editproject";
 import Manageprojects from "./components/foremployers/manageprojects";
@@ -122,7 +122,7 @@ import CompanyDetails from "./components/CompanyDetails";
 import OnboardScreenEmployer from "./components/pages/onboardScreen/onboard-screen-employer";
 import CompanyGallery from "./components/CompanyDetails/company-gallery";
 import CompanyReview from "./components/CompanyDetails/companyreview";
-import DeveloperList from "./components/foremployers/developer/developerlist";
+import TalentList from "./components/foremployers/talent/talentList";
 import PostJob from "./components/jobs/post_job";
 import Faq from "./components/faq/faq";
 import Favouritelist from "./components/foremployers/favourites/favouritelist";
@@ -248,9 +248,9 @@ const AppContainer = function (props) {
                   <Route exact path="/post-project" component={PostProject} />
                   <Route exact path="/company-project" component={CompanyProject} />
                   {/* For Employer */}
-                  <Route exact path="/search/talent/:query" component={Developer} />
+                  <Route exact path="/search/talent/:query" component={AdvocateTalents} />
                   <Route exact path="/developer-details/:userId" component={DeveloperDetails} />
-                  <Route exact path="/search/talent/:query/developer-list" component={DeveloperList} />
+                  <Route exact path="/search/talent/:query/developer-list" component={TalentList} />
                   <Route exact path="/dashboard" component={Dashboard} />
                   <Route exact path="/edit-project" component={EditProject} />
                   <Route exact path="/manage-projects" component={Manageprojects} />

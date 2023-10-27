@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
-import Axios from '../../../apiClient';
+import Axios from '../../../Axios';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import { useEnumsContext } from '../../../context/EnumsContext';
 
@@ -11,7 +11,7 @@ const Register = (props) => {
   const { enumsState } = useEnumsContext();
   const [user, setUser] = React.useState({});
   const [userRoles, setUserRoles] = React.useState([]);
-  console.log('[userRoles]', userRoles);
+  // console.log('[userRoles]', userRoles);
   useEffect(() => {
     document.body.className = 'account-page';
     return () => { document.body.className = ''; }
