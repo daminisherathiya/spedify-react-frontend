@@ -93,6 +93,8 @@ import DeveloperProfile from "./components/forfreelancer/developerprofile"
 import CompanyProfile from './components/forfreelancer/companyprofile/index'
 import CompanyProject from './components/forfreelancer/companyproject/index'
 import AppUniversal from "../admin/app-universal";
+import Users from './components/users/Users';
+import CommonUserDetails from './components/users/UserDetails';
 
 // CSS Files
 // Bootstrap CSS
@@ -248,7 +250,7 @@ const AppContainer = function (props) {
                   <Route exact path="/post-project" component={PostProject} />
                   <Route exact path="/company-project" component={CompanyProject} />
                   {/* For Employer */}
-                  <Route exact path="/search/talent/:query" component={AdvocateTalents} />
+                  <Route exact path="/search/talent/:query" component={Users} />
                   <Route exact path="/developer-details/:userId" component={DeveloperDetails} />
                   <Route exact path="/search/talent/:query/developer-list" component={TalentList} />
                   <Route exact path="/dashboard" component={Dashboard} />
@@ -281,7 +283,9 @@ const AppContainer = function (props) {
                   <Route exact path="/company-gallery" component={CompanyGallery} />
                   <Route exact path="/company-review" component={CompanyReview} />
                   {/* For Freelancer */}
-                  <Route exact path="/search/work/:query" component={Project} />
+                  <Route exact path="/search/parent/:query" component={Users} />
+                  <Route exact path="/userDetails/:userId" component={CommonUserDetails} />
+                  <Route exact path="/search/education/:query" component={Project} />
                   <Route exact path="/project-details" component={ProjectDetails} />
                   <Route exact path="/freelancer-dashboard" component={FreelancerDashboard} />
                   <Route exact path="/freelancer-project-proposals" component={FreelancerProjectproposal} />

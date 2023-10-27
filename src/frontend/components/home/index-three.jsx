@@ -91,7 +91,7 @@ const Home3 = () => {
   const query = React.useRef(null);
   query.current = { userType: 1 }
   const { enumsState } = useEnumsContext();
-  console.log('Enums.enumsState', enumsState);
+  // console.log('Enums.enumsState', enumsState);
   const options1 = enumsState.UserRoles || []
 
   useEffect(() => {
@@ -171,7 +171,7 @@ const Home3 = () => {
   const eventclick = () => {
     const { userType = 1, queryStr = 'all' } = query.current;
     if (userType === 1) history.push(`/search/talent/userType=${userType}&q=${queryStr}`)
-    else history.push(`/search/work/userType=${userType}&q=${queryStr}`)
+    else history.push(`/search/parent/userType=${userType}&q=${queryStr}`)
   };
   return (
     <>
@@ -246,7 +246,7 @@ const Home3 = () => {
                   <h5>TRUSED BY OVER 2M+ USERS</h5>
                 </div>
                 <h1>
-                  Get the Perfect Advocates/Providers &amp; <br /> Work{" "}
+                  Get the Perfect Advocates/Providers &amp; <br /> Parents{" "}
                 </h1>
                 <form
                   className="form"

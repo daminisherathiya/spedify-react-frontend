@@ -9,8 +9,8 @@ import 'react-select2-wrapper/css/select2.css';
 import {
   home_icon, Avatar_1, Avatar_2, Avatar_3, Avatar_4, Avatar_5, Avatar_6,
   Avatar_7, Avatar_8, Avatar_9, Avatar_10, Avatar_11, Avatar_12, Logo
-} from "../../imagepath";
-import { Post } from "../../../../services/Api";
+} from "../imagepath";
+import { Post } from "../../../services/Api";
 import GridUser from "./GridUser";
 import Button from "./Button";
 import ListUser from "./ListUser";

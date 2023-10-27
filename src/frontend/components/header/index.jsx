@@ -348,9 +348,9 @@ const Header = (props) => {
                 <li className={pathname === "faq" ? "active" : ""}>
                   <Link to="/faq">FAQ</Link>
                 </li>
-                <li className={pathname === "onboard-screen" ? "active" : ""}>
+                {/* <li className={pathname === "onboard-screen" ? "active" : ""}>
                   <Link to="/onboard-screen">On Boarding</Link>
-                </li>
+                </li> */}
                 {
                   isLoggedIn &&
                   <li className={pathname === "chats" ? "active" : ""}>
