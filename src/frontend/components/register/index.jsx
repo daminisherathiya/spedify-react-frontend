@@ -3,36 +3,31 @@ import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
 import Axios from '../../../apiClient';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
+import { useEnumsContext } from '../../../context/EnumsContext';
 
 const Register = (props) => {
   // console.log('[props]', props);
   const { history } = props;
+  const { enumsState } = useEnumsContext();
+  const [user, setUser] = React.useState({});
+  const [userRoles, setUserRoles] = React.useState([]);
+  console.log('[userRoles]', userRoles);
   useEffect(() => {
-
     document.body.className = 'account-page';
     return () => { document.body.className = ''; }
   });
-  const [user, setUser] = React.useState({});
+  useEffect(() => {
+    if (enumsState.UserRoles) setUserRoles(enumsState.UserRoles)
+  }, [enumsState]);
   const onChange = e => {
     e.persist();
     setUser({ ...user, [e.target.id]: e.target.value })
   }
-  const [enums, setEnums] = React.useState({})
-  const getEnums = async () => {
-    const response = await Axios.get('/api/v1/enums');
-    setEnums(response.data.enums)
-  }
-  React.useEffect(() => {
-    getEnums()
-  }, [])
-  const enumSelection = (enumKey, enumIndex) => {
-    let enm = enums[enumKey];
-    enm = enm.map((en, j) => {
+  const enumSelection = (enumIndex) => {
+    setUserRoles([...userRoles].map((en, j) => {
       if (j === enumIndex) return { ...en, active: true }
       return { ...en, active: false };
-    })
-    enums[enumKey] = enm;
-    setEnums({ ...enums })
+    }))
   }
   const onSubmit = async () => {
     try {
@@ -71,13 +66,13 @@ const Register = (props) => {
                     <nav className="user-tabs mb-4">
                       <ul role="tablist" className="nav nav-pills nav-justified">
                         {
-                          (enums.UserRoles || []).map((role, index) => (
+                          (userRoles || []).map((role, index) => (
                             <li
                               key={`role-index-${index}`}
                               className={`nav-item nav-link ${role.active ? "active" : ''}`}
                               style={{ cursor: 'pointer' }}
-                              onClick={() => enumSelection('UserRoles', index)}>
-                              {role.value}
+                              onClick={() => enumSelection(index)}>
+                              {role.text}
                             </li>
                           ))
                         }

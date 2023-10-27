@@ -88,11 +88,11 @@ import { useEnumsContext } from "../../../context/EnumsContext";
 
 const Home3 = () => {
   const [scroll, setScroll] = useState(true);
-  const [query, setQury] = useState({});
-  const { state } = useEnumsContext();
-  console.log('Enums.state', state);
-  const options1 = state.UserRoles || []
-  //Aos
+  const query = React.useRef(null);
+  query.current = { userType: 1 }
+  const { enumsState } = useEnumsContext();
+  console.log('Enums.enumsState', enumsState);
+  const options1 = enumsState.UserRoles || []
 
   useEffect(() => {
     AOS.init({
@@ -169,10 +169,10 @@ const Home3 = () => {
   }, []);
   const history = useHistory();
   const eventclick = () => {
-    // history.push("/search/work/q=Special Education");
-    history.push("/search/talent/q=Mudassir");
+    const { userType = 1, queryStr = 'all' } = query.current;
+    if (userType === 1) history.push(`/search/talent/userType=${userType}&q=${queryStr}`)
+    else history.push(`/search/work/userType=${userType}&q=${queryStr}`)
   };
-
   return (
     <>
       {/* Loader */}
@@ -250,10 +250,10 @@ const Home3 = () => {
                 </h1>
                 <form
                   className="form"
-                  name="store"
-                  id="store"
-                  method="post"
-                  action={`${config.publicPath}project`}
+                // name="store"
+                // id="store"
+                // method="post"
+                // action={`${config.publicPath}project`}
                 >
                   <div className="form-inner">
                     <div className="input-group">
@@ -262,16 +262,29 @@ const Home3 = () => {
                           className="select form-control"
                           data={options1}
                           options={{
-                            placeholder: "Parent",
+                            placeholder: "Advocate/Providers",
+                          }}
+                          onSelect={(e) => {
+                            query.current = {
+                              ...query.current,
+                              userType: e.target.value
+                            }
                           }}
                         />
                       </span>
                       <input
-                        type="email"
+                        type="text"
                         className="form-control"
                         placeholder="What are you looking for"
+                        onChange={e => {
+                          query.current = {
+                            ...query.current,
+                            queryStr: e.target.value
+                          }
+                        }}
                       />
                       <button
+                        type="button"
                         className="btn btn-primary sub-btn"
                         onClick={eventclick}
                       >

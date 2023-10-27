@@ -7,12 +7,12 @@ export const useEnumsContext = () => {
 };
 
 export const EnumsProvider = ({ children }) => {
-    const initialState = { enums: [] };
+    const initialState = {};
 
     const [state, dispatch] = useReducer(enumsReducer, initialState);
 
     return (
-        <EnumsContext.Provider value={{ state, dispatch }}>
+        <EnumsContext.Provider value={{ enumsState: state, dispatch }}>
             {children}
         </EnumsContext.Provider>
     );
