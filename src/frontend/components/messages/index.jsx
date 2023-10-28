@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Img_05 } from "../imagepath";
-import jwt_decode from "jwt-decode";
 import Axios from "../../../Axios";
 import { ME, OTHER } from "../../../keys";
 import msgSound from '../../assets/message.mp3'
 import { useUserContext } from "../../../context/UserContext";
+import { useLocation } from "react-router-dom";
 const audio = new Audio(msgSound);
 
 const Messages = (props) => {
   // const audioPlayer = React.useRef();
   const { state } = useUserContext();
   const socket = state.user.socket;
-  const [currentUser, setCurrentUser] = React.useState(state.user || {});
   const [chats, setChats] = React.useState([]);
   const [room, setRoom] = React.useState('');
   const [message, setMessage] = React.useState('');
@@ -20,6 +19,8 @@ const Messages = (props) => {
   const selectedChat = (chats || []).find(c => c.selected) || {};
   const [onlineUsers, setOnlineUsers] = React.useState([])
   const messagesScrollRef = React.useRef(null);
+  const currentUser = state.user || {};
+  const location = useLocation();
   // console.log('[Mesaages].socket', socket);
   const sendMessage = () => {
     if (message !== '') {
@@ -66,7 +67,9 @@ const Messages = (props) => {
       .then(res => {
         const dbChats = (res.data.doc.chats || []).map((chat, index) => {
           socket.emit('join_room', { userId: currentUser._id, _id: currentUser._id, username: currentUser.username, room: chat._id })
-          return { ...chat, selected: index === 0 }
+          return {
+            ...chat, selected: location.state ? location.state.chatIds.includes(chat._id) ? true : false : index === 0
+          }
         });
         if (dbChats.length) {
           const firstChat = dbChats[0];
@@ -119,7 +122,7 @@ const Messages = (props) => {
   }
   // console.log('selectedChat', selectedChat);
   // console.log('chats', chats);
-  console.log('onlineUsers', onlineUsers);
+  // console.log('onlineUsers', onlineUsers);
   return (
     <>
       {/* Content */}

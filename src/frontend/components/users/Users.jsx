@@ -15,6 +15,8 @@ import GridUser from "./GridUser";
 import Button from "./Button";
 import ListUser from "./ListUser";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useUserContext } from "../../../context/UserContext";
 
 const options = [
   { id: 1, text: 'Select Category', },
@@ -47,30 +49,63 @@ const options4 = [
   { id: 3, text: 'Individual', },
 ];
 
-const User = ({ isGrid, user }) => {
-  if (isGrid) return <GridUser user={user} />
-  else return <ListUser user={user} />
+const User = ({ isGrid, user, openChat }) => {
+  if (isGrid) return <GridUser user={user} openChat={openChat} />
+  else return <ListUser user={user} openChat={openChat} />
 }
 
 const Talent = (props) => {
+  const history = useHistory();
+  const { state } = useUserContext();
+  const currentUser = state.user;
   const [isGrid, setIsGrid] = React.useState(true);
   const [users, setUsers] = React.useState([]);
   const params = useParams();
+  const openChat = async (user) => {
+    const arr = user.chats;
+    const arr2 = currentUser.chats;
+    let isChatExist = false;
+    for (let index = 0; index < arr.length; index++) {
+      const element1 = arr[index];
+      for (let j = 0; j < arr2.length; j++) {
+        const element2 = arr2[j];
+        if (element1 === element2) {
+          isChatExist = true;
+          break;
+        }
+      }
+
+    }
+    console.log('isChatExist', isChatExist);
+
+    if (isChatExist) {
+      history.push({ pathname: `/messages`, state: { chatIds: user.chats } })
+    } else {
+      const data = await Post(
+        'api/v1/chats/createUpdate',
+        {
+          "users": [currentUser._id, user._id,]
+        })
+      // console.log('data', data);
+      history.push({ pathname: `/messages`, state: { chatIds: [data.doc.chat._id, ...user.chats] } })
+    }
+
+  }
   const getUsers = async () => {
+    console.log('[Talent].currentUser', currentUser);
     const parms = params.query.split("&");
-    console.log('params',);
     const data = await Post(
       'api/v1/search/user',
       {
         "userType": parseInt(`${parms[0]}`.split("=")[1]),
         "query": `${parms[1]}`.split("=")[1] === "all" ? "" : `${parms[1]}`.split("=")[1]
       })
-    if (data.statusCode === 200) setUsers(data.doc);
+    if (data.statusCode === 200) setUsers(currentUser ? [...data.doc].filter(u => u._id !== currentUser._id) : data.doc);
     else setUsers([]);
   }
   React.useEffect(() => {
     getUsers();
-  }, [])
+  }, [currentUser])
   return (
     <>
       {/* Breadcrumb */}
@@ -414,7 +449,7 @@ const Talent = (props) => {
                 </div>
               </div>
               <div className="row">
-                {users.map((user, index) => <User user={user} isGrid={isGrid} key={`user-key-${index}-${user._id}`} />)}
+                {users.map((user, index) => <User user={user} isGrid={isGrid} key={`user-key-${index}-${user._id}`} openChat={() => openChat(user)} />)}
               </div>
               <div className="row">
                 <div className="col-md-12">

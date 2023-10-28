@@ -7,7 +7,7 @@ import {
 } from "../imagepath";
 import Button from "./Button";
 
-const GridUser = ({ user }) => {
+const GridUser = ({ user, openChat }) => {
     return <div className="col-md-6 col-lg-6 col-xl-4">
         <div className="freelance-widget">
             <div className="freelance-content">
@@ -67,7 +67,7 @@ const GridUser = ({ user }) => {
                     <div className="freelancers-price">$25 Hourly</div>
                 </div>
             </div>
-            <Button />
+            <Button onClick={openChat} />
         </div>
     </div>
 }
