@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ME } from "../../../keys";
 import { useHistory } from "react-router-dom";
+import { useUserContext } from "../../../context/UserContext";
 
 
 const Header = (props) => {
@@ -78,7 +79,7 @@ const Header = (props) => {
     }
   }
   window.addEventListener('scroll', changeBackground);
-  const currentUser = localStorage.getItem('@decoded') ? JSON.parse(localStorage.getItem('@decoded')) : isLoggedIn ? {} : null;
+  const currentUser = isLoggedIn ? props.userState.user : null;
   const onLogout = () => {
     localStorage.clear();
     window.location.href = '/'

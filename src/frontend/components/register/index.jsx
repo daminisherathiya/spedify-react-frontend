@@ -4,6 +4,7 @@ import { Logo_01 } from "../imagepath";
 import Axios from '../../../Axios';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import { useEnumsContext } from '../../../context/EnumsContext';
+import jwtDecode from 'jwt-decode';
 
 const Register = (props) => {
   // console.log('[props]', props);
@@ -33,8 +34,9 @@ const Register = (props) => {
     try {
       const response = await Axios.post('api/v1/users/signup', user);
       if (response.data.statusCode === 200) {
-        const myData = response.data.doc;
-        await setItem(PreferencesKeys.authKey, myData)
+        const decoded = jwtDecode(response.data.doc.token)
+        dispatch({ type: 'LOGIN', payload: decoded });
+        await setItem(PreferencesKeys.authKey, response.data.doc);
         history.push('/')
       }
     } catch (error) {

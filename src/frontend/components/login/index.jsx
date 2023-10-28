@@ -4,6 +4,7 @@ import { Logo_01 } from "../imagepath";
 import Axios from '../../../Axios';
 import { useUserContext } from '../../../context/UserContext';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
+import jwtDecode from 'jwt-decode';
 
 const Login = ({ history }) => {
   const { dispatch } = useUserContext();
@@ -16,9 +17,9 @@ const Login = ({ history }) => {
     try {
       const response = await Axios.post('api/v1/users/login', user);
       if (response.data.statusCode === 200) {
-        const myData = response.data.doc;
-        dispatch({ type: 'LOGIN', payload: myData });
-        await setItem(PreferencesKeys.authKey, myData);
+        const decoded =  jwtDecode(response.data.doc.token)
+        dispatch({ type: 'LOGIN', payload: decoded });
+        await setItem(PreferencesKeys.authKey, response.data.doc);
         history.push('/')
       }
     } catch (error) {

@@ -95,6 +95,7 @@ import CompanyProject from './components/forfreelancer/companyproject/index'
 import AppUniversal from "../admin/app-universal";
 import Users from './components/users/Users';
 import CommonUserDetails from './components/users/UserDetails';
+import jwtDecode from 'jwt-decode';
 
 // CSS Files
 // Bootstrap CSS
@@ -132,6 +133,7 @@ import OnboardScreen from "./components/pages/onboardScreen";
 import { useHistory } from 'react-router-dom';
 import { useUserContext } from "../context/UserContext";
 import ProtectedRoute from "./ProtectedRoute";
+import { PreferencesKeys, getItem } from "../preferences/Preferences";
 // import PostJob from "./components/jobs/post-job";
 
 
@@ -146,13 +148,24 @@ if (
 }
 const AppContainer = function (props) {
   const history = useHistory();
-  const { state } = useUserContext();
+  const { state, dispatch } = useUserContext();
   const isLoggedIn = state.isLoggedIn;
   // console.log('userState', state);
   if (props) {
     const location = history.location.pathname.split("/")[1];
     // console.log('location', location);
-
+    const getSetuser = async () => {
+      const userAuth = await getItem(PreferencesKeys.authKey);
+      // console.log('userAuth', userAuth);
+      if (userAuth) {
+        const decoded = jwtDecode(userAuth.token);
+        dispatch({ type: 'LOGIN', payload: decoded });
+        console.log('User session maintained.');
+      }
+    }
+    React.useEffect(() => {
+      getSetuser();
+    }, [])
     return (
       <Router basename={`${config.publicPath}`}>
         {
