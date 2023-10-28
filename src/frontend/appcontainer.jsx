@@ -136,7 +136,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import { PreferencesKeys, getItem } from "../preferences/Preferences";
 import Messges from "./components/messages";
 // import PostJob from "./components/jobs/post-job";
-import io from 'socket.io-client';
+import Socket from "../socket/Socket";
 if (
   !window.location.pathname.includes("admin")
 
@@ -148,7 +148,7 @@ const AppContainer = function (props) {
   const history = useHistory();
   const { state, dispatch } = useUserContext();
   const isLoggedIn = state.isLoggedIn;
-  console.log('userState', state);
+  // console.log('userState', state);
   if (props) {
     const location = history.location.pathname.split("/")[1];
     // console.log('location', location);
@@ -156,29 +156,9 @@ const AppContainer = function (props) {
       const userAuth = await getItem(PreferencesKeys.authKey);
       // console.log('userAuth', userAuth);
       if (userAuth) {
+        Socket.init(userAuth.token)
         const decoded = jwtDecode(userAuth.token);
-        const socket = io(`http://localhost:80/chats`, {
-          auth: {
-            token: userAuth.token
-          },
-        });
-        socket.on('connect', () => {
-          console.log('[socket] a user connected');
-
-        });
-
-        socket.on('disconnect', () => {
-          console.log('[socket] user disconnected');
-        });
-
-        socket.on('connect_error', (err) => {
-          console.log('[socket] connect_error', err.message); // prints the message associated with the error
-        });
-
-        socket.on('connect_msg', (data) => {
-          console.log('[socket] connect_msg', data); // prints the message associated with the error
-        });
-        dispatch({ type: 'LOGIN', payload: { ...decoded, socket } });
+        dispatch({ type: 'LOGIN', payload: decoded });
         console.log('User session initiated.');
       }
     }

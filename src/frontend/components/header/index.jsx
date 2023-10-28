@@ -6,6 +6,7 @@ import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ME } from "../../../keys";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../../../context/UserContext";
+import Socket from "../../../socket/Socket";
 
 
 const Header = (props) => {
@@ -82,7 +83,8 @@ const Header = (props) => {
   const currentUser = isLoggedIn ? props.userState.user : null;
   const onLogout = () => {
     localStorage.clear();
-    window.location.href = '/'
+    Socket.disconnect();
+    window.location.href = '/';
   }
   return (
     <>

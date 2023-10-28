@@ -6,12 +6,14 @@ import { ME, OTHER } from "../../../keys";
 import msgSound from '../../assets/message.mp3'
 import { useUserContext } from "../../../context/UserContext";
 import { useLocation } from "react-router-dom";
+import Socket from "../../../socket/Socket";
 const audio = new Audio(msgSound);
 
 const Messages = (props) => {
   // const audioPlayer = React.useRef();
   const { state } = useUserContext();
-  const socket = state.user.socket;
+  const socket = Socket.get();
+  console.log('[Messages].socket', socket);
   const [chats, setChats] = React.useState([]);
   const [room, setRoom] = React.useState('');
   const [message, setMessage] = React.useState('');
@@ -117,7 +119,7 @@ const Messages = (props) => {
   }
   const getChatUser = chat => {
     const chatUser = (chat.usersRef || []).filter(u => u._id !== currentUser._id)[0] || { username: "" };
-    console.log('chatUser', chatUser);
+    // console.log('chatUser', chatUser);
     return chatUser;
   }
   // console.log('selectedChat', selectedChat);
@@ -160,13 +162,14 @@ const Messages = (props) => {
                           const messages = chat.messages;
                           const lastMessage = messages[messages.length - 1];
                           const unreadMsgs = messages.filter(msg => !msg.seen).length;
+                          const isUserOnline = onlineUsers.includes(chatUser._id);
                           return <div
                             style={{ cursor: 'pointer' }}
                             key={`chat-key-${index}`}
                             className={`media d-flex ${chat.selected ? 'active' : ''}`}
                             onClick={() => onChatSelect(chat)}>
                             <div className="media-img-wrap flex-shrink-0">
-                              <div className={`avatar avatar-${onlineUsers.includes(chatUser._id) ? 'online' : 'away'}`}>
+                              <div className={`avatar avatar-${isUserOnline ? 'online' : 'away'}`}>
                                 <img
                                   src={OTHER}
                                   alt="User Image"
@@ -218,7 +221,7 @@ const Messages = (props) => {
                       </div>
                       <div className="media-body flex-grow-1">
                         <div className="user-name">{getChatUser(selectedChat).username} </div>
-                        <div className="user-status">online</div>
+                        <div className="user-status">{onlineUsers.includes(getChatUser(selectedChat)._id) ? "online" : "offline"}</div>
                       </div>
                     </div>
                     <div className="chat-options">

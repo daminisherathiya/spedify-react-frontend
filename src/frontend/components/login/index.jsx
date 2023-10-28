@@ -5,6 +5,7 @@ import Axios from '../../../Axios';
 import { useUserContext } from '../../../context/UserContext';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import jwtDecode from 'jwt-decode';
+import Socket from '../../../socket/Socket';
 
 const Login = ({ history }) => {
   const { dispatch } = useUserContext();
@@ -17,7 +18,9 @@ const Login = ({ history }) => {
     try {
       const response = await Axios.post('api/v1/users/login', user);
       if (response.data.statusCode === 200) {
-        const decoded =  jwtDecode(response.data.doc.token)
+        const token = response.data.doc.token;
+        Socket.init(token);
+        const decoded = jwtDecode(token)
         dispatch({ type: 'LOGIN', payload: decoded });
         await setItem(PreferencesKeys.authKey, response.data.doc);
         history.push('/')
