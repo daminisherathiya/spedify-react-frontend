@@ -1,30 +1,26 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Img_02, Img_03, Img_05 } from "../../imagepath";
-import io from 'socket.io-client'
+import { Img_05 } from "../imagepath";
 import jwt_decode from "jwt-decode";
-import Axios from "../../../../Axios";
-import { ME, OTHER } from "../../../../keys";
-import msgSound from '../../../assets/message.mp3'
-import { PreferencesKeys, getItem } from "../../../../preferences/Preferences";
-import { useUserContext } from "../../../../context/UserContext";
+import Axios from "../../../Axios";
+import { ME, OTHER } from "../../../keys";
+import msgSound from '../../assets/message.mp3'
+import { useUserContext } from "../../../context/UserContext";
 const audio = new Audio(msgSound);
 
-const Chats = (props) => {
+const Messages = (props) => {
   // const audioPlayer = React.useRef();
-  // console.log('[Chats].Props', props);
-  const messagesScrollRef = React.useRef(null)
-  const [currentUser, setCurrentUser] = React.useState({});
+  const { state } = useUserContext();
+  const socket = state.user.socket;
+  const [currentUser, setCurrentUser] = React.useState(state.user || {});
   const [chats, setChats] = React.useState([]);
   const [room, setRoom] = React.useState('');
   const [message, setMessage] = React.useState('');
   const [typingUser, setTypingUser] = React.useState(null);
   const selectedChat = (chats || []).find(c => c.selected) || {};
   const [onlineUsers, setOnlineUsers] = React.useState([])
-  const { state } = useUserContext();
-  const socket = state.user.socket;
-  console.log('[Chats].socket', socket);
-  if (!socket) return;
+  const messagesScrollRef = React.useRef(null);
+  // console.log('[Mesaages].socket', socket);
   const sendMessage = () => {
     if (message !== '') {
       const createdAt = Date.now();
@@ -66,15 +62,10 @@ const Chats = (props) => {
     return () => { document.body.className = ''; }
   });
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem('@user'));
-    const decoded = jwt_decode(localData.token);
-    // console.log('decoded', decoded);
-    setCurrentUser(decoded)
-    localStorage.setItem('@decoded', JSON.stringify(decoded))
     Axios.get(`/api/v1/chats/getChatsByUser`)
       .then(res => {
         const dbChats = (res.data.doc.chats || []).map((chat, index) => {
-          socket.emit('join_room', { userId: decoded._id, _id: decoded._id, username: decoded.username, room: chat._id })
+          socket.emit('join_room', { userId: currentUser._id, _id: currentUser._id, username: currentUser.username, room: chat._id })
           return { ...chat, selected: index === 0 }
         });
         if (dbChats.length) {
@@ -426,4 +417,4 @@ const Chats = (props) => {
   )
 
 }
-export default Chats;
+export default Messages;

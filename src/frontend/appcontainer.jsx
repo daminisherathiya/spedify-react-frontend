@@ -134,11 +134,9 @@ import { useHistory } from 'react-router-dom';
 import { useUserContext } from "../context/UserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import { PreferencesKeys, getItem } from "../preferences/Preferences";
+import Messges from "./components/messages";
 // import PostJob from "./components/jobs/post-job";
-
-
-
-
+import io from 'socket.io-client';
 if (
   !window.location.pathname.includes("admin")
 
@@ -150,7 +148,7 @@ const AppContainer = function (props) {
   const history = useHistory();
   const { state, dispatch } = useUserContext();
   const isLoggedIn = state.isLoggedIn;
-  // console.log('userState', state);
+  console.log('userState', state);
   if (props) {
     const location = history.location.pathname.split("/")[1];
     // console.log('location', location);
@@ -159,10 +157,32 @@ const AppContainer = function (props) {
       // console.log('userAuth', userAuth);
       if (userAuth) {
         const decoded = jwtDecode(userAuth.token);
-        dispatch({ type: 'LOGIN', payload: decoded });
-        console.log('User session maintained.');
+        const socket = io(`http://localhost:80/chats`, {
+          auth: {
+            token: userAuth.token
+          },
+        });
+        socket.on('connect', () => {
+          console.log('[socket] a user connected');
+
+        });
+
+        socket.on('disconnect', () => {
+          console.log('[socket] user disconnected');
+        });
+
+        socket.on('connect_error', (err) => {
+          console.log('[socket] connect_error', err.message); // prints the message associated with the error
+        });
+
+        socket.on('connect_msg', (data) => {
+          console.log('[socket] connect_msg', data); // prints the message associated with the error
+        });
+        dispatch({ type: 'LOGIN', payload: { ...decoded, socket } });
+        console.log('User session initiated.');
       }
     }
+    // console.log('Socket', socket);
     React.useEffect(() => {
       getSetuser();
     }, [])
@@ -282,7 +302,7 @@ const AppContainer = function (props) {
                   <Route exact path="/favourites-list" component={Favouritelist} />
                   <Route exact path="/invited-favourites" component={Invitations} />
                   <Route exact path="/membership-plans" component={Membership} />
-                  <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/chats" component={Chats} />
+                  <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/messages" component={Messges} />
                   <Route exact path="/review" component={Review} />
                   <Route exact path="/deposit-funds" component={DepositFunds} />
                   <Route exact path="/withdraw-money" component={Withdrawmoney} />
@@ -319,7 +339,8 @@ const AppContainer = function (props) {
                   <Route exact path="/freelancer-delete-account" component={FreelancerDeleteAccount} />
                   <Route exact path="/freelancer-profile" component={FreelancerProfile} />
                   <Route exact path="/freelancer-details" component={FreelancerDetails} />
-                  <Route exact path="/chats" component={Chats} />
+                  <Route exact path="/freelancer-chats" component={Chats} />
+                  <Route exact path="/messges" component={Messges} />
                   <Route exact path="/freelancer-review" component={FreelancerReview} />
                   <Route exact path="/freelancer-portfolio" component={FreelancerPortfolio} />
                   <Route exact path="/freelancer-withdraw-money" component={FreelancerWithdrawmoney} />

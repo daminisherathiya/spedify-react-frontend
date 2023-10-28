@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Button = ({ title = 'Chat' }) => {
     return <div className="cart-hover">
       <Link
-        to="/chats"
+        to="/messages"
         className="btn-cart"
         tabIndex={-1}
       >
