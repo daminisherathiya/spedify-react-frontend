@@ -137,6 +137,7 @@ import { PreferencesKeys, getItem } from "../preferences/Preferences";
 import Messges from "./components/messages";
 // import PostJob from "./components/jobs/post-job";
 import Socket from "../socket/Socket";
+import { Get } from "../services/Api";
 if (
   !window.location.pathname.includes("admin")
 
@@ -154,11 +155,10 @@ const AppContainer = function (props) {
     // console.log('location', location);
     const getSetuser = async () => {
       const userAuth = await getItem(PreferencesKeys.authKey);
-      // console.log('userAuth', userAuth);
       if (userAuth) {
         Socket.init(userAuth.token)
-        const decoded = jwtDecode(userAuth.token);
-        dispatch({ type: 'LOGIN', payload: decoded });
+        const data = await Get(`api/v1/users/userDetails`);
+        dispatch({ type: 'LOGIN', payload: data.doc });
         console.log('User session initiated.');
       }
     }

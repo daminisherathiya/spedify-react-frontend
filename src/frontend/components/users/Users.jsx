@@ -56,14 +56,16 @@ const User = ({ isGrid, user, openChat }) => {
 
 const Talent = (props) => {
   const history = useHistory();
-  const { state } = useUserContext();
-  const currentUser = state.user;
+  const { state, dispatch } = useUserContext();
+  const loggedInUser = state.user;
+  console.log('loggedInUser', loggedInUser);
   const [isGrid, setIsGrid] = React.useState(true);
   const [users, setUsers] = React.useState([]);
   const params = useParams();
   const openChat = async (user) => {
+    if (!loggedInUser) return history.push('/login')
     const arr = user.chats;
-    const arr2 = currentUser.chats;
+    const arr2 = loggedInUser.chats;
     let isChatExist = false;
     for (let index = 0; index < arr.length; index++) {
       const element1 = arr[index];
@@ -74,25 +76,23 @@ const Talent = (props) => {
           break;
         }
       }
-
     }
     console.log('isChatExist', isChatExist);
-
     if (isChatExist) {
       history.push({ pathname: `/messages`, state: { chatIds: user.chats } })
     } else {
       const data = await Post(
         'api/v1/chats/createUpdate',
         {
-          "users": [currentUser._id, user._id,]
+          "users": [loggedInUser._id, user._id,]
         })
       // console.log('data', data);
+      dispatch({ type: 'LOGIN', payload: {...loggedInUser, chats: [data.doc.chat._id, ...loggedInUser.chats]} });
       history.push({ pathname: `/messages`, state: { chatIds: [data.doc.chat._id, ...user.chats] } })
     }
 
   }
   const getUsers = async () => {
-    console.log('[Talent].currentUser', currentUser);
     const parms = params.query.split("&");
     const data = await Post(
       'api/v1/search/user',
@@ -100,12 +100,12 @@ const Talent = (props) => {
         "userType": parseInt(`${parms[0]}`.split("=")[1]),
         "query": `${parms[1]}`.split("=")[1] === "all" ? "" : `${parms[1]}`.split("=")[1]
       })
-    if (data.statusCode === 200) setUsers(currentUser ? [...data.doc].filter(u => u._id !== currentUser._id) : data.doc);
+    if (data.statusCode === 200) setUsers(loggedInUser ? [...data.doc].filter(u => u._id !== loggedInUser._id) : data.doc);
     else setUsers([]);
   }
   React.useEffect(() => {
     getUsers();
-  }, [currentUser])
+  }, [loggedInUser])
   return (
     <>
       {/* Breadcrumb */}

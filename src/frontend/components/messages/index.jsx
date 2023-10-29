@@ -7,13 +7,14 @@ import msgSound from '../../assets/message.mp3'
 import { useUserContext } from "../../../context/UserContext";
 import { useLocation } from "react-router-dom";
 import Socket from "../../../socket/Socket";
-const audio = new Audio(msgSound);
+// const audio = new Audio(msgSound);
 
 const Messages = (props) => {
   // const audioPlayer = React.useRef();
   const { state } = useUserContext();
+  console.log('[Mesaages].state', state);
+  if (!state.isLoggedIn) return null;
   const socket = Socket.get();
-  console.log('[Messages].socket', socket);
   const [chats, setChats] = React.useState([]);
   const [room, setRoom] = React.useState('');
   const [message, setMessage] = React.useState('');
@@ -27,7 +28,6 @@ const Messages = (props) => {
   const sendMessage = () => {
     if (message !== '') {
       const createdAt = Date.now();
-      // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
       socket.emit('send_message', { sender: currentUser, _id: room, room, seen: true, text: message, createdAt, attachments: [] });
       setMessage('');
       setTypingUser(null)
@@ -75,7 +75,7 @@ const Messages = (props) => {
         });
         if (dbChats.length) {
           const firstChat = dbChats[0];
-          setRoom(firstChat._id)
+          setRoom(location.state ? location.state.chatIds[0] : firstChat._id)
           setChats(dbChats)
         } else setChats([])
       })
