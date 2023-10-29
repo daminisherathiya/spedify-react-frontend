@@ -138,6 +138,7 @@ import Messges from "./components/messages";
 // import PostJob from "./components/jobs/post-job";
 import Socket from "../socket/Socket";
 import { Get } from "../services/Api";
+import userSession from "../hooks/userSession";
 if (
   !window.location.pathname.includes("admin")
 
@@ -146,6 +147,7 @@ if (
   require("./assets/css/style.css");
 }
 const AppContainer = function (props) {
+  userSession();
   const history = useHistory();
   const { state, dispatch } = useUserContext();
   const isLoggedIn = state.isLoggedIn;

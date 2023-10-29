@@ -6,6 +6,7 @@ export const localStorage = window.localStorage;
 export const PreferencesKeys = {
     authKey: "@auth_token",
     axiosErrKey: "@axios_error",
+    lastRoute: "@lastRoute",
 }
 
 export const setItem = async (storageKey, data) => {

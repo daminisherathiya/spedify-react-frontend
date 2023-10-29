@@ -53,3 +53,10 @@ export const isJSONStringValid = (jsonString) => {
         return false;
     }
 }
+
+export const validateUser = async () => {
+    return {
+        isValid: true,
+        message: ''
+    }
+}
