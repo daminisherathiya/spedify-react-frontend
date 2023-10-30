@@ -3,7 +3,7 @@ import React, { createContext, useContext, useReducer } from 'react';
 
 const UserContext = createContext();
 const initialState = {
-  user: { username: '', email: '' },
+  user: { username: '', email: '', userType: 0 },
   isLoggedIn: false,
 };
 export const useUserContext = () => {
