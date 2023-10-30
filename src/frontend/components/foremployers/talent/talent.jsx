@@ -57,16 +57,20 @@ const Talent = (props) => {
   const [users, setUsers] = React.useState([]);
   const params = useParams();
   const getUsers = async () => {
-    const parms = params.query.split("&");
-    console.log('params',);
-    const data = await Post(
-      'api/v1/search/user',
-      {
-        "userType": parseInt(`${parms[0]}`.split("=")[1]),
-        "query": `${parms[1]}`.split("=")[1] === "all" ? "" : `${parms[1]}`.split("=")[1]
-      })
-    if (data.statusCode === 200) setUsers(data.doc);
-    else setUsers([]);
+    try {
+      const parms = params.query.split("&");
+      const data = await Post(
+        'api/v1/search/user',
+        {
+          "userType": parseInt(`${parms[0]}`.split("=")[1]),
+          "query": `${parms[1]}`.split("=")[1] === "all" ? "" : `${parms[1]}`.split("=")[1]
+        })
+      if (data.statusCode === 200) setUsers(data.doc);
+      else setUsers([]);
+    } catch (error) {
+      console.log('[getUsers].error', error);
+    }
+
   }
   React.useEffect(() => {
     getUsers();

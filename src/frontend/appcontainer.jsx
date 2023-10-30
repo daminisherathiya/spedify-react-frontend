@@ -156,13 +156,18 @@ const AppContainer = function (props) {
     const location = history.location.pathname.split("/")[1];
     // console.log('location', location);
     const getSetuser = async () => {
-      const userAuth = await getItem(PreferencesKeys.authKey);
-      if (userAuth) {
-        Socket.init(userAuth.token)
-        const data = await Get(`api/v1/users/userDetails`);
-        dispatch({ type: 'LOGIN', payload: data.doc });
-        console.log('User session initiated.');
+      try {
+        const userAuth = await getItem(PreferencesKeys.authKey);
+        if (userAuth) {
+          Socket.init(userAuth.token)
+          const data = await Get(`api/v1/users/userDetails`);
+          dispatch({ type: 'LOGIN', payload: data.doc });
+          console.log('User session initiated.');
+        }
+      } catch (error) {
+        console.log('[getSetuser].error', error);
       }
+
     }
     // console.log('Socket', socket);
     React.useEffect(() => {

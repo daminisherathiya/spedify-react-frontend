@@ -4,6 +4,7 @@ const Post = async (url = '', payload = {}, headers = {}) => {
         const response = await Axios.post(`${url}`, payload, { headers: { ...headers } });
         return response.data;
     } catch (error) {
+        console.log('[Post].error', error);
         throw error;
     }
 }
@@ -12,6 +13,7 @@ const Get = async (url = '', headers = {}) => {
         const response = await Axios.get(`${url}`, { headers: { ...headers } });
         return response.data;
     } catch (error) {
+        console.log('[Get].error', error);
         throw error;
     }
 }

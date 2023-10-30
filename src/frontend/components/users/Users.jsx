@@ -62,46 +62,58 @@ const Talent = (props) => {
   const [isGrid, setIsGrid] = React.useState(true);
   const [users, setUsers] = React.useState([]);
   const params = useParams();
+
   const openChat = async (user) => {
-    if (!loggedInUser) return history.push('/login')
-    const arr = user.chats;
-    const arr2 = loggedInUser.chats;
-    let isChatExist = false;
-    for (let index = 0; index < arr.length; index++) {
-      const element1 = arr[index];
-      for (let j = 0; j < arr2.length; j++) {
-        const element2 = arr2[j];
-        if (element1 === element2) {
-          isChatExist = true;
-          break;
+    try {
+      if (!loggedInUser) return history.push('/login')
+      const arr = user.chats;
+      const arr2 = loggedInUser.chats;
+      let isChatExist = false;
+      for (let index = 0; index < arr.length; index++) {
+        const element1 = arr[index];
+        for (let j = 0; j < arr2.length; j++) {
+          const element2 = arr2[j];
+          if (element1 === element2) {
+            isChatExist = true;
+            break;
+          }
         }
       }
-    }
-    console.log('isChatExist', isChatExist);
-    if (isChatExist) {
-      history.push({ pathname: `/messages`, state: { chatIds: user.chats } })
-    } else {
-      const data = await Post(
-        'api/v1/chats/createUpdate',
-        {
-          "users": [loggedInUser._id, user._id,]
-        })
-      // console.log('data', data);
-      dispatch({ type: 'LOGIN', payload: {...loggedInUser, chats: [data.doc.chat._id, ...loggedInUser.chats]} });
-      history.push({ pathname: `/messages`, state: { chatIds: [data.doc.chat._id, ...user.chats] } })
+      // console.log('isChatExist', isChatExist);
+      if (isChatExist) {
+        history.push({ pathname: `/messages`, state: { chatIds: user.chats } })
+      } else {
+        const data = await Post(
+          'api/v1/chats/createUpdate',
+          {
+            "users": [loggedInUser._id, user._id,]
+          })
+        // console.log('data', data);
+        dispatch({ type: 'LOGIN', payload: { ...loggedInUser, chats: [data.doc.chat._id, ...loggedInUser.chats] } });
+        history.push({ pathname: `/messages`, state: { chatIds: [data.doc.chat._id, ...user.chats] } })
+      }
+
+    } catch (error) {
+      console.log('[openChat].error', error);
+
     }
 
   }
   const getUsers = async () => {
-    const parms = params.query.split("&");
-    const data = await Post(
-      'api/v1/search/user',
-      {
-        "userType": parseInt(`${parms[0]}`.split("=")[1]),
-        "query": `${parms[1]}`.split("=")[1] === "all" ? "" : `${parms[1]}`.split("=")[1]
-      })
-    if (data.statusCode === 200) setUsers(loggedInUser ? [...data.doc].filter(u => u._id !== loggedInUser._id) : data.doc);
-    else setUsers([]);
+    try {
+      const parms = params.query.split("&");
+      const data = await Post(
+        'api/v1/search/user',
+        {
+          "userType": parseInt(`${parms[0]}`.split("=")[1]),
+          "query": `${parms[1]}`.split("=")[1] === "all" ? "" : `${parms[1]}`.split("=")[1]
+        })
+      if (data.statusCode === 200) setUsers(loggedInUser ? [...data.doc].filter(u => u._id !== loggedInUser._id) : data.doc);
+      else setUsers([]);
+    } catch (error) {
+      console.log('[getUsers].error', error);
+    }
+
   }
   React.useEffect(() => {
     getUsers();
