@@ -30,8 +30,8 @@ const userSession = () => {
                 if (isValid) toDashboard(isValid);
                 else toLogin(message);
             }
-            if (user.isLoggedIn === false) toLogin();
-            else asyncHandler();
+            // if (user.isLoggedIn === false) toLogin();
+            asyncHandler();
         },
         [user.isLoggedIn]);
     return user;
