@@ -2,17 +2,17 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 const UserContext = createContext();
-
+const initialState = {
+  user: { username: '', email: '' },
+  isLoggedIn: false,
+};
 export const useUserContext = () => {
   return useContext(UserContext);
 };
 
 export const UserProvider = ({ children }) => {
   // Define your initial state and reducer for managing user sessions.
-  const initialState = {
-    user: null,
-    isLoggedIn: false,
-  };
+
 
   const [state, dispatch] = useReducer(userReducer, initialState);
 
@@ -29,7 +29,7 @@ const userReducer = (state, action) => {
     case 'LOGIN':
       return { ...state, user: action.payload, isLoggedIn: true };
     case 'LOGOUT':
-      return { ...state, user: null, isLoggedIn: false };
+      return { ...state, user: initialState.user, isLoggedIn: false };
     default:
       return state;
   }
