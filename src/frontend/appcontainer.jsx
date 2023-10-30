@@ -72,7 +72,7 @@ import InvoiceView from "./components/pages/invoices/invoice_view";
 import Aboutus from "./components/pages/aboutus";
 import BlankPage from "./components/pages/blank_page";
 import Page404 from "./components/pages/page_404";
-import UserDetails from "./components/pages/user_details";
+// import UserDetails from "./components/pages/user_details";
 import Login from "./components/login";
 import Register from "./components/register";
 import ForgotPassword from "./components/pages/forgot_password";
@@ -93,9 +93,8 @@ import DeveloperProfile from "./components/forfreelancer/developerprofile"
 import CompanyProfile from './components/forfreelancer/companyprofile/index'
 import CompanyProject from './components/forfreelancer/companyproject/index'
 import AppUniversal from "../admin/app-universal";
-import Users from './components/users/Users';
-import CommonUserDetails from './components/users/UserDetails';
-import jwtDecode from 'jwt-decode';
+import Users from './pages/users/Users';
+import UserDetails from './pages/users/UserDetails';
 
 // CSS Files
 // Bootstrap CSS
@@ -134,7 +133,7 @@ import { useHistory } from 'react-router-dom';
 import { useUserContext } from "../context/UserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import { PreferencesKeys, getItem } from "../preferences/Preferences";
-import Messges from "./components/messages";
+import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
 import Socket from "../socket/Socket";
 import { Get } from "../services/Api";
@@ -304,7 +303,7 @@ const AppContainer = function (props) {
                   <Route exact path="/company-review" component={CompanyReview} />
                   {/* For Freelancer */}
                   <Route exact path="/search/parent/:query" component={Users} />
-                  <Route exact path="/userDetails/:userId" component={CommonUserDetails} />
+                  <Route exact path="/userDetails/:userId" component={UserDetails} />
                   <Route exact path="/search/education/:query" component={Project} />
                   <Route exact path="/project-details" component={ProjectDetails} />
                   <Route exact path="/freelancer-dashboard" component={FreelancerDashboard} />
@@ -327,7 +326,8 @@ const AppContainer = function (props) {
                   <Route exact path="/freelancer-profile" component={FreelancerProfile} />
                   <Route exact path="/freelancer-details" component={FreelancerDetails} />
                   <Route exact path="/freelancer-chats" component={Chats} />
-                  <Route exact path="/messges" component={Messges} />
+                  {/* <Route exact path="/messges" component={Messges} /> */}
+                  <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/messages" component={Messges} />
                   <Route exact path="/freelancer-review" component={FreelancerReview} />
                   <Route exact path="/freelancer-portfolio" component={FreelancerPortfolio} />
                   <Route exact path="/freelancer-withdraw-money" component={FreelancerWithdrawmoney} />

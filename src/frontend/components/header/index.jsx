@@ -134,50 +134,49 @@ const Header = (props) => {
                 }
               </ul>
             </div>
-            <ul className="nav header-navbar-rht">
-              <li className="nav-item dropdown has-arrow account-item">
-                <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                  <span className="user-img">
-                    {/* <img src={Avatar_1} alt="" /> */}
-                    <img src={ME} alt="" />
-                  </span>
-                  <span>{currentUser.username || ''}</span>
-                </Link>
-                <div className="dropdown-menu emp">
-                  <div className="drop-head">Account Details</div>
-                  <Link className="dropdown-item" to="/user-account-details">
-                    <i className="material-icons">verified_user</i> View profile
-                  </Link>
-                  <div className="drop-head">Projects Settings</div>
-                  <Link className="dropdown-item" to="/manage-projects">
-                    <i className="material-icons">business_center</i> Projects
-                  </Link>
-                  <Link className="dropdown-item" to="/favourites">
-                    <i className="material-icons">local_play</i> Favourites
-                  </Link>
-                  <Link className="dropdown-item" to="/review">
-                    <i className="material-icons">pie_chart</i> Reviews
-                  </Link>
-                  <div className="drop-head">Account Details</div>
-                  <Link className="dropdown-item" to="/profile-settings">
-                    {" "}
-                    <i className="material-icons">settings</i> Profile Settings
-                  </Link>
-                  <div className="dropdown-item" onClick={onLogout} style={{ cursor: 'pointer' }}>
-                    <i className="material-icons">power_settings_new</i> Logout
-                  </div>
-                </div>
-              </li>
-            </ul>
             {
-              !isLoggedIn &&
-              <ul className="nav header-navbar-rht reg-head">
-                <li><Link to="/register" className="reg-btn"><img src={Reg_icon} className="me-1" alt="icon" />{" "} Register</Link></li>
-                <li><Link to="/login" className="log-btn"> <img src={Lock_icon} className="me-1" alt="icon" />{" "}Login</Link></li>
-                {/* <li><Link to="post-project" className="login-btn">Post a Project{" "} </Link></li> */}
-              </ul>
+              isLoggedIn ?
+                <ul className="nav header-navbar-rht">
+                  <li className="nav-item dropdown has-arrow account-item">
+                    <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                      <span className="user-img">
+                        <img src={ME} alt="" />
+                      </span>
+                      <span>{currentUser.username || ''}</span>
+                    </Link>
+                    <div className="dropdown-menu emp">
+                      <div className="drop-head">Account Details</div>
+                      <Link className="dropdown-item" to="/user-account-details">
+                        <i className="material-icons">verified_user</i> View profile
+                      </Link>
+                      <div className="drop-head">Projects Settings</div>
+                      <Link className="dropdown-item" to="/manage-projects">
+                        <i className="material-icons">business_center</i> Projects
+                      </Link>
+                      <Link className="dropdown-item" to="/favourites">
+                        <i className="material-icons">local_play</i> Favourites
+                      </Link>
+                      <Link className="dropdown-item" to="/review">
+                        <i className="material-icons">pie_chart</i> Reviews
+                      </Link>
+                      <div className="drop-head">Account Details</div>
+                      <Link className="dropdown-item" to="/profile-settings">
+                        {" "}
+                        <i className="material-icons">settings</i> Profile Settings
+                      </Link>
+                      <div className="dropdown-item" onClick={onLogout} style={{ cursor: 'pointer' }}>
+                        <i className="material-icons">power_settings_new</i> Logout
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                :
+                <ul className="nav header-navbar-rht reg-head">
+                  <li><Link to="/register" className="reg-btn"><img src={Reg_icon} className="me-1" alt="icon" />{" "} Register</Link></li>
+                  <li><Link to="/login" className="log-btn"> <img src={Lock_icon} className="me-1" alt="icon" />{" "}Login</Link></li>
+                  {/* <li><Link to="post-project" className="login-btn">Post a Project{" "} </Link></li> */}
+                </ul>
             }
-
           </nav>
         </header>
 

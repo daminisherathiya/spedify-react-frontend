@@ -4,7 +4,7 @@ import "nouislider/distribute/nouislider.css";
 import 'react-select2-wrapper/css/select2.css';
 import {
   Avatar_1,
-} from "../imagepath";
+} from "../../components/imagepath";
 import Button from "./Button";
 
 const ListUser = ({ user, openChat }) => {

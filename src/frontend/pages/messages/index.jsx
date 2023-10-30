@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Img_05 } from "../imagepath";
+import { Img_05 } from "../../components/imagepath";
 import Axios from "../../../Axios";
 import { ME, OTHER } from "../../../keys";
 import msgSound from '../../assets/message.mp3'

@@ -5,7 +5,7 @@ import StickyBox from "react-sticky-box";
 import {
     Logo_01, Img_01, Img_02, Img_03, Project_img, Project_1, Project_2, Project_3, Project_4, Project_5, Project_6, Project_7,
     Flags_pl, Tab_icon_01, Tab_icon_02, Tab_icon_03, Tab_icon_04, Tab_icon_05, Tab_icon_06, home_icon, Profile_Bg, Img_04, Tab_icon_21, Tab_icon_16, Tab_icon_17, Tab_icon_18, Tab_icon_19, Tab_icon_20, Project_8, Project_9, Project_011, Icon_10, Icon_11, Project_11_1, Project_Copy
-} from "../imagepath";
+} from "../../components/imagepath";
 
 
 const DeveloperDetails = (props) => {
