@@ -10,14 +10,13 @@ import { Get } from "../../../../services/Api";
 const Settings = (props) => {
   const { enumsState = { UserRoles: [] } } = useEnumsContext();
   const { state } = useUserContext();
-  const [userProfile, setUserProfile] = React.useState(state.user || { userType: 0 });
+  const [userProfile, setUserProfile] = React.useState(state.user);
   const getProfile = async (userId = '') => {
     const data = await Get(`api/v1/users/profile/${userId}`);
-    setUserProfile(pre => ({ ...pre, ...data.doc }))
+    setUserProfile(pre => ({ ...pre, ...state.user, ...data.doc }))
   }
   console.log('userProfile', userProfile);
   useEffect(() => {
-    setUserProfile(pre => ({ ...pre, ...state.user }));
     if (state.user._id) {
       getProfile(state.user._id)
     }
@@ -26,8 +25,7 @@ const Settings = (props) => {
     document.body.className = 'dashboard-page';
     return () => { document.body.className = ''; }
   });
-  if (!userProfile.address) return null;
-  else return (
+  return (
     <>
       {/* Breadcrumb */}
       <div className="bread-crumb-bar">
@@ -146,7 +144,7 @@ const Settings = (props) => {
                                 Change Image <input type="file" />
                               </label>
                             </div>
-                            <p>Image size 300*300</p>
+                            {/* <p>Image size 300*300</p> */}
                           </div>
                         </div>
                       </div>

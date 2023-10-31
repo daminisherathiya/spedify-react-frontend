@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { Logo, Img_04, avatar_1, Avatar_1, Top_icon, Reg_icon, Lock_icon, loader_icon, Logo_img, } from '../imagepath';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ME } from "../../../keys";
+import { BASE_URL, ME } from "../../../keys";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../../../context/UserContext";
 import Socket from "../../../socket/Socket";
+import Avatar from "../common/Avatar";
 
 
 const Header = (props) => {
@@ -80,7 +81,8 @@ const Header = (props) => {
     }
   }
   window.addEventListener('scroll', changeBackground);
-  const currentUser = isLoggedIn ? props.userState.user : { username: '' };
+  const currentUser = isLoggedIn ? props.userState.user : {};
+  console.log('currentUser', currentUser);
   const onLogout = () => {
     localStorage.clear();
     Socket.disconnect();
@@ -140,7 +142,7 @@ const Header = (props) => {
                   <li className="nav-item dropdown has-arrow account-item">
                     <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                       <span className="user-img">
-                        <img src={ME} alt="" />
+                        <Avatar />
                       </span>
                       <span>{currentUser.username || ''}</span>
                     </Link>

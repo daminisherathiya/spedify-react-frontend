@@ -31,7 +31,7 @@ import Review from "./components/foremployers/review";
 import DepositFunds from "./components/foremployers/depositfunds";
 import Withdrawmoney from "./components/foremployers/withdrawmoney";
 import Transactionhistory from "./components/foremployers/transactionhistory";
-import Settings from "./components/foremployers/settings";
+import Settings from "./pages/settings";
 import ChangePassword from "./components/foremployers/changepassword";
 import DeleteAccount from "./components/foremployers/deleteaccount";
 import VerifyIdentity from "./components/foremployers/verifyidentity";
@@ -159,8 +159,9 @@ const AppContainer = function (props) {
         const userAuth = await getItem(PreferencesKeys.authKey);
         if (userAuth) {
           Socket.init(userAuth.token)
-          const data = await Get(`api/v1/users/userDetails`);
-          dispatch({ type: 'LOGIN', payload: data.doc });
+          const userDetails = await Get(`api/v1/users/userDetails`);
+          const profileDetails = await Get(`api/v1/users/profile/${userDetails.doc._id}`);
+          dispatch({ type: 'LOGIN', payload: { ...userDetails.doc, ...profileDetails.doc } });
           console.log('User session initiated.');
         }
       } catch (error) {
@@ -303,7 +304,7 @@ const AppContainer = function (props) {
                   <Route exact path="/company-review" component={CompanyReview} />
                   {/* For Freelancer */}
                   <Route exact path="/search/parent/:query" component={Users} />
-                  <Route exact path="/userDetails/:userId" component={UserDetails} />
+                  <Route exact path="/profileDetails/:userId" component={UserDetails} />
                   <Route exact path="/search/education/:query" component={Project} />
                   <Route exact path="/project-details" component={ProjectDetails} />
                   <Route exact path="/freelancer-dashboard" component={FreelancerDashboard} />
