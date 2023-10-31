@@ -5,14 +5,14 @@ import { home_icon } from "../../components/imagepath";
 import { Sidebar } from '../sidebar';
 import { useEnumsContext } from "../../../context/EnumsContext";
 import { useUserContext } from "../../../context/UserContext";
-import { BASE_URL } from "../../../keys";
 import Avatar from "../../components/common/Avatar";
+import { Post } from "../../../services/Api";
 
 const Settings = (props) => {
   const { enumsState = { UserRoles: [] } } = useEnumsContext();
-  const { state } = useUserContext();
+  const { state, dispatch } = useUserContext();
   const [userProfile, setUserProfile] = React.useState(state.user);
-  // console.log('userProfile', userProfile);
+  console.log('userProfile', userProfile);
   useEffect(() => {
     setUserProfile(pre => ({ ...pre, ...state.user }))
   }, [state.user])
@@ -22,7 +22,37 @@ const Settings = (props) => {
   });
   const onChange = e => {
     console.log(e.target.id);
-    setUserProfile(pre => ({ ...pre, [e.target.id]: e.target.value }))
+    const targetId = e.target.id;
+    if (targetId === 'pictures') {
+      const File = e.target.files[0]
+      setUserProfile(pre => ({ ...pre, File, pictures: [{ path: URL.createObjectURL(File) }] }))
+    } else {
+      setUserProfile(pre => ({ ...pre, [e.target.id]: e.target.value }))
+    }
+  }
+  const onSubmit = async () => {
+    try {
+      const payload = {
+        ...userProfile,
+        _id: userProfile.profileId
+      };
+      if (userProfile.File) {
+        const fd = new FormData();
+        fd.append("file", userProfile.File)
+        const doc = (await Post(`api/v1/files/upload`, fd, {
+          'content-type': 'multipart/form-data'
+        })).doc;
+        payload.pictures = [doc._id];
+        payload.picturesDoc = doc;
+      }
+      if (payload.picturesDoc) payload.picturesDoc = [payload.picturesDoc]
+      await Post('/api/v1/users/profile', payload)
+      // dispatch({ type: 'LOGIN', payload });
+
+    } catch (error) {
+
+    }
+
   }
   return (
     <>
@@ -123,7 +153,11 @@ const Settings = (props) => {
                           </div>
                           <div className="form-group col-md-6">
                             <label>Language </label>
-                            <input onChange={onChange} id="language" type="text" className="form-control" />
+                            {/* <input onChange={onChange} id="language" type="text" className="form-control" /> */}
+                            <select onChange={onChange} id="language" className="form-control select" defaultValue={userProfile.gender}>
+                              <option value={0}>Male</option>
+                              <option value={1}>Female</option>
+                            </select>
                           </div>
                         </div>
                         <div className="form-row pro-pad pt-0">
@@ -131,7 +165,7 @@ const Settings = (props) => {
                             <label>Profile Picture</label>
                             <div className="d-flex align-items-center">
                               <div className="upload-images">
-                                <Avatar />
+                                <Avatar uri={userProfile.pictures[0].path} />
                                 <div
                                   className="btn btn-icon btn-danger btn-sm"
                                 >
@@ -238,7 +272,8 @@ const Settings = (props) => {
                         </button>&nbsp;
                         <button
                           className="btn btn-primary click-btn btn-plan"
-                          type="submit"
+                          type="button"
+                          onClick={onSubmit}
                         >
                           Update
                         </button>

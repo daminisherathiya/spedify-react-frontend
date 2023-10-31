@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Img_04 } from "../../components/imagepath"
 import Avatar from "../../components/common/Avatar";
 
 const Sidebar = ({ userProfile }) => {
@@ -10,9 +11,7 @@ const Sidebar = ({ userProfile }) => {
         <>
             <div className="settings-widget">
                 <div className="settings-header d-sm-flex flex-row flex-wrap text-center text-sm-start align-items-center">
-                    <div>
-                        <Avatar />
-                    </div>
+                    <Avatar />
                     <div className="ms-sm-3 ms-md-0 ms-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
                         <p className="mb-2">Welcome,</p>
                         <Link to="user-account-details">

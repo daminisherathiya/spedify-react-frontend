@@ -161,7 +161,7 @@ const AppContainer = function (props) {
           Socket.init(userAuth.token)
           const userDetails = await Get(`api/v1/users/userDetails`);
           const profileDetails = await Get(`api/v1/users/profile/${userDetails.doc._id}`);
-          dispatch({ type: 'LOGIN', payload: { ...userDetails.doc, ...profileDetails.doc } });
+          dispatch({ type: 'LOGIN', payload: { ...profileDetails.doc, ...userDetails.doc, userId: userDetails.doc._id, profileId: profileDetails.doc._id } });
           console.log('User session initiated.');
         }
       } catch (error) {
