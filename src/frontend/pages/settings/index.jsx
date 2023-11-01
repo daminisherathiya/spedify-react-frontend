@@ -7,9 +7,10 @@ import { useEnumsContext } from "../../../context/EnumsContext";
 import { useUserContext } from "../../../context/UserContext";
 import Avatar from "../../components/common/Avatar";
 import { Post } from "../../../services/Api";
+import Select from "../../components/Select";
 
 const Settings = (props) => {
-  const { enumsState = { UserRoles: [] } } = useEnumsContext();
+  const { enumsState = { UserRoles: [], UserCategories: [], Language: [], Gender: [] } } = useEnumsContext();
   const { state, dispatch } = useUserContext();
   const [userProfile, setUserProfile] = React.useState(state.user);
   console.log('userProfile', userProfile);
@@ -137,28 +138,28 @@ const Settings = (props) => {
                             <label>Contact Number</label>
                             <input onChange={onChange} id="contactNo" type="text" className="form-control" defaultValue={userProfile.contactNo} />
                           </div>
-                          <div className="form-group col-md-6">
-                            <label>Category</label>
-                            <select onChange={onChange} id="category" className="form-control select" defaultValue={userProfile.category}>
-                              <option value={0}>Category 1</option>
-                              <option value={"653f995582780a1cc13d4e58"}>Category 2</option>
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label>Gender</label>
-                            <select onChange={onChange} id="gender" className="form-control select" defaultValue={userProfile.gender}>
-                              <option value={0}>Male</option>
-                              <option value={1}>Female</option>
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label>Language </label>
-                            {/* <input onChange={onChange} id="language" type="text" className="form-control" /> */}
-                            <select onChange={onChange} id="language" className="form-control select" defaultValue={userProfile.gender}>
-                              <option value={0}>Male</option>
-                              <option value={1}>Female</option>
-                            </select>
-                          </div>
+                          <Select
+                            label="Category"
+                            id={"category"}
+                            defaultValue={userProfile.category}
+                            onChange={onChange}
+                            options={enumsState.UserCategories}
+                          />
+                          <Select
+                            label="Gender"
+                            id={"gender"}
+                            defaultValue={userProfile.gender}
+                            onChange={onChange}
+                            options={enumsState.Gender}
+                          />
+
+                          <Select
+                            label="Language"
+                            id={"language"}
+                            defaultValue={userProfile.language}
+                            onChange={onChange}
+                            options={enumsState.Language}
+                          />
                         </div>
                         <div className="form-row pro-pad pt-0">
                           <div className="form-group col-md-6 pro-pic">
