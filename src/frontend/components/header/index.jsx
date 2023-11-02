@@ -12,11 +12,11 @@ import Avatar from "../common/Avatar";
 
 const Header = (props) => {
   const history = useHistory();
+  const { state } = useUserContext();
   const [isSideMenu, setSideMenu] = useState("");
   const [isSideMenu1, setSideMenu1] = useState("");
   const [isSideMenu2, setSideMenu2] = useState("");
   const [isSideMenu3, setSideMenu3] = useState("");
-  const isLoggedIn = props.userState.isLoggedIn;
   const toggleSidebar = (value) => {
     setSideMenu(value)
   }
@@ -81,8 +81,9 @@ const Header = (props) => {
     }
   }
   window.addEventListener('scroll', changeBackground);
-  const currentUser = isLoggedIn ? props.userState.user : {};
-  console.log('currentUser', currentUser);
+  console.log('[Header].UserContext', state);
+  const isLoggedIn = state.isLoggedIn;
+  const currentUser = isLoggedIn ? state.user : {};
   const onLogout = () => {
     localStorage.clear();
     Socket.disconnect();

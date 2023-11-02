@@ -1,3 +1,8 @@
+import { BASE_URL } from "../keys";
+import { PreferencesKeys, getItem } from "../preferences/Preferences";
+import { Get } from "../services/Api";
+import Socket from "../socket/Socket";
+
 // Function to generate a random encryption key
 export const generateEncryptionKey = async () => {
     return await window.crypto.subtle.generateKey(
@@ -59,4 +64,22 @@ export const validateUser = async () => {
         isValid: true,
         message: ''
     }
+}
+export const getSetuser = async (dispatch) => {
+    try {
+        const userAuth = await getItem(PreferencesKeys.authKey);
+        if (userAuth) {
+            Socket.init(userAuth.token)
+            const userDetails = await Get(`api/v1/users/userDetails`);
+            const picture = userDetails.doc.picture;
+            if (picture) {
+                userDetails.doc.picture = `${BASE_URL}/${picture.files.find((p, index) => index === 0).path}`
+            }
+            dispatch({ type: 'LOGIN', payload: userDetails.doc });
+            console.log('User session initiated.');
+        }
+    } catch (error) {
+        console.log('[getSetuser].error', error);
+    }
+
 }

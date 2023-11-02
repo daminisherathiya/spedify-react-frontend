@@ -6,11 +6,14 @@ import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import { useEnumsContext } from '../../../context/EnumsContext';
 import jwtDecode from 'jwt-decode';
 import Socket from '../../../socket/Socket';
+import { useUserContext } from '../../../context/UserContext';
+import { getSetuser } from '../../../helpers';
 
 const Register = (props) => {
   // console.log('[props]', props);
   const { history } = props;
   const { enumsState } = useEnumsContext();
+  const { dispatch } = useUserContext();
   const [user, setUser] = React.useState({});
   const [userRoles, setUserRoles] = React.useState([]);
   // console.log('[userRoles]', userRoles);
@@ -33,13 +36,10 @@ const Register = (props) => {
   }
   const onSubmit = async () => {
     try {
-      const response = await Axios.post('api/v1/users/signup', user);
+      const response = await Axios.post('api/v1/users/signup', { ...user, userType: userRoles.find(x => x.active)?.value ?? 1, loginMethodType: 1 });
       if (response.data.statusCode === 200) {
-        const token = response.data.doc.token;
-        Socket.init(token);
-        const decoded = jwtDecode(token)
-        dispatch({ type: 'LOGIN', payload: decoded });
         await setItem(PreferencesKeys.authKey, response.data.doc);
+        await getSetuser(dispatch)
         history.push('/')
       }
     } catch (error) {

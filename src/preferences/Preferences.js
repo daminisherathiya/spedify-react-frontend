@@ -17,10 +17,9 @@ export const setItem = async (storageKey, data) => {
         //     data: JSON.stringify(Array.from(new Uint8Array(encryptedData))),
         //     iv: JSON.stringify(Array.from(iv)),
         // }))
-
         localStorage.setItem(storageKey, JSON.stringify(data))
+        Promise.resolve(console.log(`Data saved in the cache using the cache key: ${storageKey}`))
 
-        console.log(`Data saved in the cache using the cache key: ${storageKey}`);
     } catch (error) {
         console.log('[setItem].error', error);
     }
@@ -44,7 +43,7 @@ export const getItem = async (storageKey) => {
             }
         }
         // console.log('[getItem]', storageData);
-        return storageData;
+        return Promise.resolve(storageData);
     } catch (error) {
         console.log('[getItem].error', error);
     }

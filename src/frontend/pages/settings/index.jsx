@@ -9,11 +9,38 @@ import Avatar from "../../components/common/Avatar";
 import { Post } from "../../../services/Api";
 import Select from "../../components/Select";
 
+function findObjectDifferences(obj1, obj2) {
+  const diffs = {};
+
+  for (const key in obj1) {
+    if (obj1.hasOwnProperty(key)) {
+      if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+        const nestedDiffs = findObjectDifferences(obj1[key], obj2[key]);
+        if (Object.keys(nestedDiffs).length > 0) {
+          diffs[key] = nestedDiffs;
+        }
+      } else if (obj1[key] !== obj2[key]) {
+        // diffs[key] = { obj1: obj1[key], obj2: obj2[key] };
+        diffs[key] = obj2[key];
+      }
+    }
+  }
+
+  for (const key in obj2) {
+    if (obj2.hasOwnProperty(key) && !obj1.hasOwnProperty(key)) {
+      // diffs[key] = { obj1: undefined, obj2: obj2[key] };
+      diffs[key] = obj2[key];
+    }
+  }
+  console.log('diffs', diffs);
+  return diffs;
+}
 const Settings = (props) => {
   const { enumsState = { UserRoles: [], UserCategories: [], Language: [], Gender: [] } } = useEnumsContext();
+  console.log('enumsState', enumsState);
   const { state, dispatch } = useUserContext();
   const [userProfile, setUserProfile] = React.useState(state.user);
-  console.log('userProfile', userProfile);
+  // console.log('userProfile', userProfile);
   useEffect(() => {
     setUserProfile(pre => ({ ...pre, ...state.user }))
   }, [state.user])
@@ -32,21 +59,23 @@ const Settings = (props) => {
   }
   const onSubmit = async () => {
     try {
-      const payload = {
-        ...userProfile,
-        _id: userProfile.profileId
-      };
-      if (userProfile.File) {
-        const fd = new FormData();
-        fd.append("file", userProfile.File)
-        const doc = (await Post(`api/v1/files/upload`, fd, {
-          'content-type': 'multipart/form-data'
-        })).doc;
-        payload.picture = doc._id;
+      const diffs = findObjectDifferences(state.user, userProfile);
+      if (Object.keys(diffs).length) {
+        const payload = {
+          ...diffs,
+          _id: userProfile.profileId
+        };
+        if (userProfile.File) {
+          const fd = new FormData();
+          fd.append("file", userProfile.File)
+          const doc = (await Post(`api/v1/files/upload`, fd, {
+            'content-type': 'multipart/form-data'
+          })).doc;
+          payload.picture = doc._id;
+        }
+        await Post('/api/v1/users/profile', payload)
+        dispatch({ type: 'LOGIN', payload: { ...payload, picture: userProfile.picture } });
       }
-      await Post('/api/v1/users/profile', { ...payload, })
-      dispatch({ type: 'LOGIN', payload: { ...payload, picture: userProfile.picture } });
-
     } catch (error) {
 
     }
@@ -188,19 +217,19 @@ const Settings = (props) => {
                       <div className="row">
                         <div className="form-group col-md-12">
                           <label>Address</label>
-                          <input onChange={onChange} id="addressLine" type="text" className="form-control" defaultValue={userProfile.address.addressLine} />
+                          <input onChange={onChange} id="addressLine" type="text" className="form-control" defaultValue={userProfile.addressLine} />
                         </div>
                         <div className="form-group col-md-6">
                           <label>State</label>
-                          <input onChange={onChange} id="state" type="text" className="form-control" defaultValue={userProfile.address.state} />
+                          <input onChange={onChange} id="state" type="text" className="form-control" defaultValue={userProfile.state} />
                         </div>
                         <div className="form-group col-md-6">
                           <label>Zipcode</label>
-                          <input onChange={onChange} id="zipCode" type="text" className="form-control" defaultValue={userProfile.address.zipCode} />
+                          <input onChange={onChange} id="zipCode" type="text" className="form-control" defaultValue={userProfile.zipCode} />
                         </div>
                         <div className="form-group col-md-6">
                           <label>Country</label>
-                          <select onChange={onChange} id="country" className="form-control select" defaultValue={userProfile.address.country}>
+                          <select onChange={onChange} id="country" className="form-control select" defaultValue={userProfile.country}>
                             <option value={0}>Pakistan</option>
                             <option value={1}>United Kindom</option>
                             <option value={2}>USA</option>
@@ -238,23 +267,23 @@ const Settings = (props) => {
                       <div className="row">
                         <div className="form-group col-md-6">
                           <label>Facebook</label>
-                          <input onChange={onChange} id="facebook" type="text" className="form-control" defaultValue={userProfile.socialLinks.facebook} />
+                          <input onChange={onChange} id="facebook" type="text" className="form-control" defaultValue={userProfile.facebook} />
                         </div>
                         <div className="form-group col-md-6">
                           <label>Dribble</label>
-                          <input onChange={onChange} id="dribble" type="text" className="form-control" defaultValue={userProfile.socialLinks.dribble} />
+                          <input onChange={onChange} id="dribble" type="text" className="form-control" defaultValue={userProfile.dribble} />
                         </div>
                         <div className="form-group col-md-6">
                           <label>Twitter</label>
-                          <input onChange={onChange} id="twitter" type="text" className="form-control" defaultValue={userProfile.socialLinks.twitter} />
+                          <input onChange={onChange} id="twitter" type="text" className="form-control" defaultValue={userProfile.twitter} />
                         </div>
                         <div className="form-group col-md-6">
                           <label>LinkedIn</label>
-                          <input onChange={onChange} id="likedin" type="text" className="form-control" defaultValue={userProfile.socialLinks.likedin} />
+                          <input onChange={onChange} id="likedin" type="text" className="form-control" defaultValue={userProfile.likedin} />
                         </div>
                         <div className="form-group col-md-6">
                           <label>Behance</label>
-                          <input onChange={onChange} id="behance" type="text" className="form-control" defaultValue={userProfile.socialLinks.behance} />
+                          <input onChange={onChange} id="behance" type="text" className="form-control" defaultValue={userProfile.behance} />
                         </div>
                       </div>
                     </div>

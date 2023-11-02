@@ -137,8 +137,9 @@ import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
 import Socket from "../socket/Socket";
 import { Get } from "../services/Api";
-import userSession from "../hooks/userSession";
+// import userSession from "../hooks/userSession";
 import { BASE_URL } from "../keys";
+import { getSetuser } from "../helpers";
 if (
   !window.location.pathname.includes("admin")
 
@@ -147,36 +148,18 @@ if (
   require("./assets/css/style.css");
 }
 const AppContainer = function (props) {
-  userSession();
+  // userSession();
   const history = useHistory();
   const { state, dispatch } = useUserContext();
   const isLoggedIn = state.isLoggedIn;
   // console.log('userState', state);
+  React.useEffect(() => {
+    getSetuser(dispatch);
+  }, [])
   if (props) {
     const location = history.location.pathname.split("/")[1];
     // console.log('location', location);
-    const getSetuser = async () => {
-      try {
-        const userAuth = await getItem(PreferencesKeys.authKey);
-        if (userAuth) {
-          Socket.init(userAuth.token)
-          const userDetails = await Get(`api/v1/users/userDetails`);
-          const picture = userDetails.doc.picture;
-          if (picture) {
-            userDetails.doc.picture = `${BASE_URL}/${picture.files.find((p, index) => index === 0).path}`
-          }
-          dispatch({ type: 'LOGIN', payload: { ...userDetails.doc, userId: userDetails.doc._id } });
-          console.log('User session initiated.');
-        }
-      } catch (error) {
-        console.log('[getSetuser].error', error);
-      }
 
-    }
-    // console.log('Socket', socket);
-    React.useEffect(() => {
-      getSetuser();
-    }, [])
     return (
       <Router basename={`${config.publicPath}`}>
         {
@@ -261,7 +244,7 @@ const AppContainer = function (props) {
 
             (
               <>
-                <Header {...props} userState={state} />
+                <Header {...props} />
                 <Switch>
                   {/* home */}
                   <Route exact path="/" component={Home3} />
