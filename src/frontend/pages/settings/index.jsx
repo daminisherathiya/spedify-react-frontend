@@ -22,11 +22,10 @@ const Settings = (props) => {
     return () => { document.body.className = ''; }
   });
   const onChange = e => {
-    console.log(e.target.id);
     const targetId = e.target.id;
-    if (targetId === 'pictures') {
+    if (targetId === 'picture') {
       const File = e.target.files[0]
-      setUserProfile(pre => ({ ...pre, File, pictures: [{ path: URL.createObjectURL(File) }] }))
+      setUserProfile(pre => ({ ...pre, File, picture: URL.createObjectURL(File) }))
     } else {
       setUserProfile(pre => ({ ...pre, [e.target.id]: e.target.value }))
     }
@@ -43,12 +42,10 @@ const Settings = (props) => {
         const doc = (await Post(`api/v1/files/upload`, fd, {
           'content-type': 'multipart/form-data'
         })).doc;
-        payload.pictures = [doc._id];
-        payload.picturesDoc = doc;
+        payload.picture = doc._id;
       }
-      if (payload.picturesDoc) payload.picturesDoc = [payload.picturesDoc]
-      await Post('/api/v1/users/profile', payload)
-      // dispatch({ type: 'LOGIN', payload });
+      await Post('/api/v1/users/profile', { ...payload, })
+      dispatch({ type: 'LOGIN', payload: { ...payload, picture: userProfile.picture } });
 
     } catch (error) {
 
@@ -83,7 +80,7 @@ const Settings = (props) => {
             {/* sidebar */}
             <div className="col-xl-3 col-md-4 theiaStickySidebar">
               <StickyBox offsetTop={20} offsetBottom={20}>
-                <Sidebar userProfile={userProfile} />
+                <Sidebar userProfile={state.user} />
               </StickyBox>
             </div>
             {/* /sidebar */}
@@ -166,7 +163,7 @@ const Settings = (props) => {
                             <label>Profile Picture</label>
                             <div className="d-flex align-items-center">
                               <div className="upload-images">
-                                <Avatar uri={userProfile.pictures[0].path} />
+                                <Avatar uri={userProfile.picture} />
                                 <div
                                   className="btn btn-icon btn-danger btn-sm"
                                 >
@@ -174,7 +171,7 @@ const Settings = (props) => {
                                 </div>
                               </div>
                               <label className="file-upload image-upbtn ms-3">
-                                Change Image <input onChange={onChange} id="pictures" type="file" />
+                                Change Image <input onChange={onChange} id="picture" type="file" />
                               </label>
                             </div>
                             {/* <p>Image size 300*300</p> */}

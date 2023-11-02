@@ -1,19 +1,19 @@
 // UserContext.js
 import React, { createContext, useContext, useReducer } from 'react';
-import { BASE_URL, ME } from '../keys';
+import { ME } from '../keys';
 
 const UserContext = createContext();
 const initialState = {
   user: {
-    language: '',
     username: '',
     email: '',
+    language: '',
     displayName: '',
     tagline: '',
     contactNo: '',
     category: '',
     gender: 0,
-    pictures: [{ path: ME }],
+    picture: ME,
     overview: '',
     address: {
       addressLine: '',
@@ -28,8 +28,6 @@ const initialState = {
       likedin: '',
       behance: '',
     },
-
-
   },
   isLoggedIn: false,
 };
@@ -54,7 +52,7 @@ const userReducer = (state, action) => {
   // Implement your user session management logic in this reducer.
   switch (action.type) {
     case 'LOGIN':
-      return { ...state, user: { ...state.user, ...action.payload, pictures: action.payload.pictures ? action.payload.pictures[0].files.map((file, index) => ({ ...file, path: `${BASE_URL}/${file.path}` })) : initialState.user.pictures }, isLoggedIn: true };
+      return { ...state, user: { ...state.user, ...action.payload }, isLoggedIn: true };
     case 'LOGOUT':
       return { ...state, user: initialState.user, isLoggedIn: false };
     default:

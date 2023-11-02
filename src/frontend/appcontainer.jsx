@@ -138,6 +138,7 @@ import Messges from "./pages/messages";
 import Socket from "../socket/Socket";
 import { Get } from "../services/Api";
 import userSession from "../hooks/userSession";
+import { BASE_URL } from "../keys";
 if (
   !window.location.pathname.includes("admin")
 
@@ -160,8 +161,11 @@ const AppContainer = function (props) {
         if (userAuth) {
           Socket.init(userAuth.token)
           const userDetails = await Get(`api/v1/users/userDetails`);
-          const profileDetails = await Get(`api/v1/users/profile/${userDetails.doc._id}`);
-          dispatch({ type: 'LOGIN', payload: { ...profileDetails.doc, ...userDetails.doc, userId: userDetails.doc._id, profileId: profileDetails.doc._id } });
+          const picture = userDetails.doc.picture;
+          if (picture) {
+            userDetails.doc.picture = `${BASE_URL}/${picture.files.find((p, index) => index === 0).path}`
+          }
+          dispatch({ type: 'LOGIN', payload: { ...userDetails.doc, userId: userDetails.doc._id } });
           console.log('User session initiated.');
         }
       } catch (error) {
