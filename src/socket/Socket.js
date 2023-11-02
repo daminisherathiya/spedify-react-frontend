@@ -1,11 +1,12 @@
 import io from 'socket.io-client';
+import { BASE_URL } from '../keys';
 
 class Socket {
     constructor() {
         this.socket = null;
     }
     init(token = '') {
-        const socket = io(`http://localhost:80/chats`, {
+        const socket = io(`${BASE_URL}/chats`, {
             auth: {
                 token
             },
