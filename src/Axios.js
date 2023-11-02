@@ -5,7 +5,7 @@ Axios.interceptors.request.use(
    async config => {
         config.baseURL = BASE_URL;
         const authKey = await getItem(PreferencesKeys.authKey) || false;
-        console.log('axios.authKey', authKey);
+        // console.log('axios.authKey', authKey);
         if (authKey) {
             config.headers['Authorization'] = `Bearer ${authKey.token}`;
         }

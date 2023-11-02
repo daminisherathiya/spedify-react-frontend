@@ -49,7 +49,7 @@ const Header = (props) => {
   // if (exclusionArray.indexOf(props.location.pathname) >= 0) {
   //   return "";
   // }
-  console.log(props.location, "location")
+  // console.log(props.location, "location")
 
   //nav transparent
 
@@ -81,7 +81,7 @@ const Header = (props) => {
     }
   }
   window.addEventListener('scroll', changeBackground);
-  console.log('[Header].UserContext', state);
+  // console.log('[Header].UserContext', state);
   const isLoggedIn = state.isLoggedIn;
   const currentUser = isLoggedIn ? state.user : {};
   const onLogout = () => {

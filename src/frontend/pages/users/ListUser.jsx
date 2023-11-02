@@ -6,7 +6,21 @@ import {
   Avatar_1,
 } from "../../components/imagepath";
 import Button from "./Button";
-
+import { BASE_URL } from "../../../keys";
+const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const num = randomNumber(5, 1);
+const ratingStars = () => {
+  const stars = [];
+  for (let index = 0; index < num; index++) {
+    stars.unshift(<i className="fas fa-star filled" />)
+  }
+  if (num < 5) {
+    for (let j = 0; j < (5 - num); j++) {
+      stars.push(<i className="fas fa-star" />)
+    }
+  }
+  return stars;
+}
 const ListUser = ({ user, openChat }) => {
   return <div className="list-book-mark book-mark favour-book">
     <div className="row">
@@ -16,11 +30,11 @@ const ListUser = ({ user, openChat }) => {
             <div className="about-list-author d-flex align-items-center">
               <div className="about-author-img">
                 <div className="author-img-wrap">
-                  <Link to="company-profile.html">
+                  <Link to={`/userDetails/${user._id}`}>
                     <img
                       className="img-fluid"
                       alt=""
-                      src={Avatar_1}
+                      src={`${BASE_URL}/${user.picture.files.find((file, index) => index === 0).path}`}
                     />
                     <span className="verified">
                       <i className="fas fa-check-circle" />
@@ -34,34 +48,31 @@ const ListUser = ({ user, openChat }) => {
                     <Link to="company-profile.html">{user.username}</Link>
                   </h3>
                   <div className="freelance-specific">
-                    UI/UX Designer
+                    {user.tagline}
                   </div>
                   <div className="freelance-location">
                     <i className="fas fa-map-marker-alt me-1" />
-                    Alabama, USA
+                    {`${user.state}`}
                   </div>
                   <div className="rating">
-                    <i className="fas fa-star filled" />
-                    <i className="fas fa-star filled" />
-                    <i className="fas fa-star filled" />
-                    <i className="fas fa-star " />
-                    <i className="fas fa-star" />
-                    <span className="average-rating">4.7 (32)</span>
+                    {ratingStars()}
+                    <span className="average-rating">{`${num}.${randomNumber(10, 1)} (${randomNumber(100, 10)})`} </span>
                   </div>
                   <div className="freelance-tags">
-                    <Link to="#">
+                    <Link to="javascript:void(0);">
                       <span className="badge badge-pill badge-design">
-                        Web Design
+                        Skill 1
                       </span>
                     </Link>
-                    <Link to="#">
+                    <Link to="javascript:void(0);">
                       <span className="badge badge-pill badge-design">
-                        UI Design
+                        Skill 2
+
                       </span>
                     </Link>
-                    <Link to="#">
+                    <Link to="javascript:void(0);">
                       <span className="badge badge-pill badge-design">
-                        Node Js
+                        Skill 3
                       </span>
                     </Link>
                   </div>

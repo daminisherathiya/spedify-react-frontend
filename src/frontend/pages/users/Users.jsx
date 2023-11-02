@@ -79,7 +79,7 @@ const Talent = (props) => {
           }
         }
       }
-      // console.log('isChatExist', isChatExist);
+      console.log('isChatExist', isChatExist);
       if (isChatExist) {
         history.push({ pathname: `/messages`, state: { chatIds: user.chats } })
       } else {

@@ -2,17 +2,18 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Img_05 } from "../../components/imagepath";
 import Axios from "../../../Axios";
-import { ME, OTHER } from "../../../keys";
+import { BASE_URL, ME, OTHER } from "../../../keys";
 import msgSound from '../../assets/message.mp3'
 import { useUserContext } from "../../../context/UserContext";
 import { useLocation } from "react-router-dom";
 import Socket from "../../../socket/Socket";
+import { getFilePath } from "../../../helpers";
 // const audio = new Audio(msgSound);
 
 const Messages = (props) => {
   // const audioPlayer = React.useRef();
   const { state } = useUserContext();
-  console.log('[Mesaages].state', state);
+  // console.log('[Mesaages].state', state);
   if (!state.isLoggedIn) return null;
   const socket = Socket.get();
   const [chats, setChats] = React.useState([]);
@@ -24,37 +25,47 @@ const Messages = (props) => {
   const messagesScrollRef = React.useRef(null);
   const currentUser = state.user || {};
   const location = useLocation();
-  // console.log('[Mesaages].socket', socket);
   const sendMessage = () => {
-    if (message !== '') {
-      const createdAt = Date.now();
-      socket.emit('send_message', { sender: currentUser, _id: room, room, seen: true, text: message, createdAt, attachments: [] });
-      setMessage('');
-      setTypingUser(null)
+    try {
+      if (message !== '') {
+        const createdAt = Date.now();
+        socket.emit('send_message', { sender: currentUser, _id: room, room, seen: true, text: message, createdAt, attachments: [], isLocalMessage: true });
+        setMessage('');
+        setTypingUser(null)
+      }
+    } catch (error) {
+      console.log('[sendMessage].error', error);
     }
+
   };
   useEffect(() => {
     socket.on('receive_message', (data) => {
-      console.log('receive_message', data);
-      // audio.play()
-      setTypingUser(null)
-      const updateChat = chats.map((chat, index) => {
-        if (chat._id === data._id) {
-          chat.messages = [
-            ...chat.messages,
-            {
-              _id: data._id,
-              text: data.text,
-              sender: data.sender,
-              attachments: data.attachments,
-              seen: selectedChat._id === data._id,
-              createdAt: data.createdAt,
-            }
-          ]
-        }
-        return chat;
-      })
-      setChats(updateChat)
+      try {
+        console.log('receive_message', data);
+        // audio.play()
+        setTypingUser(null)
+        const updateChat = chats.map((chat, index) => {
+          if (chat._id === data._id) {
+            chat.messages = [
+              ...chat.messages,
+              {
+                ...data,
+                _id: data._id,
+                text: data.text,
+                sender: data.sender,
+                attachments: data.attachments,
+                seen: selectedChat._id === data._id,
+                createdAt: data.createdAt,
+              }
+            ]
+          }
+          return chat;
+        })
+        setChats(updateChat)
+      } catch (error) {
+        console.log('[receive_message].error', error);
+      }
+
     });
 
     // Remove event listener on component unmount
@@ -117,14 +128,13 @@ const Messages = (props) => {
     const date = new Date(timestamp);
     return date.toLocaleString();
   }
-  const getChatUser = chat => {
+  const getChatUser = (chat) => {
     const chatUser = (chat.usersRef || []).filter(u => u._id !== currentUser._id)[0] || { username: "" };
     // console.log('chatUser', chatUser);
     return chatUser;
   }
   // console.log('selectedChat', selectedChat);
   // console.log('chats', chats);
-  // console.log('onlineUsers', onlineUsers);
   return (
     <>
       {/* Content */}
@@ -171,7 +181,7 @@ const Messages = (props) => {
                             <div className="media-img-wrap flex-shrink-0">
                               <div className={`avatar avatar-${isUserOnline ? 'online' : 'away'}`}>
                                 <img
-                                  src={OTHER}
+                                  src={getFilePath(chatUser.picture)}
                                   alt="User Image"
                                   className="avatar-img rounded-circle"
                                 />
@@ -212,8 +222,7 @@ const Messages = (props) => {
                       <div className="media-img-wrap flex-shrink-0">
                         <div className={`avatar avatar-${onlineUsers.includes(getChatUser(selectedChat)._id) ? 'online' : 'away'}`}>
                           <img
-                            // src={Img_05}
-                            src={OTHER}
+                            src={getFilePath((selectedChat.usersRef || []).find(u => u._id !== currentUser._id)?.picture ?? {})}
                             alt="User Image"
                             className="avatar-img rounded-circle"
                           />
@@ -250,10 +259,11 @@ const Messages = (props) => {
                         {
                           (selectedChat.messages || []).map((message, msgIndex) => {
                             const isCurrentUser = message.sender._id === currentUser._id;
+                            // console.log('message.sender', message.sender);
                             return <li key={`msg-index-${msgIndex}`} className={`media ${isCurrentUser ? 'sent' : 'received'} d-flex`}>
                               <div className="avatar flex-shrink-0">
                                 <img
-                                  src={isCurrentUser ? ME : OTHER}
+                                  src={message.isLocalMessage ? message.sender.picture : getFilePath(message.sender.picture)}
                                   alt="User Image"
                                   className="avatar-img rounded-circle"
                                 />
@@ -286,8 +296,7 @@ const Messages = (props) => {
                     <div className="input-group">
                       <div className="avatar">
                         <img
-                          // src={Img_05}
-                          src={ME}
+                          src={currentUser.picture}
                           alt="User Image"
                           className="avatar-img rounded-circle"
                         />

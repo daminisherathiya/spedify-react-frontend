@@ -4,8 +4,6 @@ import { Logo_01 } from "../imagepath";
 import Axios from '../../../Axios';
 import { useUserContext } from '../../../context/UserContext';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
-import jwtDecode from 'jwt-decode';
-import Socket from '../../../socket/Socket';
 import { getSetuser } from '../../../helpers';
 
 const Login = ({ history }) => {
@@ -19,8 +17,8 @@ const Login = ({ history }) => {
     try {
       const response = await Axios.post('api/v1/users/login', user);
       if (response.data.statusCode === 200) {
-        await getSetuser(dispatch)
         await setItem(PreferencesKeys.authKey, response.data.doc);
+        await getSetuser(dispatch)
         history.push('/')
       }
     } catch (error) {

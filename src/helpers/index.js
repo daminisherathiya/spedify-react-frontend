@@ -83,3 +83,8 @@ export const getSetuser = async (dispatch) => {
     }
 
 }
+export const getFilePath = (pictureObj = {}) => {
+    if (!pictureObj || !Object.keys(pictureObj).length) return ''
+    if (pictureObj.files) return `${BASE_URL}/${pictureObj.files.find((x, index) => index === 0).path}`;
+    else return ''
+}
