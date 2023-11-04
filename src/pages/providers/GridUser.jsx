@@ -46,7 +46,7 @@ const GridUser = ({ user, openChat }) => {
 
                 <div className="freelance-info">
                     <h3>
-                        <Link to={`/developer-details/${user._id}`}>{`${user.username}`.charAt(0).toUpperCase() + user.username.slice(1)}</Link>
+                        <Link to={`/provider-details/${user._id}`}>{`${user.username}`.charAt(0).toUpperCase() + user.username.slice(1)}</Link>
                     </h3>
                     <div className="freelance-specific">{user.tagline}</div>
                     <div className="freelance-location">

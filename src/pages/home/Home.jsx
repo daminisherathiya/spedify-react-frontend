@@ -115,8 +115,8 @@ const Home3 = () => {
   const history = useHistory();
   const eventclick = () => {
     const { userType = 1, queryStr = 'all' } = query.current;
-    if (userType === 1) history.push(`/search/talent/userType=${userType}&q=${queryStr}`)
-    else history.push(`/search/parent/userType=${userType}&q=${queryStr}`)
+    if (userType === 1) history.push(`/search/provider/userType=${userType}&q=${queryStr}`)
+    else history.push(`/search/work/userType=${userType}&q=${queryStr}`)
   };
   return (
     <>
@@ -191,7 +191,7 @@ const Home3 = () => {
                   <h5>TRUSED BY OVER 2M+ USERS</h5>
                 </div>
                 <h1>
-                  Get the Perfect Providers &amp; <br /> Parents{" "}
+                  Get the Perfect Providers &amp; <br /> Work{" "}
                 </h1>
                 <form
                   className="form"
@@ -199,6 +199,7 @@ const Home3 = () => {
                 // id="store"
                 // method="post"
                 // action={`${config.publicPath}project`}
+                style={{width: "105%"}}
                 >
                   <div className="form-inner">
                     <div className="input-group">
@@ -502,7 +503,7 @@ const Home3 = () => {
                       Post a Project
                     </Link>
                     <Link
-                      to="developer-details"
+                      to="provider-details"
                       className="btn btn-primary market-developer"
                     >
                       Find Developers

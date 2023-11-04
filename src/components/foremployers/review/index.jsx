@@ -54,7 +54,7 @@ const Review = (props) => {
                   </p>
                   <div className="review-top tab-reviews d-flex align-items-center">
                     <div className="review-img">
-                      <Link to="developer-details.html">
+                      <Link to="provider-details.html">
                         <img
                           className="img-fluid"
                           src={Review_01}
@@ -64,7 +64,7 @@ const Review = (props) => {
                     </div>
                     <div className="review-info">
                       <h3>
-                        <Link to="developer-details.html">javiervalino</Link>
+                        <Link to="provider-details.html">javiervalino</Link>
                       </h3>
                       <h5>Today • 09:35 PM</h5>
                     </div>
@@ -94,7 +94,7 @@ const Review = (props) => {
                   </p>
                   <div className="review-top tab-reviews d-flex align-items-center">
                     <div className="review-img">
-                      <Link to="developer-details.html">
+                      <Link to="provider-details.html">
                         <img
                           className="img-fluid"
                           src={Review_02}
@@ -104,7 +104,7 @@ const Review = (props) => {
                     </div>
                     <div className="review-info">
                       <h3>
-                        <Link to="developer-details.html">trentburns</Link>
+                        <Link to="provider-details.html">trentburns</Link>
                       </h3>
                       <h5>Yesterday • 09:35 PM</h5>
                     </div>
@@ -125,7 +125,7 @@ const Review = (props) => {
                   </p>
                   <div className="review-top tab-reviews d-flex align-items-center">
                     <div className="review-img">
-                      <Link to="developer-details.html">
+                      <Link to="provider-details.html">
                         <img
                           className="img-fluid"
                           src={Review_03}
@@ -135,7 +135,7 @@ const Review = (props) => {
                     </div>
                     <div className="review-info">
                       <h3>
-                        <Link to="developer-details.html">mabdz</Link>
+                        <Link to="provider-details.html">mabdz</Link>
                       </h3>
                       <h5>Sep 3 • 6:57 AM</h5>
                     </div>
@@ -156,7 +156,7 @@ const Review = (props) => {
                   </p>
                   <div className="review-top tab-reviews d-flex align-items-center">
                     <div className="review-img">
-                      <Link to="developer-details.html">
+                      <Link to="provider-details.html">
                         <img
                           className="img-fluid"
                           src={Review_02}
@@ -166,7 +166,7 @@ const Review = (props) => {
                     </div>
                     <div className="review-info">
                       <h3>
-                        <Link to="developer-details.html">creativerr</Link>
+                        <Link to="provider-details.html">creativerr</Link>
                       </h3>
                       <h5>Aug 12 • 9:37 AM</h5>
                     </div>
@@ -188,7 +188,7 @@ const Review = (props) => {
                   </p>
                   <div className="review-top tab-reviews d-flex align-items-center">
                     <div className="review-img">
-                      <Link to="developer-details.html">
+                      <Link to="provider-details.html">
                         <img
                           className="img-fluid"
                           src={Review_1}
@@ -198,7 +198,7 @@ const Review = (props) => {
                     </div>
                     <div className="review-info">
                       <h3>
-                        <Link to="developer-details.html">adirajulk</Link>
+                        <Link to="provider-details.html">adirajulk</Link>
                       </h3>
                       <h5>Aug 3 • 6:57 AM</h5>
                     </div>
@@ -224,7 +224,7 @@ const Review = (props) => {
                   </p>
                   <div className="review-top tab-reviews d-flex align-items-center">
                     <div className="review-img">
-                      <Link to="developer-details.html">
+                      <Link to="provider-details.html">
                         <img
                           className="img-fluid"
                           src={Review_03}
@@ -234,7 +234,7 @@ const Review = (props) => {
                     </div>
                     <div className="review-info">
                       <h3>
-                        <Link to="developer-details.html">james</Link>
+                        <Link to="provider-details.html">james</Link>
                       </h3>
                       <h5>Aug 2 • 7:57 AM</h5>
                     </div>

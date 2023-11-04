@@ -57,7 +57,7 @@ const BlogDetails = () => {
                       <ul>
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_02} alt="Post Author" />
                               <span>John Doe</span>
                             </Link>
@@ -135,7 +135,7 @@ const BlogDetails = () => {
                   <div className="about-author">
                     <div className="about-author-img">
                       <div className="author-img-wrap">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img
                             className="img-fluid"
                             alt=""
@@ -145,7 +145,7 @@ const BlogDetails = () => {
                       </div>
                     </div>
                     <div className="author-details">
-                      <Link to="/developer-details" className="blog-author-name">
+                      <Link to="/provider-details" className="blog-author-name">
                         Web Designer
                       </Link>
                       <p>

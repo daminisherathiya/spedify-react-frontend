@@ -113,7 +113,7 @@ const Favouritelist = (props) => {
                             <div className="about-list-author d-flex align-items-center">
                               <div className="about-author-img">
                                 <div className="author-img-wrap">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       className="img-fluid"
                                       alt=""
@@ -128,7 +128,7 @@ const Favouritelist = (props) => {
                               <div className="author-details">
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">
+                                    <Link to="provider-details.html">
                                       Akshay Handge
                                     </Link>
                                   </h3>
@@ -182,7 +182,7 @@ const Favouritelist = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -197,7 +197,7 @@ const Favouritelist = (props) => {
                             <div className="about-list-author d-flex align-items-center">
                               <div className="about-author-img">
                                 <div className="author-img-wrap">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       className="img-fluid"
                                       alt=""
@@ -212,7 +212,7 @@ const Favouritelist = (props) => {
                               <div className="author-details">
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">
+                                    <Link to="provider-details.html">
                                       George Wells
                                     </Link>
                                   </h3>
@@ -266,7 +266,7 @@ const Favouritelist = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -281,7 +281,7 @@ const Favouritelist = (props) => {
                             <div className="about-list-author d-flex align-items-center">
                               <div className="about-author-img">
                                 <div className="author-img-wrap">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       className="img-fluid"
                                       alt=""
@@ -296,7 +296,7 @@ const Favouritelist = (props) => {
                               <div className="author-details">
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">
+                                    <Link to="provider-details.html">
                                       Richard Wilson
                                     </Link>
                                   </h3>
@@ -350,7 +350,7 @@ const Favouritelist = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -365,7 +365,7 @@ const Favouritelist = (props) => {
                             <div className="about-list-author d-flex align-items-center">
                               <div className="about-author-img">
                                 <div className="author-img-wrap">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       className="img-fluid"
                                       alt=""
@@ -380,7 +380,7 @@ const Favouritelist = (props) => {
                               <div className="author-details">
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">
+                                    <Link to="provider-details.html">
                                       Timothy Smith
                                     </Link>
                                   </h3>
@@ -434,7 +434,7 @@ const Favouritelist = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -449,7 +449,7 @@ const Favouritelist = (props) => {
                             <div className="about-list-author d-flex align-items-center">
                               <div className="about-author-img">
                                 <div className="author-img-wrap">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       className="img-fluid"
                                       alt=""
@@ -464,7 +464,7 @@ const Favouritelist = (props) => {
                               <div className="author-details">
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">
+                                    <Link to="provider-details.html">
                                       Akshay Handge
                                     </Link>
                                   </h3>
@@ -518,7 +518,7 @@ const Favouritelist = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -533,7 +533,7 @@ const Favouritelist = (props) => {
                             <div className="about-list-author d-flex align-items-center">
                               <div className="about-author-img">
                                 <div className="author-img-wrap">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       className="img-fluid"
                                       alt=""
@@ -548,7 +548,7 @@ const Favouritelist = (props) => {
                               <div className="author-details">
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">
+                                    <Link to="provider-details.html">
                                       Richard Wilson
                                     </Link>
                                   </h3>
@@ -602,7 +602,7 @@ const Favouritelist = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -617,7 +617,7 @@ const Favouritelist = (props) => {
                             <div className="about-list-author d-flex align-items-center">
                               <div className="about-author-img">
                                 <div className="author-img-wrap">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       className="img-fluid"
                                       alt=""
@@ -632,7 +632,7 @@ const Favouritelist = (props) => {
                               <div className="author-details">
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">
+                                    <Link to="provider-details.html">
                                       Timothy Smith
                                     </Link>
                                   </h3>
@@ -686,7 +686,7 @@ const Favouritelist = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >

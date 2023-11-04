@@ -19,7 +19,7 @@ const GridUser = ({ user }) => {
                     <i className="fas fa-star" />
                 </Link>
                 <div className="freelance-img">
-                    <Link to={`/developer-details/${user._id}`}>
+                    <Link to={`/provider-details/${user._id}`}>
                         <img
                             src={Avatar_1}
                             alt="User Image"
@@ -32,7 +32,7 @@ const GridUser = ({ user }) => {
 
                 <div className="freelance-info">
                     <h3>
-                        <Link to={`/developer-details/${user._id}`}>{user.username}</Link>
+                        <Link to={`/provider-details/${user._id}`}>{user.username}</Link>
                     </h3>
                     <div className="freelance-specific">UI/UX Designer</div>
                     <div className="freelance-location">

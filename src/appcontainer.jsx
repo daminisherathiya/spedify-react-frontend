@@ -7,7 +7,6 @@ import Footer from "./components/footer";
 import PostProject from "./components/postproject";
 
 //home
-import Home from "./components/home";
 
 //For Employee
 import AdvocateTalents from "./components/foremployers/talent/talent";
@@ -85,15 +84,12 @@ import BlogDetails from "./components/blog/blog_details";
 
 import PrivacyPolicy from "./components/privacyPages/privacy_policy";
 import TermsCondition from "./components/privacyPages/term_condition";
-import Home2 from "./components/home/index-two";
-import Home3 from "./pages/home/Home";
-import Home4 from "./components/home/index-four";
-import Home5 from "./components/home/index-five";
+import Home from "./pages/home/Home";
 import DeveloperProfile from "./components/forfreelancer/developerprofile"
 import CompanyProfile from './components/forfreelancer/companyprofile/index'
 import CompanyProject from './components/forfreelancer/companyproject/index'
-import Users from './pages/users/Users';
-import UserDetails from './pages/users/UserDetails';
+import Providers from './pages/providers/Users';
+import UserDetails from './pages/providers/UserDetails';
 
 // CSS Files
 // Bootstrap CSS
@@ -164,15 +160,15 @@ const AppContainer = function (props) {
         <Header {...props} />
         <Switch>
           {/* home */}
-          <Route exact path="/" component={Home3} />
+          <Route exact path="/" component={Home} />
           <Route exact path="/developer-profile" component={DeveloperProfile} />
           <Route exact path="/company-profile" component={CompanyProfile} />
           <Route exact path="/post-project" component={PostProject} />
           <Route exact path="/company-project" component={CompanyProject} />
           {/* For Employer */}
-          <Route exact path="/search/talent/:query" component={Users} />
-          <Route exact path="/developer-details/:userId" component={DeveloperDetails} />
-          <Route exact path="/search/talent/:query/developer-list" component={TalentList} />
+          <Route exact path="/search/provider/:query" component={Providers} />
+          <Route exact path="/provider-details/:userId" component={DeveloperDetails} />
+          <Route exact path="/search/provider/:query/developer-list" component={TalentList} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/edit-project" component={EditProject} />
           <Route exact path="/manage-projects" component={Manageprojects} />
@@ -203,9 +199,8 @@ const AppContainer = function (props) {
           <Route exact path="/company-gallery" component={CompanyGallery} />
           <Route exact path="/company-review" component={CompanyReview} />
           {/* For Freelancer */}
-          <Route exact path="/search/parent/:query" component={Users} />
           <Route exact path="/profileDetails/:userId" component={UserDetails} />
-          <Route exact path="/search/education/:query" component={Project} />
+          <Route exact path="/search/work/:query" component={Project} />
           <Route exact path="/project-details" component={ProjectDetails} />
           <Route exact path="/freelancer-dashboard" component={FreelancerDashboard} />
           <Route exact path="/freelancer-project-proposals" component={FreelancerProjectproposal} />

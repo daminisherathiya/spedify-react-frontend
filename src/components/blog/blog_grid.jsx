@@ -57,7 +57,7 @@ const BlogGrid = () => {
                       <ul className="entry-meta meta-item">
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_02} alt="Post Author" />{" "}
                               <span> David Lee</span>
                             </Link>
@@ -96,7 +96,7 @@ const BlogGrid = () => {
                       <ul className="entry-meta meta-item">
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_03} alt="Post Author" />{" "}
                               <span> Deborah Angel</span>
                             </Link>
@@ -133,7 +133,7 @@ const BlogGrid = () => {
                       <ul className="entry-meta meta-item">
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_04} alt="Post Author" />{" "}
                               <span>Darren Elder</span>
                             </Link>
@@ -172,7 +172,7 @@ const BlogGrid = () => {
                       <ul className="entry-meta meta-item">
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_05} alt="Post Author" />{" "}
                               <span>Sofia Brient</span>
                             </Link>
@@ -211,7 +211,7 @@ const BlogGrid = () => {
                       <ul className="entry-meta meta-item">
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_02} alt="Post Author" />{" "}
                               <span>Marvin Campbell</span>
                             </Link>
@@ -250,7 +250,7 @@ const BlogGrid = () => {
                       <ul className="entry-meta meta-item">
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_03} alt="Post Author" />{" "}
                               <span> Paul Berthold</span>
                             </Link>

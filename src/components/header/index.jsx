@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Logo, Img_04, avatar_1, Avatar_1, Top_icon, Reg_icon, Lock_icon, loader_icon, Logo_img, } from '../imagepath';
+import { Logo, Img_04, avatar_1, Avatar_1, Top_icon, Reg_icon, Lock_icon, loader_icon, Logo_img, Spedify_Logo } from '../imagepath';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL, ME } from "../.././keys";
@@ -40,7 +40,7 @@ const Header = (props) => {
   };
 
   const pathname = history.location.pathname.split("/")[1];
-  console.log('[header].pathname', pathname);
+  // console.log('[header].pathname', pathname);
   // const exclusionArray = [
   //   "/onboard-screen",
   //   "/onboard-screen-employer"
@@ -104,14 +104,14 @@ const Header = (props) => {
                   <span />
                 </span>
               </Link>
-              <Link to="/" className="navbar-brand logo">
-                <img src={Logo_img} className="img-fluid" alt="Logo" />
+              <Link to="/" className="navbar-brand logo" style={{ height: '80px', width: "80px", overflow: 'hidden' }}>
+                <img src={Spedify_Logo} className="img-fluid" alt="Logo" style={{ borderRadius: 40 }} />
               </Link>
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
-                <Link to="/" className="menu-logo">
-                  <img src={Logo_img} className="img-fluid" alt="Logo" />
+                <Link to="/" className="menu-logo" style={{ height: '80px', width: "80px", overflow: 'hidden' }}>
+                  <img src={Spedify_Logo} className="img-fluid" alt="Logo" style={{ borderRadius: 40 }} />
                 </Link>
                 <Link id="menu_close" className="menu-close" to="#" onClick={() => onhandleCloseMenu()}>
                   <i><FontAwesomeIcon icon={faTimes} /></i>

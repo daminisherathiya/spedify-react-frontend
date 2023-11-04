@@ -241,7 +241,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -256,7 +256,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Akshay Handge</Link></h3>
+                              <h3><Link to="/provider-details">Akshay Handge</Link></h3>
                               <div className="customer-details">
                                 <h5>UI/UX Designer</h5>
                                 <div className="rating">
@@ -311,7 +311,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -326,7 +326,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">David Peterson</Link></h3>
+                              <h3><Link to="/provider-details">David Peterson</Link></h3>
                               <div className="customer-details">
                                 <h5>iOS Expert + Node Dev</h5>
                                 <div className="rating">
@@ -381,7 +381,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -396,7 +396,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Marcin Kowalski </Link></h3>
+                              <h3><Link to="/provider-details">Marcin Kowalski </Link></h3>
                               <div className="customer-details">
                                 <h5>Front-End Developer</h5>
                                 <div className="rating">
@@ -446,7 +446,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -461,7 +461,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Akshay Handge</Link></h3>
+                              <h3><Link to="/provider-details">Akshay Handge</Link></h3>
                               <div className="customer-details">
                                 <h5>UI/UX Designer</h5>
                                 <div className="rating">
@@ -516,7 +516,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -531,7 +531,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">David Peterson</Link></h3>
+                              <h3><Link to="/provider-details">David Peterson</Link></h3>
                               <div className="customer-details">
                                 <h5>iOS Expert + Node Dev</h5>
                                 <div className="rating">
@@ -586,7 +586,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -601,7 +601,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Marcin Kowalski </Link></h3>
+                              <h3><Link to="/provider-details">Marcin Kowalski </Link></h3>
                               <div className="customer-details">
                                 <h5>Front-End Developer</h5>
                                 <div className="rating">
@@ -651,7 +651,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -666,7 +666,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Akshay Handge</Link></h3>
+                              <h3><Link to="/provider-details">Akshay Handge</Link></h3>
                               <div className="customer-details">
                                 <h5>UI/UX Designer</h5>
                                 <div className="rating">
@@ -721,7 +721,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -736,7 +736,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">David Peterson</Link></h3>
+                              <h3><Link to="/provider-details">David Peterson</Link></h3>
                               <div className="customer-details">
                                 <h5>iOS Expert + Node Dev</h5>
                                 <div className="rating">
@@ -791,7 +791,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -806,7 +806,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Marcin Kowalski </Link></h3>
+                              <h3><Link to="/provider-details">Marcin Kowalski </Link></h3>
                               <div className="customer-details">
                                 <h5>Front-End Developer</h5>
                                 <div className="rating">
@@ -856,7 +856,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -871,7 +871,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Akshay Handge</Link></h3>
+                              <h3><Link to="/provider-details">Akshay Handge</Link></h3>
                               <div className="customer-details">
                                 <h5>UI/UX Designer</h5>
                                 <div className="rating">
@@ -926,7 +926,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -941,7 +941,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">David Peterson</Link></h3>
+                              <h3><Link to="/provider-details">David Peterson</Link></h3>
                               <div className="customer-details">
                                 <h5>iOS Expert + Node Dev</h5>
                                 <div className="rating">
@@ -996,7 +996,7 @@ class Search extends Component {
                   <div className="col-md-6 col-lg-6 col-xl-4">
                     <div className="card widget-profile pat-widget-profile">
                       <div className="card-top">
-                        <Link to="/developer-details">
+                        <Link to="/provider-details">
                           <img alt="Card Image" src={Dev_img} className="card-img-top" />
                         </Link>
                         <div className="dev-text d-flex justify-content-between">
@@ -1011,7 +1011,7 @@ class Search extends Component {
                         <div className="pro-widget-content">
                           <div className="profile-info-widget">
                             <div className="profile-det-info">
-                              <h3><Link to="/developer-details">Marcin Kowalski </Link></h3>
+                              <h3><Link to="/provider-details">Marcin Kowalski </Link></h3>
                               <div className="customer-details">
                                 <h5>Front-End Developer</h5>
                                 <div className="rating">

@@ -106,7 +106,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_1}
                                       alt="User Image"
@@ -118,7 +118,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">George Wells</Link>
+                                    <Link to="provider-details.html">George Wells</Link>
                                   </h3>
                                   <div className="freelance-specific">UI/UX Designer</div>
                                   <div className="freelance-location">
@@ -155,7 +155,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -175,7 +175,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_2}
                                       alt="User Image"
@@ -187,7 +187,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Timothy Smith</Link>
+                                    <Link to="provider-details.html">Timothy Smith</Link>
                                   </h3>
                                   <div className="freelance-specific">PHP Developer</div>
                                   <div className="freelance-location">
@@ -224,7 +224,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -244,7 +244,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_3}
                                       alt="User Image"
@@ -256,7 +256,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Janet Paden</Link>
+                                    <Link to="provider-details.html">Janet Paden</Link>
                                   </h3>
                                   <div className="freelance-specific">Graphic Designer</div>
                                   <div className="freelance-location">
@@ -293,7 +293,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -313,7 +313,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_4}
                                       alt="User Image"
@@ -325,7 +325,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">James Douglas</Link>
+                                    <Link to="provider-details.html">James Douglas</Link>
                                   </h3>
                                   <div className="freelance-specific">iOS Developer</div>
                                   <div className="freelance-location">
@@ -362,7 +362,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -382,7 +382,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_5}
                                       alt="User Image"
@@ -394,7 +394,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Floyd Lewis</Link>
+                                    <Link to="provider-details.html">Floyd Lewis</Link>
                                   </h3>
                                   <div className="freelance-specific">SEO Developer</div>
                                   <div className="freelance-location">
@@ -431,7 +431,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -451,7 +451,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_6}
                                       alt="User Image"
@@ -463,7 +463,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Jacqueline Daye</Link>
+                                    <Link to="provider-details.html">Jacqueline Daye</Link>
                                   </h3>
                                   <div className="freelance-specific">SM Developer</div>
                                   <div className="freelance-location">
@@ -500,7 +500,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -520,7 +520,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_7}
                                       alt="User Image"
@@ -532,7 +532,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Crystal Kemper</Link>
+                                    <Link to="provider-details.html">Crystal Kemper</Link>
                                   </h3>
                                   <div className="freelance-specific">Network Engineer</div>
                                   <div className="freelance-location">
@@ -569,7 +569,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -589,7 +589,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_8}
                                       alt="User Image"
@@ -601,7 +601,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Tony Ingle</Link>
+                                    <Link to="provider-details.html">Tony Ingle</Link>
                                   </h3>
                                   <div className="freelance-specific">Business Analyst</div>
                                   <div className="freelance-location">
@@ -638,7 +638,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -658,7 +658,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_9}
                                       alt="User Image"
@@ -670,7 +670,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Kathleen Kaiser</Link>
+                                    <Link to="provider-details.html">Kathleen Kaiser</Link>
                                   </h3>
                                   <div className="freelance-specific">
                                     IT Project Manager
@@ -709,7 +709,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -729,7 +729,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_10}
                                       alt="User Image"
@@ -741,7 +741,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Veronica Cheek</Link>
+                                    <Link to="provider-details.html">Veronica Cheek</Link>
                                   </h3>
                                   <div className="freelance-specific">
                                     Software Architect
@@ -780,7 +780,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -800,7 +800,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_11}
                                       alt="User Image"
@@ -851,7 +851,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >
@@ -871,7 +871,7 @@ const Favourites = (props) => {
                                   <i className="fas fa-star" />
                                 </Link>
                                 <div className="freelance-img">
-                                  <Link to="developer-details.html">
+                                  <Link to="provider-details.html">
                                     <img
                                       src={Avatar_12}
                                       alt="User Image"
@@ -883,7 +883,7 @@ const Favourites = (props) => {
                                 </div>
                                 <div className="freelance-info">
                                   <h3>
-                                    <Link to="developer-details.html">Mickey Bernier</Link>
+                                    <Link to="provider-details.html">Mickey Bernier</Link>
                                   </h3>
                                   <div className="freelance-specific">QA Engineer</div>
                                   <div className="freelance-location">
@@ -920,7 +920,7 @@ const Favourites = (props) => {
                               </div>
                               <div className="cart-hover">
                                 <Link
-                                  to="developer-details.html"
+                                  to="provider-details.html"
                                   className="btn-cart"
                                   tabIndex={-1}
                                 >

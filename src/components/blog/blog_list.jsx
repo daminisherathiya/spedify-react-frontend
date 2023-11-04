@@ -59,7 +59,7 @@ const BlogList = () => {
                       <ul>
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_02} alt="Post Author" />{" "}
                               <span>John Doe</span>
                             </Link>
@@ -113,7 +113,7 @@ const BlogList = () => {
                       <ul>
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_03} alt="Post Author" />{" "}
                               <span>Nick Joe</span>
                             </Link>
@@ -164,7 +164,7 @@ const BlogList = () => {
                       <ul>
                         <li>
                           <div className="post-author">
-                            <Link to="/developer-details">
+                            <Link to="/provider-details">
                               <img src={Img_03} alt="Post Author" />{" "}
                               <span>Nick Joe</span>
                             </Link>

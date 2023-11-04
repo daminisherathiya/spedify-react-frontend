@@ -416,3 +416,4 @@ export { default as Wallet_icon_3 } from '../assets/img/wallet-icon-3.svg';
 
 export{ default as Lock_icon } from '../assets/img/icon/lock-icon.svg';
 export {default as Bg_13} from '../assets/img/bg/bg-13.jpg';
+export {default as Spedify_Logo} from '../assets/img/spedify-logo.png';

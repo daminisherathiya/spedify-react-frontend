@@ -79,7 +79,7 @@ const FeaturedDevelopers = () => {
           >
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_05} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -95,7 +95,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Megan Torres</Link>
+                  <Link to="provider-details">Megan Torres</Link>
                 </h4>
                 <p>Java Developer</p>
                 <div className="rating">
@@ -107,7 +107,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">5.0 (50)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -115,7 +115,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_06} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -131,7 +131,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Nicole Black</Link>
+                  <Link to="provider-details">Nicole Black</Link>
                 </h4>
                 <p>.net Developer</p>
                 <div className="rating">
@@ -143,7 +143,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">4.0 (20)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -151,7 +151,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_07} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite">
@@ -167,7 +167,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Megan Torres</Link>
+                  <Link to="provider-details">Megan Torres</Link>
                 </h4>
                 <p>React Developer</p>
                 <div className="rating">
@@ -179,7 +179,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">5.0 (30)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -187,7 +187,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_08} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -203,7 +203,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Shan Morris</Link>
+                  <Link to="provider-details">Shan Morris</Link>
                 </h4>
                 <p>Angular Developer</p>
                 <div className="rating">
@@ -215,7 +215,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">5.0 (30)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -223,7 +223,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_07} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -239,7 +239,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Megan Torres</Link>
+                  <Link to="provider-details">Megan Torres</Link>
                 </h4>
                 <p>Java Developer</p>
                 <div className="rating">
@@ -251,7 +251,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">4.0 (30)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -259,7 +259,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_06} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -275,7 +275,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Nicole Black</Link>
+                  <Link to="provider-details">Nicole Black</Link>
                 </h4>
                 <p>.net Developer</p>
                 <div className="rating">
@@ -287,7 +287,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">4.0 (20)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -295,7 +295,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_07} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -311,7 +311,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Megan Torres</Link>
+                  <Link to="provider-details">Megan Torres</Link>
                 </h4>
                 <p>React Developer</p>
                 <div className="rating">
@@ -323,7 +323,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">5.0 (30)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -331,7 +331,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_06} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -347,7 +347,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Nicole Black</Link>
+                  <Link to="provider-details">Nicole Black</Link>
                 </h4>
                 <p>.net Developer</p>
                 <div className="rating">
@@ -359,7 +359,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">4.0 (20)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -367,7 +367,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_08} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -383,7 +383,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Shan Morris</Link>
+                  <Link to="provider-details">Shan Morris</Link>
                 </h4>
                 <p>Angular Developer</p>
                 <div className="rating">
@@ -395,7 +395,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">5.0 (30)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -403,7 +403,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_07} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -419,7 +419,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Megan Torres</Link>
+                  <Link to="provider-details">Megan Torres</Link>
                 </h4>
                 <p>React Developer</p>
                 <div className="rating">
@@ -431,7 +431,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">5.0 (30)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -439,7 +439,7 @@ const FeaturedDevelopers = () => {
             </div>
             <div className="project-item project-item-feature">
               <div className="project-img heart-blk">
-                <Link to="developer-details">
+                <Link to="provider-details">
                   <img src={Developer_06} alt="" className="img-fluid" />
                 </Link>
                 <Link to="#" className="favourite ">
@@ -455,7 +455,7 @@ const FeaturedDevelopers = () => {
               </div>
               <div className="feature-project-content text-center">
                 <h4>
-                  <Link to="developer-details">Nicole Black</Link>
+                  <Link to="provider-details">Nicole Black</Link>
                 </h4>
                 <p>.net Developer</p>
                 <div className="rating">
@@ -467,7 +467,7 @@ const FeaturedDevelopers = () => {
                   <span className="average-rating">4.0 (20)</span>
                 </div>
                 <div className="feature-developer-foot d-flex justify-content-center">
-                  <Link to="developer-details">
+                  <Link to="provider-details">
                     <i className="fas fa-caret-right" />
                   </Link>
                 </div>
@@ -481,7 +481,7 @@ const FeaturedDevelopers = () => {
               className="view-locations all-views text-center aos aos-init aos-animate"
               data-aos="fade-up"
             >
-              <Link to="developer-details" className="btn btn-primary ">
+              <Link to="provider-details" className="btn btn-primary ">
                 View all Developers{" "}
                 <span className="location-right">
                   <FiArrowRight className="feather-arrow-right" />
