@@ -1,7 +1,9 @@
+import jwtDecode from "jwt-decode";
 import { BASE_URL } from "../keys";
 import { PreferencesKeys, getItem } from "../preferences/Preferences";
 import { Get } from "../services/Api";
 import Socket from "../socket/Socket";
+import moment from "moment";
 
 // Function to generate a random encryption key
 export const generateEncryptionKey = async () => {
@@ -59,10 +61,25 @@ export const isJSONStringValid = (jsonString) => {
     }
 }
 
-export const validateUser = async () => {
+export const validateUser = async (dispatch) => {
+    let message = '',
+        isValid = false;
+    const authKey = await getItem(PreferencesKeys.authKey) || false;
+    if (authKey) {
+        const decoded = jwtDecode(authKey.token);
+        const TOKEN_MINUTES = Math.ceil(moment.duration(moment.unix(decoded.exp).diff(moment(new Date()))).asMinutes());
+        if (TOKEN_MINUTES <= 1) {
+            isValid = false;
+            message = 'Session Expired!';
+        } else {
+            // dispatch({ type: 'LOGIN', payload: decoded });
+            isValid = true;
+        }
+    }
+    console.log('validateUser', isValid, message);
     return {
-        isValid: true,
-        message: ''
+        isValid,
+        message
     }
 }
 export const getSetuser = async (dispatch) => {

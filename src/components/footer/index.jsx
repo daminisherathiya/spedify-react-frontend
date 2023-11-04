@@ -16,7 +16,7 @@ const Footer = (props) => {
   if (exclusionArray.indexOf(props.location.pathname) >= 0) {
     return "";
   }
-  console.log(props.location, "location");
+  // console.log(props.location, "location");
 
   return (
     <>

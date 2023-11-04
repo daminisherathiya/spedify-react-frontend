@@ -29,6 +29,7 @@ import Slider from "react-slick";
 import { FiArrowRight } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
+import ProjectCategories from "./components/ProjectCategories";
 // import Achievements from "./components/Achievements";
 
 const Home3 = () => {
@@ -249,219 +250,7 @@ const Home3 = () => {
         {/* <TrustedCompanies /> */}
         {/* / Company Hire */}
         {/* Different Categories */}
-        <section className="section different-categories">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-12 mx-auto">
-                <div
-                  className="section-header section-header-three section-locate aos"
-                  data-aos="fade-up"
-                >
-                  <div>
-                    <h2 className="header-title">
-                      Browse Projects By Category
-                    </h2>
-                    <p>Get work done in over 60 different categories</p>
-                  </div>
-                  <div className="view-locations">
-                    <Link to="project" className="btn btn-primary ">
-                      View all Categories{" "}
-                      <span className="location-right">
-                        <FiArrowRight className="feather-arrow-right" />
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row ">
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_01} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>Angular Development</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>840 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_02} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>Python Development</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>640 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_03} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>Node JS Development</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>240 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_04} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>PHP Development</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>840 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_05} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>Illustration</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>340 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_06} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>Link Building</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>540 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_07} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>Android Apps</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>640 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6 d-flex">
-                <div
-                  className="different-categories-blk aos"
-                  data-aos="fade-up"
-                >
-                  <div className="differ-img">
-                    <img src={Category_08} alt="" />
-                  </div>
-                  <div className="differ-content">
-                    <h6>MYSQL</h6>
-                    <p>
-                      Web development, UI/UX development, Module development
-                      &amp; more
-                    </p>
-                    <div className="category-foot">
-                      <span>140 Projects</span>
-                      <Link to="project">
-                        <i className="fas fa-caret-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ProjectCategories />
         {/* /Different Categories */}
         {/* Marketplace */}
         <section className="section best-marketplace">
@@ -470,7 +259,7 @@ const Home3 = () => {
               <div className="col-md-6 d-flex align-items-center">
                 <div className="market-place-group aos" data-aos="fade-up">
                   <h2>
-                    Join World’s Best <span>Marketplace for developers</span>
+                    Join World’s Best <span>Marketplace for providers</span>
                   </h2>
                   <p>
                     Why hire people when you can simply integrate our talented
@@ -497,16 +286,16 @@ const Home3 = () => {
                   </ul>
                   <div className="market-place-btn">
                     <Link
-                      to="project"
+                      to="/post-project"
                       className="btn btn-primary market-project me-2"
                     >
                       Post a Project
                     </Link>
                     <Link
-                      to="provider-details"
+                      to="/search/providers"
                       className="btn btn-primary market-developer"
                     >
-                      Find Developers
+                      Find Providers
                     </Link>
                   </div>
                 </div>
@@ -556,7 +345,7 @@ const Home3 = () => {
                         data-bs-toggle="pill"
                         to="#trending-developers"
                       >
-                        Trending Developers
+                        Trending Providers
                       </Link>
                     </li>
                     <li className="nav-item">

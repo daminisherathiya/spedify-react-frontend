@@ -62,8 +62,8 @@ const FeaturedDevelopers = () => {
               className="section-header section-header-three aos"
               data-aos="fade-up"
             >
-              <h2 className="header-title">Featured Developers for you</h2>
-              <p>We have over 1400+ Developers </p>
+              <h2 className="header-title">Featured Providers for you</h2>
+              <p>We have over 1400+ Providers </p>
             </div>
           </div>
         </div>
@@ -481,8 +481,10 @@ const FeaturedDevelopers = () => {
               className="view-locations all-views text-center aos aos-init aos-animate"
               data-aos="fade-up"
             >
-              <Link to="provider-details" className="btn btn-primary ">
-                View all Developers{" "}
+              <Link
+                to="/search/providers"
+                className="btn btn-primary ">
+                View all Providers{" "}
                 <span className="location-right">
                   <FiArrowRight className="feather-arrow-right" />
                 </span>

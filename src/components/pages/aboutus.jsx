@@ -120,7 +120,7 @@ const Aboutus = () => {
             <div className="col-md-3">
               <div className="counter">
                 <h2>900+</h2>
-                <h4> Developers</h4>
+                <h4> Providers</h4>
               </div>
             </div>
             <div className="col-md-3">
@@ -140,7 +140,7 @@ const Aboutus = () => {
               <div className="section-header text-center">
                 <div className="section-line" />
                 <h2 className="header-title">Top Reviews</h2>
-                <p>High Performing Developers To Your</p>
+                <p>High Performing Providers To Your</p>
               </div>
             </div>
           </div>

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { Logo_01 } from "../imagepath";
-import Axios from '../../Axios';
-import { PreferencesKeys, setItem } from '../.././preferences/Preferences';
-import { useEnumsContext } from '../../context/EnumsContext';
-import { useUserContext } from '../.././context/UserContext';
-import { getSetuser } from '../.././helpers';
+import { Logo_01 } from "../../../components/imagepath";
+import Axios from '../../../Axios';
+import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
+import { useEnumsContext } from '../../../context/EnumsContext';
+import { useUserContext } from '../../../context/UserContext';
+import { getSetuser } from '../../../helpers';
 
 const Register = (props) => {
   // console.log('[props]', props);

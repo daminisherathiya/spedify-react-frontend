@@ -72,8 +72,8 @@ import Aboutus from "./components/pages/aboutus";
 import BlankPage from "./components/pages/blank_page";
 import Page404 from "./components/pages/page_404";
 // import UserDetails from "./components/pages/user_details";
-import Login from "./components/login";
-import Register from "./components/register";
+import Login from "./pages/auth/login";
+import Register from "./pages/auth/register";
 import ForgotPassword from "./components/pages/forgot_password";
 import onboardScreen from "./components/pages/onboardScreen";
 
@@ -132,9 +132,10 @@ import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
 import Socket from "./socket/Socket";
 import { Get } from "./services/Api";
-// import userSession from "../hooks/userSession";
+import userSession from "./hooks/userSession";
 import { BASE_URL } from "./keys";
 import { getSetuser } from "./helpers";
+import { createBrowserHistory } from 'history'
 if (
   !window.location.pathname.includes("admin")
 
@@ -142,12 +143,13 @@ if (
   require('./assets/js/bootstrap.min.js');
   require("./assets/css/style.css");
 }
+const history = createBrowserHistory();
 const AppContainer = function (props) {
-  // userSession();
+  userSession();
   const history = useHistory();
   const { state, dispatch } = useUserContext();
   const isLoggedIn = state.isLoggedIn;
-  // console.log('userState', state);
+  console.log('isLoggedIn', isLoggedIn);
   React.useEffect(() => {
     getSetuser(dispatch);
   }, [])
@@ -156,16 +158,15 @@ const AppContainer = function (props) {
     // console.log('location', location);
 
     return (
-      <Router basename={`${config.publicPath}`}>
+      <Router basename={`${config.publicPath}`} history={history}>
         <Header {...props} />
         <Switch>
-          {/* home */}
+          <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/post-project" component={PostProject} />
+          <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/messages" component={Messges} />
           <Route exact path="/" component={Home} />
           <Route exact path="/developer-profile" component={DeveloperProfile} />
           <Route exact path="/company-profile" component={CompanyProfile} />
-          <Route exact path="/post-project" component={PostProject} />
           <Route exact path="/company-project" component={CompanyProject} />
-          {/* For Employer */}
           <Route exact path="/search/providers" component={Providers} />
           <Route exact path="/provider-details/:userId" component={DeveloperDetails} />
           <Route exact path="/search/providers/:query/developer-list" component={TalentList} />
@@ -185,7 +186,6 @@ const AppContainer = function (props) {
           <Route exact path="/favourites-list" component={Favouritelist} />
           <Route exact path="/invited-favourites" component={Invitations} />
           <Route exact path="/membership-plans" component={Membership} />
-          <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/messages" component={Messges} />
           <Route exact path="/review" component={Review} />
           <Route exact path="/deposit-funds" component={DepositFunds} />
           <Route exact path="/withdraw-money" component={Withdrawmoney} />
@@ -198,7 +198,6 @@ const AppContainer = function (props) {
           <Route exact path="/company-details" component={CompanyDetails} />
           <Route exact path="/company-gallery" component={CompanyGallery} />
           <Route exact path="/company-review" component={CompanyReview} />
-          {/* For Freelancer */}
           <Route exact path="/profileDetails/:userId" component={UserDetails} />
           <Route exact path="/search/work" component={Project} />
           <Route exact path="/project-details" component={ProjectDetails} />
@@ -222,14 +221,11 @@ const AppContainer = function (props) {
           <Route exact path="/freelancer-profile" component={FreelancerProfile} />
           <Route exact path="/freelancer-details" component={FreelancerDetails} />
           <Route exact path="/freelancer-chats" component={Chats} />
-          {/* <Route exact path="/messges" component={Messges} /> */}
-          <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/messages" component={Messges} />
           <Route exact path="/freelancer-review" component={FreelancerReview} />
           <Route exact path="/freelancer-portfolio" component={FreelancerPortfolio} />
           <Route exact path="/freelancer-withdraw-money" component={FreelancerWithdrawmoney} />
           <Route exact path="/freelancer-transaction-history" component={FreelancerTransactionhistory} />
           <Route exact path="/freelancer-verify-identity" component={FreelancerVerifyIdentity} />
-          {/* Pages */}
           <Route exact path="/about" component={Aboutus} />
           <Route exact path="/blank-page" component={BlankPage} />
           <Route exact path="/404-page" component={Page404} />
@@ -242,23 +238,16 @@ const AppContainer = function (props) {
           <Route exact path="/register" component={Register} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
 
-          {/* Blogs */}
           <Route exact path="/blog-list" component={BlogList} />
           <Route exact path="/blog-grid" component={BlogGrid} />
           <Route exact path="/blog-details" component={BlogDetails} />
-          {/* Privacy Pages */}
           <Route exact path="/privacy-policy" component={PrivacyPolicy} />
           <Route exact path="/term-condition" component={TermsCondition} />
-          {/* Jobs*/}
           <Route exact path="/post-job" component={PostJob} />
-          {/* Faq */}
           <Route exact path="/faq" component={Faq} />
-          {/* Edit Project */}
           <Route exact path="/edit-project" component={EditProject} />
-
         </Switch>
         <Route render={(props) => <Footer {...props} />} />
-        {/* <Route render={(props) => <FooterTwo {...props} />} /> */}
       </Router>
     );
   };

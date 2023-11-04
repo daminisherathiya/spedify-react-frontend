@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Logo_01 } from "../imagepath";
-import Axios from '../../Axios';
-import { useUserContext } from '../.././context/UserContext';
-import { PreferencesKeys, setItem } from '../.././preferences/Preferences';
-import { getSetuser } from '../.././helpers';
+import Axios from '../../../Axios';
+import { useUserContext } from '../../../context/UserContext';
+import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
+import { getSetuser } from '../../../helpers';
+import { useEnumsContext } from '../../../context/EnumsContext';
 
 const Login = ({ history }) => {
   const { dispatch } = useUserContext();
+  const { enumsState } = useEnumsContext();
   const [user, setUser] = React.useState({});
+  const [userRoles, setUserRoles] = React.useState([]);
   const onChange = e => {
     e.persist();
     setUser({ ...user, [e.target.id]: e.target.value })
@@ -19,7 +22,7 @@ const Login = ({ history }) => {
       if (response.data.statusCode === 200) {
         await setItem(PreferencesKeys.authKey, response.data.doc);
         await getSetuser(dispatch)
-        history.push('/')
+        // history.push('/')
       }
     } catch (error) {
       console.log('[onSubmit].error', error)
@@ -30,6 +33,9 @@ const Login = ({ history }) => {
     document.body.className = 'account-page';
     return () => { document.body.className = ''; }
   });
+  useEffect(() => {
+    if (enumsState.UserRoles) setUserRoles(enumsState.UserRoles)
+  }, [enumsState]);
   return (
     <>
       {/* Page Content */}

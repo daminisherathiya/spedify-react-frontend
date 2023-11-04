@@ -52,7 +52,7 @@ const ListUser = ({ user, openChat }) => {
                   </div>
                   <div className="freelance-location">
                     <i className="fas fa-map-marker-alt me-1" />
-                    {`${user.state}`}
+                    {`${user.addressLine},${user.state}`}
                   </div>
                   <div className="rating">
                     {ratingStars()}

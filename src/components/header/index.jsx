@@ -12,7 +12,7 @@ import Avatar from "../common/Avatar";
 
 const Header = (props) => {
   const history = useHistory();
-  const { state } = useUserContext();
+  const { state, dispatch } = useUserContext();
   const [isSideMenu, setSideMenu] = useState("");
   const [isSideMenu1, setSideMenu1] = useState("");
   const [isSideMenu2, setSideMenu2] = useState("");
@@ -87,7 +87,8 @@ const Header = (props) => {
   const onLogout = () => {
     localStorage.clear();
     Socket.disconnect();
-    window.location.href = '/';
+    dispatch({ type: 'LOGOUT' });
+    // window.location.href = '/';
   }
   return (
     <>
@@ -123,8 +124,8 @@ const Header = (props) => {
                   <Link to="/about">About us</Link>
                 </li>
 
-                <li className={pathname === "blog-grid" ? "active" : ""}>
-                  <Link to="/blog-grid">Blogs</Link>
+                <li className={pathname === "blog-list" ? "active" : ""}>
+                  <Link to="/blog-list">Blogs</Link>
                 </li>
                 <li className={pathname === "faq" ? "active" : ""}>
                   <Link to="/faq">FAQ</Link>

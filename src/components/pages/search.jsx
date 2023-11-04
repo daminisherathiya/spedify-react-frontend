@@ -211,7 +211,7 @@ class Search extends Component {
               <div className="col-md-12 col-lg-8 col-xl-9">
                 <div className="row align-items-center result bg-white">
                   <div className="col-md-6 col-12">
-                    <h4>Browse 7 UI/UX Developers</h4>
+                    <h4>Browse 7 UI/UX Providers</h4>
                   </div>
                   <div className="col-md-6 col-12 d-md-block d-none">
                     <div className="sort-by">
