@@ -4,7 +4,7 @@ import { Logo_01 } from "../../../components/imagepath";
 import Axios from '../../../Axios';
 import { useUserContext } from '../../../context/UserContext';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
-import { getSetuser } from '../../../helpers';
+import { getSetUser } from '../../../helpers';
 import UserRoles from '../components/UserRoles';
 
 const Login = ({ history }) => {
@@ -20,7 +20,7 @@ const Login = ({ history }) => {
       const response = await Axios.post('api/v1/users/login', { ...user, userType: user.userType || 1 });
       if (response.data.statusCode === 200) {
         await setItem(PreferencesKeys.authKey, response.data.doc);
-        await getSetuser(dispatch)
+        await getSetUser(dispatch)
         history.push('/')
       }
     } catch (error) {

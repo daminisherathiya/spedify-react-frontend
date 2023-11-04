@@ -4,9 +4,9 @@ import { useLocation } from 'react-router-dom';
 import { PreferencesKeys, setItem } from './preferences/Preferences';
 
 const ProtectedRoute = ({ component: Component, isLoggedIn, ...rest }) => {
-    console.log('[ProtectedRoute].isLoggedIn', isLoggedIn);
-  // const location = useLocation();
-  // setItem(PreferencesKeys.lastRoute, location)
+  console.log('[ProtectedRoute].isLoggedIn', isLoggedIn);
+  const location = useLocation();
+  setItem(PreferencesKeys.lastRoute, location)
   // React.useEffect(() => {
   //   console.log('[ProtectedRoute].isLoggedIn', isLoggedIn);
   // }, [isLoggedIn])

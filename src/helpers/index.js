@@ -72,31 +72,28 @@ export const validateUser = async (dispatch) => {
             isValid = false;
             message = 'Session Expired!';
         } else {
-            // dispatch({ type: 'LOGIN', payload: decoded });
-            isValid = true;
+            isValid = await getSetUser(dispatch, authKey.token)
         }
     }
-    console.log('validateUser', isValid, message);
     return {
         isValid,
         message
     }
 }
-export const getSetuser = async (dispatch) => {
+export const getSetUser = async (dispatch, token) => {
     try {
-        const userAuth = await getItem(PreferencesKeys.authKey);
-        if (userAuth) {
-            Socket.init(userAuth.token)
-            const userDetails = await Get(`api/v1/users/userDetails`);
-            const picture = userDetails.doc.picture;
-            if (picture) {
-                userDetails.doc.picture = `${BASE_URL}/${picture.files.find((p, index) => index === 0).path}`
-            }
-            dispatch({ type: 'LOGIN', payload: userDetails.doc });
-            console.log('User session initiated.');
+        Socket.init(token)
+        const userDetails = await Get(`api/v1/users/userDetails`);
+        const picture = userDetails.doc.picture;
+        if (picture) {
+            userDetails.doc.picture = `${BASE_URL}/${picture.files.find((p, index) => index === 0).path}`
         }
+        dispatch({ type: 'LOGIN', payload: userDetails.doc });
+        console.log('User session initiated.');
+        return true
     } catch (error) {
-        console.log('[getSetuser].error', error);
+        console.log('[getSetUser].error', error);
+        return false;
     }
 
 }

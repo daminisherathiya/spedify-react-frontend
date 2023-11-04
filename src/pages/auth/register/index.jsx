@@ -5,7 +5,7 @@ import Axios from '../../../Axios';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import { useEnumsContext } from '../../../context/EnumsContext';
 import { useUserContext } from '../../../context/UserContext';
-import { getSetuser } from '../../../helpers';
+import { getSetUser } from '../../../helpers';
 
 const Register = (props) => {
   // console.log('[props]', props);
@@ -37,7 +37,7 @@ const Register = (props) => {
       const response = await Axios.post('api/v1/users/signup', { ...user, userType: userRoles.find(x => x.active)?.value ?? 1, loginMethodType: 1 });
       if (response.data.statusCode === 200) {
         await setItem(PreferencesKeys.authKey, response.data.doc);
-        await getSetuser(dispatch)
+        await getSetUser(dispatch)
         history.push('/')
       }
     } catch (error) {

@@ -128,7 +128,6 @@ import ProtectedRoute from "./ProtectedRoute";
 import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
 import userSession from "./hooks/userSession";
-import { getSetuser } from "./helpers";
 import { createBrowserHistory } from 'history'
 if (
   !window.location.pathname.includes("admin")
@@ -139,14 +138,11 @@ if (
 }
 const history = createBrowserHistory();
 const AppContainer = function (props) {
-  userSession();
-  const history = useHistory();
+  // const history = useHistory();
   const { state, dispatch } = useUserContext();
   const isLoggedIn = state.isLoggedIn;
-  console.log('isLoggedIn', isLoggedIn);
-  React.useEffect(() => {
-    getSetuser(dispatch);
-  }, [])
+  console.log('[AppContainer].userState', state);
+  userSession(dispatch, history);
   if (props) {
     return (
       <Router basename={`${config.publicPath}`} history={history}>

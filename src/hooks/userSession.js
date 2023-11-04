@@ -20,7 +20,7 @@ const userSession = () => {
     React.useEffect(
         () => {
             const asyncHandler = async () => {
-                const { isValid, message } = await validateUser(dispatch);
+                const { isValid, message } = await validateUser(dispatch, history);
                 if (isValid) toDashboard(isValid);
                 else toLogin(message);
             }
