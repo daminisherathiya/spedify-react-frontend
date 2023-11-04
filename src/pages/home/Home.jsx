@@ -21,16 +21,15 @@ import {
 } from "../../components/imagepath";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import FooterThree from "../footer/index-three";
-import FeaturedDevelopers from "./slider/Featureddevelopers";
-import TopReviews1 from "./slider/TopReviews1";
-import Blogs from "./slider/home3blog";
+import FooterThree from "../../components/footer/index-three";
+import FeaturedDevelopers from "./components/Featureddevelopers";
+import TopReviews1 from "./components/TopReviews1";
+import Blogs from "./components/Blogs";
 import Slider from "react-slick";
 import { FiArrowRight } from "react-icons/fi";
-
 import { useHistory } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
-import Achievements from "./slider/Achievements";
+// import Achievements from "./components/Achievements";
 
 const Home3 = () => {
   const [scroll, setScroll] = useState(true);
