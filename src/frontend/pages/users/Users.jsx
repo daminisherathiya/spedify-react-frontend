@@ -12,7 +12,7 @@ import {
 } from "../../components/imagepath";
 import { Post } from "../../../services/Api";
 import GridUser from "./GridUser";
-import Button from "./Button";
+import Button from "../../components/Button";
 import ListUser from "./ListUser";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";

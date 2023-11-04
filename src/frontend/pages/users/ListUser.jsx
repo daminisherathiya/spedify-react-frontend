@@ -5,7 +5,7 @@ import 'react-select2-wrapper/css/select2.css';
 import {
   Avatar_1,
 } from "../../components/imagepath";
-import Button from "./Button";
+import Button from "../../components/Button";
 import { BASE_URL } from "../../../keys";
 const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const num = randomNumber(5, 1);

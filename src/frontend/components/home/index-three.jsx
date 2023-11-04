@@ -85,6 +85,7 @@ import { FiArrowRight } from "react-icons/fi";
 
 import { useHistory } from "react-router-dom";
 import { useEnumsContext } from "../../../context/EnumsContext";
+import Achievements from "./slider/Achievements";
 
 const Home3 = () => {
   const [scroll, setScroll] = useState(true);
@@ -246,7 +247,7 @@ const Home3 = () => {
                   <h5>TRUSED BY OVER 2M+ USERS</h5>
                 </div>
                 <h1>
-                  Get the Perfect Advocates/Providers &amp; <br /> Parents{" "}
+                  Get the Perfect Providers &amp; <br /> Parents{" "}
                 </h1>
                 <form
                   className="form"
@@ -262,7 +263,7 @@ const Home3 = () => {
                           className="select form-control"
                           data={options1}
                           options={{
-                            placeholder: "Advocate/Providers",
+                            placeholder: options1[0]?.text,
                           }}
                           onSelect={(e) => {
                             query.current = {
@@ -300,7 +301,7 @@ const Home3 = () => {
         {/* <HomeSliderBanner /> */}
         {/* Home Banner */}
         {/* Company Hire */}
-        <TrustedCompanies />
+        {/* <TrustedCompanies /> */}
         {/* / Company Hire */}
         {/* Different Categories */}
         <section className="section different-categories">
@@ -575,103 +576,10 @@ const Home3 = () => {
         </section>
         {/* /Marketplace */}
         {/* Trending Projects */}
-        <TrendingProject />
+        {/* <TrendingProject /> */}
         {/* Trending Projects */}
         {/* Our Feature */}
-        <section className="section feature-count">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-md-12 mx-auto">
-                <div
-                  className="section-header feature-count-head aos"
-                  data-aos="fade-up"
-                >
-                  <h2 className="header-title">Spedify Acheivements</h2>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              {/* Feature Item */}
-              <div className="col-xl-3 col-md-6">
-                <div
-                  className="feature-item freelance-count aos"
-                  data-aos="fade-up"
-                >
-                  <div className="feature-icon ">
-                    <img src={Icon_07} className="img-fluid" alt="" />
-                  </div>
-                  <div className="feature-content course-count">
-                    <h3>
-                      <span className="counter-up">
-                        <CountUp end={9207} duration={10} />
-                      </span>
-                    </h3>
-                    <p>Freelance developers</p>
-                  </div>
-                </div>
-              </div>
-              {/* /Feature Item */}
-              {/* Feature Item */}
-              <div className="col-xl-3 col-md-6">
-                <div className="feature-item aos" data-aos="fade-up">
-                  <div className="feature-icon">
-                    <img src={Icon_04} className="img-fluid" alt="" />
-                  </div>
-                  <div className="feature-content course-count">
-                    <h3>
-                      <span className="counter-up">
-                        <CountUp end={6000} duration={10} />
-                      </span>
-                      <span>+</span>
-                    </h3>
-                    <p>Projects Added</p>
-                  </div>
-                </div>
-              </div>
-              {/* /Feature Item */}
-              {/* Feature Item */}
-              <div className="col-xl-3 col-md-6">
-                <div
-                  className="feature-item comp-project aos"
-                  data-aos="fade-up"
-                >
-                  <div className="feature-icon">
-                    <img src={Icon_05} className="img-fluid" alt="" />
-                  </div>
-                  <div className="feature-content course-count">
-                    <h3>
-                      <span className="counter-up">
-                        <CountUp end={919207} duration={10} />
-                      </span>
-                    </h3>
-                    <p>Completed projects</p>
-                  </div>
-                </div>
-              </div>
-              {/* /Feature Item */}
-              {/* Feature Item */}
-              <div className="col-xl-3 col-md-6">
-                <div
-                  className="feature-item comp-project aos"
-                  data-aos="fade-up"
-                >
-                  <div className="feature-icon">
-                    <img src={Icon_06} className="img-fluid" alt="" />
-                  </div>
-                  <div className="feature-content course-count">
-                    <h3 className="counter-up">
-                      <span>
-                        <CountUp end={998} duration={10} />
-                      </span>
-                    </h3>
-                    <p>Companies Registered</p>
-                  </div>
-                </div>
-              </div>
-              {/* /Feature Item */}
-            </div>
-          </div>
-        </section>
+        {/* <Achievements /> */}
         {/* /Our Feature */}
         {/* Feature Projects */}
         <FeaturedDevelopers />
