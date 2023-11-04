@@ -2,17 +2,18 @@ import React from 'react'
 import { useUserContext } from '../context/UserContext';
 // import { useHistory } from 'react-router-dom';
 import { PreferencesKeys, getItem } from '../preferences/Preferences';
-import { validateUser } from '../helpers';
+import { getSetUser, validateUser } from '../helpers';
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
 const userSession = () => {
     const { state, dispatch } = useUserContext();
     const user = state;
     // const history = useHistory();
-    const toLogin = async (message = '') => {
+    const toLogin = (message = '') => {
         history.push({ pathname: `/` });
     };
-    const toDashboard = async () => {
+    const toDashboard = async (token) => {
+        await getSetUser(dispatch, token)
         const lastRoute = await getItem(PreferencesKeys.lastRoute);
         if (lastRoute?.pathname) history.push({ pathname: lastRoute.pathname });
         else history.push({ pathname: `/` });
@@ -20,14 +21,14 @@ const userSession = () => {
     React.useEffect(
         () => {
             const asyncHandler = async () => {
-                const { isValid, message } = await validateUser(dispatch, history);
-                if (isValid) toDashboard(isValid);
+                const { isValid, message, token } = await validateUser(dispatch, history);
+                if (isValid) await toDashboard(token);
                 else toLogin(message);
             }
             // if (user.isLoggedIn === false) toLogin();
             asyncHandler();
         },
-        [user.isLoggedIn]);
+        []);
     return user;
 }
 export default userSession

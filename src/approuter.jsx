@@ -9,6 +9,7 @@ import { UserProvider } from './context/UserContext.jsx';
 import { EnumsProvider, useEnumsContext } from './context/EnumsContext.jsx';
 import './preferences/Preferences.js'
 import Axios from './Axios.js';
+import { LoaderProvider } from './context/LoaderContext.jsx';
 const AppRouter = (props) => {
     const { dispatch } = useEnumsContext();
     const getEnums = async () => {
@@ -21,7 +22,7 @@ const AppRouter = (props) => {
     return (
         <>
             <Router basename={`${config.publicPath}`}>
-                <Route render={(props) => <UserProvider> <AppContainer {...props} />  </UserProvider>} />
+                <Route render={(props) => <LoaderProvider> <UserProvider> <AppContainer {...props} />  </UserProvider></LoaderProvider>} />
             </Router>
             <NotificationContainer />
         </>

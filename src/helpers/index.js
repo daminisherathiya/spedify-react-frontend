@@ -63,21 +63,24 @@ export const isJSONStringValid = (jsonString) => {
 
 export const validateUser = async (dispatch) => {
     let message = '',
-        isValid = false;
+        isValid = false,
+        token = '';
     const authKey = await getItem(PreferencesKeys.authKey) || false;
     if (authKey) {
+        token = authKey.token;
         const decoded = jwtDecode(authKey.token);
         const TOKEN_MINUTES = Math.ceil(moment.duration(moment.unix(decoded.exp).diff(moment(new Date()))).asMinutes());
         if (TOKEN_MINUTES <= 1) {
             isValid = false;
             message = 'Session Expired!';
         } else {
-            isValid = await getSetUser(dispatch, authKey.token)
+            isValid = true
         }
     }
     return {
         isValid,
-        message
+        message,
+        token
     }
 }
 export const getSetUser = async (dispatch, token) => {
@@ -88,7 +91,7 @@ export const getSetUser = async (dispatch, token) => {
         if (picture) {
             userDetails.doc.picture = `${BASE_URL}/${picture.files.find((p, index) => index === 0).path}`
         }
-        dispatch({ type: 'LOGIN', payload: userDetails.doc });
+        dispatch({ type: 'LOGIN', payload: { ...userDetails.doc, isLoading: false } });
         console.log('User session initiated.');
         return true
     } catch (error) {

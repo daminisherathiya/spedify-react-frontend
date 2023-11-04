@@ -129,6 +129,7 @@ import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
 import userSession from "./hooks/userSession";
 import { createBrowserHistory } from 'history'
+import Loader from "./components/loader";
 if (
   !window.location.pathname.includes("admin")
 
@@ -138,18 +139,16 @@ if (
 }
 const history = createBrowserHistory();
 const AppContainer = function (props) {
-  // const history = useHistory();
-  const { state, dispatch } = useUserContext();
-  const isLoggedIn = state.isLoggedIn;
-  console.log('[AppContainer].userState', state);
+  const { dispatch } = useUserContext();
   userSession(dispatch, history);
   if (props) {
     return (
       <Router basename={`${config.publicPath}`} history={history}>
+        <Loader />
         <Header {...props} />
         <Switch>
-          <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/post-project" component={PostProject} />
-          <ProtectedRoute isLoggedIn={isLoggedIn} exact path="/messages" component={Messges} />
+          <ProtectedRoute exact path="/messages"><Messges /></ProtectedRoute>
+          <ProtectedRoute exact path="/post-project"><PostProject /></ProtectedRoute>
           <Route exact path="/" component={Home} />
           <Route exact path="/developer-profile" component={DeveloperProfile} />
           <Route exact path="/company-profile" component={CompanyProfile} />

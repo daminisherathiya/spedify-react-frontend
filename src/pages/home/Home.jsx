@@ -105,14 +105,14 @@ const Home3 = () => {
       },
     ],
   };
-  useEffect(() => {
-    setTimeout(function () {
-      $("#global-loader");
-      setTimeout(function () {
-        $("#global-loader").fadeOut("slow");
-      }, 100);
-    }, 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(function () {
+  //     $("#global-loader");
+  //     setTimeout(function () {
+  //       $("#global-loader").fadeOut("slow");
+  //     }, 100);
+  //   }, 500);
+  // }, []);
   const history = useHistory();
   const eventclick = () => {
     const { userType = 1, queryStr = '' } = query.current;
@@ -121,14 +121,6 @@ const Home3 = () => {
   };
   return (
     <>
-      {/* Loader */}
-      <div id="global-loader">
-        <div className="whirly-loader"> </div>
-        <div className="loader-img">
-          <img src={load_icon} className="img-fluid" alt="" />
-        </div>
-      </div>
-      {/* Loader */}
       <div className="main-wrapper">
         {/* Start Navigation */}
         {/* Header */}
