@@ -10,20 +10,20 @@ import {
   home_icon, Avatar_1, Avatar_2, Avatar_3, Avatar_4, Avatar_5, Avatar_6,
   Avatar_7, Avatar_8, Avatar_9, Avatar_10, Avatar_11, Avatar_12, Logo
 } from "../../components/imagepath";
-import { Post } from "../.././services/Api";
+import { Post } from "../../services/Api";
 import GridUser from "./GridUser";
 import Button from "../../components/Button";
 import ListUser from "./ListUser";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useUserContext } from "../.././context/UserContext";
+import { useUserContext } from "../../context/UserContext";
 
 const options = [
   { id: 1, text: 'Select Category', },
-  { id: 2, text: 'Talent', },
-  { id: 3, text: 'UI Talent', },
-  { id: 4, text: 'React Talent', },
-  { id: 5, text: '.Net Talent', },
+  { id: 2, text: 'Providers', },
+  { id: 3, text: 'UI Providers', },
+  { id: 4, text: 'React Providers', },
+  { id: 5, text: '.Net Providers', },
 ]
 
 const options1 = [
@@ -54,11 +54,11 @@ const User = ({ isGrid, user, openChat }) => {
   else return <ListUser user={user} openChat={openChat} />
 }
 
-const Talent = (props) => {
+const Providers = (props) => {
   const history = useHistory();
   const { state, dispatch } = useUserContext();
   const loggedInUser = state.user;
-  console.log('loggedInUser', loggedInUser);
+  // console.log('loggedInUser', loggedInUser);
   const [isGrid, setIsGrid] = React.useState(true);
   const [users, setUsers] = React.useState([]);
   const params = useParams();
@@ -101,12 +101,12 @@ const Talent = (props) => {
   }
   const getUsers = async () => {
     try {
-      const parms = params.query.split("&");
+      const query = history.location.search.split("=")[1]
       const data = await Post(
         'api/v1/search/user',
         {
-          "userType": parseInt(`${parms[0]}`.split("=")[1]),
-          "query": `${parms[1]}`.split("=")[1] === "all" ? "" : `${parms[1]}`.split("=")[1]
+          "userType": 1,
+          "query": query ? query : ""
         })
       if (data.statusCode === 200) setUsers(loggedInUser ? [...data.doc].filter(u => u._id !== loggedInUser._id) : data.doc);
       else setUsers([]);
@@ -523,4 +523,4 @@ const Talent = (props) => {
   )
 
 }
-export default Talent;
+export default Providers;

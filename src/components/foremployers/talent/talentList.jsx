@@ -323,12 +323,12 @@ import {Logo,Img_02,Img_03,Img_04,Img_05 } from "../../imagepath";
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-flex">
                   <ul className="list-grid d-flex align-items-center">
                     <li>
-                      <Link to="/search/provider/asdf">
+                      <Link to="/search/providers/asdf">
                         <i className="fas fa-th-large" />
                       </Link>
                     </li>
                     <li>
-                      <Link to="/search/provider/sdf/developer-list" className="favour-active">
+                      <Link to="/search/providers/sdf/developer-list" className="favour-active">
                         <i className="fas fa-list" />
                       </Link>
                     </li>

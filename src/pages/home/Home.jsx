@@ -114,9 +114,9 @@ const Home3 = () => {
   }, []);
   const history = useHistory();
   const eventclick = () => {
-    const { userType = 1, queryStr = 'all' } = query.current;
-    if (userType === 1) history.push(`/search/provider/userType=${userType}&q=${queryStr}`)
-    else history.push(`/search/work/userType=${userType}&q=${queryStr}`)
+    const { userType = 1, queryStr = '' } = query.current;
+    if (userType === 1) history.push(queryStr ? `/search/providers/?q=${queryStr}` : `/search/providers`)
+    else history.push(queryStr ? `/search/work/?q=${queryStr}` : `/search/work`)
   };
   return (
     <>
@@ -195,11 +195,11 @@ const Home3 = () => {
                 </h1>
                 <form
                   className="form"
-                // name="store"
-                // id="store"
-                // method="post"
-                // action={`${config.publicPath}project`}
-                style={{width: "105%"}}
+                  // name="store"
+                  // id="store"
+                  // method="post"
+                  // action={`${config.publicPath}project`}
+                  style={{ width: "105%" }}
                 >
                   <div className="form-inner">
                     <div className="input-group">

@@ -88,7 +88,7 @@ import Home from "./pages/home/Home";
 import DeveloperProfile from "./components/forfreelancer/developerprofile"
 import CompanyProfile from './components/forfreelancer/companyprofile/index'
 import CompanyProject from './components/forfreelancer/companyproject/index'
-import Providers from './pages/providers/Users';
+import Providers from './pages/providers/Providers';
 import UserDetails from './pages/providers/UserDetails';
 
 // CSS Files
@@ -166,9 +166,9 @@ const AppContainer = function (props) {
           <Route exact path="/post-project" component={PostProject} />
           <Route exact path="/company-project" component={CompanyProject} />
           {/* For Employer */}
-          <Route exact path="/search/provider/:query" component={Providers} />
+          <Route exact path="/search/providers" component={Providers} />
           <Route exact path="/provider-details/:userId" component={DeveloperDetails} />
-          <Route exact path="/search/provider/:query/developer-list" component={TalentList} />
+          <Route exact path="/search/providers/:query/developer-list" component={TalentList} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/edit-project" component={EditProject} />
           <Route exact path="/manage-projects" component={Manageprojects} />
@@ -200,7 +200,7 @@ const AppContainer = function (props) {
           <Route exact path="/company-review" component={CompanyReview} />
           {/* For Freelancer */}
           <Route exact path="/profileDetails/:userId" component={UserDetails} />
-          <Route exact path="/search/work/:query" component={Project} />
+          <Route exact path="/search/work" component={Project} />
           <Route exact path="/project-details" component={ProjectDetails} />
           <Route exact path="/freelancer-dashboard" component={FreelancerDashboard} />
           <Route exact path="/freelancer-project-proposals" component={FreelancerProjectproposal} />
