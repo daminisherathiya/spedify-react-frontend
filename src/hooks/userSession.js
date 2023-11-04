@@ -1,9 +1,9 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
-import { useUserContext } from '../context/UserContext';
+import { useUserContext } from './context/UserContext';
 import { useHistory } from 'react-router-dom';
-import { PreferencesKeys, getItem, setItem } from '../preferences/Preferences';
-import { validateUser } from '../helpers';
+import { PreferencesKeys, getItem, setItem } from './preferences/Preferences';
+import { validateUser } from './helpers';
 const userSession = () => {
     const { state } = useUserContext();
     const location = useLocation();
