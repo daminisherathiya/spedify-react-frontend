@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import config from "config";
 
-import { Route, Redirect, BrowserRouter as Router, Switch, Link } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import PostProject from "./components/postproject";
@@ -9,7 +9,6 @@ import PostProject from "./components/postproject";
 //home
 
 //For Employee
-import AdvocateTalents from "./components/foremployers/talent/talent";
 import DeveloperDetails from "./components/foremployers/talent/talentDetails";
 import Dashboard from "./components/foremployers/dashboard";
 import EditProject from "./components/foremployers/editproject";
@@ -75,7 +74,6 @@ import Page404 from "./components/pages/page_404";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import ForgotPassword from "./components/pages/forgot_password";
-import onboardScreen from "./components/pages/onboardScreen";
 
 //Blog
 import BlogList from "./components/blog/blog_list";
@@ -127,13 +125,9 @@ import OnboardScreen from "./components/pages/onboardScreen";
 import { useHistory } from 'react-router-dom';
 import { useUserContext } from "./context/UserContext";
 import ProtectedRoute from "./ProtectedRoute";
-import { PreferencesKeys, getItem } from "./preferences/Preferences";
 import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
-import Socket from "./socket/Socket";
-import { Get } from "./services/Api";
 import userSession from "./hooks/userSession";
-import { BASE_URL } from "./keys";
 import { getSetuser } from "./helpers";
 import { createBrowserHistory } from 'history'
 if (
@@ -154,9 +148,6 @@ const AppContainer = function (props) {
     getSetuser(dispatch);
   }, [])
   if (props) {
-    const location = history.location.pathname.split("/")[1];
-    // console.log('location', location);
-
     return (
       <Router basename={`${config.publicPath}`} history={history}>
         <Header {...props} />
