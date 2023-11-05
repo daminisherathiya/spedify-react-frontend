@@ -127,7 +127,7 @@ import { useUserContext } from "./context/UserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
-import userSession from "./hooks/userSession";
+import userSession from "./hooks/useUserSession";
 import { createBrowserHistory } from 'history'
 import Loader from "./components/loader";
 if (

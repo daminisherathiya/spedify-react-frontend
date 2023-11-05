@@ -15,22 +15,4 @@ const ProtectedRoute = ({ children }) => {
   if (isLoggedIn) return children
   return null
 };
-// const ProtectedRoute = ({ component: Component, ...rest }) => {
-//   const loader = document.getElementById("global-loader");
-//   console.log('Loader', loader?.style?.display);
-//   const location = useLocation();
-//   setItem(PreferencesKeys.lastRoute, location)
-//   const { state } = useUserContext();
-//   const isLoggedIn = state.isLoggedIn;
-//   return <Route
-//     {...rest}
-//     render={(props) =>
-//       isLoggedIn ?
-//         <Component {...props} />
-//         :
-//         <Redirect to='/login' />
-//     }
-//   />
-// };
-
 export default ProtectedRoute;
