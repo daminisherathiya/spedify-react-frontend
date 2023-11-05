@@ -17,7 +17,7 @@ const Login = ({ history }) => {
   }
   const onSubmit = async () => {
     try {
-      const response = await Axios.post('api/v1/users/login', { ...user, userType: user.userType || 1 });
+      const response = await Axios.post('api/v1/users/login', { ...user, userType: user.userType || 1, loginMethodType: 1 });
       if (response.data.statusCode === 200) {
         await setItem(PreferencesKeys.authKey, response.data.doc);
         await getSetUser(dispatch)

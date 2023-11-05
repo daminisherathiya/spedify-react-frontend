@@ -4,7 +4,7 @@ import config from "config";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
-import PostProject from "./components/postproject";
+import PostProject from "./pages/postproject";
 
 //home
 

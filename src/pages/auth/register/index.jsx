@@ -3,38 +3,26 @@ import { Link } from "react-router-dom";
 import { Logo_01 } from "../../../components/imagepath";
 import Axios from '../../../Axios';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
-import { useEnumsContext } from '../../../context/EnumsContext';
 import { useUserContext } from '../../../context/UserContext';
 import { getSetUser } from '../../../helpers';
+import UserRoles from '../components/UserRoles';
 
 const Register = (props) => {
   // console.log('[props]', props);
   const { history } = props;
-  const { enumsState } = useEnumsContext();
   const { dispatch } = useUserContext();
   const [user, setUser] = React.useState({});
-  const [userRoles, setUserRoles] = React.useState([]);
-  // console.log('[userRoles]', userRoles);
   useEffect(() => {
     document.body.className = 'account-page';
     return () => { document.body.className = ''; }
   });
-  useEffect(() => {
-    if (enumsState.UserRoles) setUserRoles(enumsState.UserRoles)
-  }, [enumsState]);
   const onChange = e => {
     e.persist();
     setUser({ ...user, [e.target.id]: e.target.value })
   }
-  const enumSelection = (enumIndex) => {
-    setUserRoles([...userRoles].map((en, j) => {
-      if (j === enumIndex) return { ...en, active: true }
-      return { ...en, active: false };
-    }))
-  }
   const onSubmit = async () => {
     try {
-      const response = await Axios.post('api/v1/users/signup', { ...user, userType: userRoles.find(x => x.active)?.value ?? 1, loginMethodType: 1 });
+      const response = await Axios.post('api/v1/users/signup', { ...user, userType: user.userType || 1, loginMethodType: 1 });
       if (response.data.statusCode === 200) {
         await setItem(PreferencesKeys.authKey, response.data.doc);
         await getSetUser(dispatch)
@@ -44,6 +32,8 @@ const Register = (props) => {
       console.log('[onSubmit].error', error)
     }
   }
+  const onRoleChange = userType => setUser(pre => ({ ...pre, userType }))
+
   return (
     <>
       {/* Page Content */}
@@ -66,21 +56,7 @@ const Register = (props) => {
                       <h3>Join Spedify</h3>
                       <p>Make the most of your professional life</p>
                     </div>
-                    <nav className="user-tabs mb-4">
-                      <ul role="tablist" className="nav nav-pills nav-justified">
-                        {
-                          (userRoles || []).map((role, index) => (
-                            <li
-                              key={`role-index-${index}`}
-                              className={`nav-item nav-link ${role.active ? "active" : ''}`}
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => enumSelection(index)}>
-                              {role.text}
-                            </li>
-                          ))
-                        }
-                      </ul>
-                    </nav>
+                    <UserRoles onChange={onRoleChange} />
                     <div className="tab-content pt-0">
                       <div
                         role="tabpanel"

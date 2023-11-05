@@ -30,6 +30,7 @@ import { FiArrowRight } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
 import ProjectCategories from "./components/ProjectCategories";
+import Button from "../../components/Button";
 // import Achievements from "./components/Achievements";
 
 const Home3 = () => {
@@ -281,7 +282,7 @@ const Home3 = () => {
                       to="/post-project"
                       className="btn btn-primary market-project me-2"
                     >
-                      Post a Project
+                      Post a Request
                     </Link>
                     <Link
                       to="/search/providers"
