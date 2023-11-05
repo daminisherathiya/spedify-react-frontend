@@ -136,6 +136,11 @@ const Header = (props) => {
                     <Link to="/messages">Messages</Link>
                   </li>
                 }
+                {
+                  (isLoggedIn && currentUser.userType === 2) && <li className={pathname === "post-project" ? "active" : ""}>
+                    <Link to="/post-project">Post a Project</Link>
+                  </li>
+                }
               </ul>
             </div>
             {
@@ -178,7 +183,6 @@ const Header = (props) => {
                 <ul className="nav header-navbar-rht reg-head">
                   <li><Link to="/register" className="reg-btn"><img src={Reg_icon} className="me-1" alt="icon" />{" "} Register</Link></li>
                   <li><Link to="/login" className="log-btn"> <img src={Lock_icon} className="me-1" alt="icon" />{" "}Login</Link></li>
-                  {/* <li><Link to="post-project" className="login-btn">Post a Project{" "} </Link></li> */}
                 </ul>
             }
           </nav>

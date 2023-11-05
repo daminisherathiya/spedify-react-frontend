@@ -121,7 +121,7 @@ const Messages = (props) => {
     })
     setChats(mdu);
     setRoom(chat._id)
-    socket.emit('join_room', { username: currentUser.username, room: chat._id });
+    // socket.emit('join_room', { username: currentUser.username, room: chat._id });
     socket.emit('seen_msgs', chat._id)
   }
   const formatDateFromTimestamp = (timestamp) => {
