@@ -30,7 +30,6 @@ import { FiArrowRight } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
 import ProjectCategories from "./components/ProjectCategories";
-import Button from "../../components/Button";
 // import Achievements from "./components/Achievements";
 
 const Home3 = () => {

@@ -20379,3 +20379,41 @@ input.select2-search__field {
 	display:block;
 
 }
+/* Float four columns side by side */
+.list-container {
+	float: left;
+	width: 30%;
+	padding: 0 8px;
+  }
+  
+  /* Remove extra left and right margins, due to padding */
+  .list-row {margin: 0 -5px;}
+  
+  /* Clear floats after the columns */
+  .list-row:after {
+	content: "";
+	display: table;
+	clear: both;
+  }
+  
+  /* Responsive columns */
+  @media screen and (max-width: 600px) {
+	.list-container {
+	  width: 100%;
+	  display: block;
+	  margin-bottom: 20px;
+	}
+  }
+  
+  /* Style the counter cards */
+  .card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 16px;
+	text-align: left;
+	background-color: #fff;
+  }
+  .list-text {
+	cursor: pointer;
+  }
+
+  

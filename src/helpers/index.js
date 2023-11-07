@@ -105,3 +105,18 @@ export const getFilePath = (pictureObj = {}) => {
     if (pictureObj.files) return `${BASE_URL}/${pictureObj.files.find((x, index) => index === 0).path}`;
     else return ''
 }
+
+export const uniqueArray = (arrayOfObjects = [{}]) => {
+    // Use a Set to keep track of unique IDs
+    const uniqueIds = new Set();
+    const uniqueObjects = [];
+
+    // Filter the array to keep only unique objects based on the 'id' property
+    for (const obj of arrayOfObjects) {
+        if (!uniqueIds.has(obj._id)) {
+            uniqueIds.add(obj._id);
+            uniqueObjects.push(obj);
+        }
+    }
+    return uniqueObjects;
+}

@@ -43,6 +43,7 @@
     "currency-symbol-map": "^5.1.0",
     "datatables.net": "^1.13.4",
     "datatables.net-bs4": "^1.13.4",
+    "debounce": "^1.2.1",
     "feather-icons-react": "^0.6.2",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^6.1.8",
