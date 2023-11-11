@@ -50,11 +50,13 @@ import './assets/css/animate.min.css';
 //owl css
 import './assets/css/owl.theme.default.css';
 import './assets/css/owl.theme.default.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useUserContext } from "./context/UserContext";
 // import PostJob from "./components/jobs/post-job";
 import userSession from "./hooks/useUserSession";
 import { createBrowserHistory } from 'history'
+import { ToastContainer } from 'react-toastify';
 if (
   !window.location.pathname.includes("admin")
 
@@ -70,6 +72,7 @@ const AppContainer = function (props) {
     return (
       <Router basename={`${config.publicPath}`} history={history}>
         <Loader />
+        <ToastContainer />
         <Header {...props} />
         <Switch>
           <ProtectedRoute exact path="/messages"><Messges /></ProtectedRoute>

@@ -7,42 +7,26 @@ import { useUserContext } from '../../../context/UserContext';
 export default function Search() {
     const { enumsState } = useEnumsContext();
     const { state } = useUserContext();
+    if (!state.isLoggedIn) return null;
+    const userRoles = enumsState.UserRoles || [];
     const history = useHistory();
     const query = React.useRef(null);
-    query.current = { userType: 1 }
-    const userRoles = enumsState.UserRoles || [];
+    query.current = { queryStr: '' }
     const eventclick = () => {
-        const { userType = 1, queryStr = '' } = query.current;
-        if (userType === 1) history.push(queryStr ? `/search/providers/?q=${queryStr}` : `/search/providers`)
+        const { queryStr = '' } = query.current;
+        if (state.user.userType === 2) history.push(queryStr ? `/search/providers/?q=${queryStr}` : `/search/providers`)
         else history.push(queryStr ? `/search/work/?q=${queryStr}` : `/search/work`)
     };
-    if (!state.isLoggedIn) return null;
     return (
         <form
             className="form"
-            style={{ width: "105%" }}
         >
             <div className="form-inner">
                 <div className="input-group">
-                    <span className="drop-detail">
-                        <Select2
-                            className="select form-control"
-                            data={userRoles}
-                            options={{
-                                placeholder: userRoles[0]?.text,
-                            }}
-                            onSelect={(e) => {
-                                query.current = {
-                                    ...query.current,
-                                    userType: e.target.value
-                                }
-                            }}
-                        />
-                    </span>
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="What are you looking for"
+                        placeholder={`Search for the best ${userRoles.find(x => x.value !== state.user.userType).text}`}
                         onChange={e => {
                             query.current = {
                                 ...query.current,

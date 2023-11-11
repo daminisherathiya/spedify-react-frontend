@@ -6,6 +6,7 @@ import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import { useUserContext } from '../../../context/UserContext';
 import { getSetUser } from '../../../helpers';
 import UserRoles from '../components/UserRoles';
+import { Post } from '../../../services/Api';
 
 const Register = (props) => {
   // console.log('[props]', props);
@@ -22,9 +23,9 @@ const Register = (props) => {
   }
   const onSubmit = async () => {
     try {
-      const response = await Axios.post('api/v1/users/signup', { ...user, userType: user.userType || 1, loginMethodType: 1 });
-      if (response.data.statusCode === 200) {
-        await setItem(PreferencesKeys.authKey, response.data.doc);
+      const data = await Post('api/v1/users/signup', { ...user, userType: user.userType || 1, loginMethodType: 1 });
+      if (data.statusCode === 200) {
+        await setItem(PreferencesKeys.authKey, data.doc);
         await getSetUser(dispatch)
         history.push('/')
       }
