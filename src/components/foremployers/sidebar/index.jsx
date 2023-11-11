@@ -10,7 +10,7 @@ const Sidebar = ({ userProfile }) => {
         <>
             <div className="settings-widget">
                 <div className="settings-header d-sm-flex flex-row flex-wrap text-center text-sm-start align-items-center">
-                    <Link to="/user-account-details">
+                    <Link to="/userDetails/userId">
                         <img
                             alt="profile image"
                             src={Img_04}

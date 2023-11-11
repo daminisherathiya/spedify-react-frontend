@@ -6,9 +6,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import PostProject from "./pages/postproject";
 
-//home
 
-//For Employee
 import DeveloperDetails from "./components/foremployers/talent/talentDetails";
 import Dashboard from "./components/foremployers/dashboard";
 import EditProject from "./components/foremployers/editproject";
@@ -36,9 +34,8 @@ import VerifyIdentity from "./components/foremployers/verifyidentity";
 import Projectproposal from "./components/foremployers/projectproposal";
 
 
-//For freelancer
-import Project from "./components/forfreelancer/projects/project";
-import ProjectDetails from "./components/forfreelancer/projects/project_details";
+import Project from "./pages/projects/project";
+import ProjectDetails from "./pages/projects/project_details";
 import ViewProposals from "./components/forfreelancer/projectproposal/viewproposal";
 import FreelancerDashboard from "./components/forfreelancer/dashboard";
 import FreelancerProjectproposal from "./components/forfreelancer/projectproposal";
@@ -67,16 +64,15 @@ import Invoices from "./components/pages/invoices/invoices";
 import InvoiceView from "./components/pages/invoices/invoice_view";
 
 //Pages
-import Aboutus from "./components/pages/aboutus";
+import Aboutus from "./pages/about";
 import BlankPage from "./components/pages/blank_page";
 import Page404 from "./components/pages/page_404";
-// import UserDetails from "./components/pages/user_details";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import ForgotPassword from "./components/pages/forgot_password";
 
 //Blog
-import BlogList from "./components/blog/blog_list";
+import BlogList from "./pages/blog";
 import BlogGrid from "./components/blog/blog_grid";
 import BlogDetails from "./components/blog/blog_details";
 
@@ -87,7 +83,7 @@ import DeveloperProfile from "./components/forfreelancer/developerprofile"
 import CompanyProfile from './components/forfreelancer/companyprofile/index'
 import CompanyProject from './components/forfreelancer/companyproject/index'
 import Providers from './pages/providers/Providers';
-import UserDetails from './pages/providers/UserDetails';
+import UserDetails from './pages/profile/UserDetails';
 
 // CSS Files
 // Bootstrap CSS
@@ -119,7 +115,7 @@ import CompanyGallery from "./components/CompanyDetails/company-gallery";
 import CompanyReview from "./components/CompanyDetails/companyreview";
 import TalentList from "./components/foremployers/talent/talentList";
 import PostJob from "./components/jobs/post_job";
-import Faq from "./components/faq/faq";
+import Faq from "./pages/faq";
 import Favouritelist from "./components/foremployers/favourites/favouritelist";
 import OnboardScreen from "./components/pages/onboardScreen";
 import { useHistory } from 'react-router-dom';
@@ -184,7 +180,7 @@ const AppContainer = function (props) {
           <Route exact path="/company-details" component={CompanyDetails} />
           <Route exact path="/company-gallery" component={CompanyGallery} />
           <Route exact path="/company-review" component={CompanyReview} />
-          <Route exact path="/profileDetails/:userId" component={UserDetails} />
+          <Route exact path="/userDetails/:userId" component={UserDetails} />
           <Route exact path="/search/work" component={Project} />
           <Route exact path="/project-details" component={ProjectDetails} />
           <Route exact path="/freelancer-dashboard" component={FreelancerDashboard} />
@@ -215,7 +211,6 @@ const AppContainer = function (props) {
           <Route exact path="/about" component={Aboutus} />
           <Route exact path="/blank-page" component={BlankPage} />
           <Route exact path="/404-page" component={Page404} />
-          <Route exact path="/user-account-details" component={UserDetails} />
           <Route exact path="/freelancer-invoices" component={Invoices} />
           <Route exact path="/view-invoice" component={InvoiceView} />
           <Route exact path="/login" component={Login} />

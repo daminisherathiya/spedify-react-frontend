@@ -155,7 +155,7 @@ const Header = (props) => {
                     </Link>
                     <div className="dropdown-menu emp">
                       <div className="drop-head">Account Details</div>
-                      <Link className="dropdown-item" to="/user-account-details">
+                      <Link className="dropdown-item" to="/userDetails/userId">
                         <i className="material-icons">verified_user</i> View profile
                       </Link>
                       <div className="drop-head">Projects Settings</div>
