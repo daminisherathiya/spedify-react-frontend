@@ -21,7 +21,6 @@ import {
 } from "../../components/imagepath";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import FooterThree from "../../components/footer/index-three";
 import FeaturedDevelopers from "./components/Featureddevelopers";
 import TopReviews1 from "./components/TopReviews1";
 import Blogs from "./components/Blogs";
@@ -853,7 +852,6 @@ const Home3 = () => {
           </div>
         </section>
         {/* /App Version */}
-        <FooterThree />
         {/* /Main Wrapper */}
         {/* Scroll Top */}
         <button

@@ -2,15 +2,31 @@ import React from "react";
 import config from "config";
 
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import Manageprojects from "./pages/manageprojects";
+import Favourites from "./pages/favourites";
+import Review from "./pages/review";
+import Settings from "./pages/settings";
+import Project from "./pages/projects/project";
+import ProjectDetails from "./pages/projects/project_details";
+import PostProject from "./pages/postproject";
+import Aboutus from "./pages/about";
+import Login from "./pages/auth/login";
+import Register from "./pages/auth/register";
+import Faq from "./pages/faq";
+import Messges from "./pages/messages";
+import ProtectedRoute from "./ProtectedRoute";
+import BlankPage from "./components/pages/blank_page";
+import Page404 from "./components/pages/page_404";
+import Loader from "./components/loader";
+
+
+
 import Header from "./components/header";
 import Footer from "./components/footer";
-import PostProject from "./pages/postproject";
 
 
-import DeveloperDetails from "./components/foremployers/talent/talentDetails";
 import Dashboard from "./components/foremployers/dashboard";
 import EditProject from "./components/foremployers/editproject";
-import Manageprojects from "./pages/manageprojects";
 import Pendingprojects from "./components/foremployers/pendingprojects";
 import OngoingProjects from "./components/foremployers/ongoingprojects";
 import CompletedProjects from "./components/foremployers/completedprojects";
@@ -20,22 +36,18 @@ import Milestone from "./components/foremployers/milestone";
 import Task from "./components/foremployers/task";
 import File from "./components/foremployers/file";
 import Payment from "./components/foremployers/payment";
-import Favourites from "./pages/favourites";
 import Invitations from "./components/foremployers/invitations";
 import Membership from "./components/foremployers/membership";
-import Review from "./pages/review";
 import DepositFunds from "./components/foremployers/depositfunds";
 import Withdrawmoney from "./components/foremployers/withdrawmoney";
 import Transactionhistory from "./components/foremployers/transactionhistory";
-import Settings from "./pages/settings";
 import ChangePassword from "./components/foremployers/changepassword";
 import DeleteAccount from "./components/foremployers/deleteaccount";
 import VerifyIdentity from "./components/foremployers/verifyidentity";
 import Projectproposal from "./components/foremployers/projectproposal";
 
 
-import Project from "./pages/projects/project";
-import ProjectDetails from "./pages/projects/project_details";
+
 import ViewProposals from "./components/forfreelancer/projectproposal/viewproposal";
 import FreelancerDashboard from "./components/forfreelancer/dashboard";
 import FreelancerProjectproposal from "./components/forfreelancer/projectproposal";
@@ -64,11 +76,7 @@ import Invoices from "./components/pages/invoices/invoices";
 import InvoiceView from "./components/pages/invoices/invoice_view";
 
 //Pages
-import Aboutus from "./pages/about";
-import BlankPage from "./components/pages/blank_page";
-import Page404 from "./components/pages/page_404";
-import Login from "./pages/auth/login";
-import Register from "./pages/auth/register";
+
 import ForgotPassword from "./components/pages/forgot_password";
 
 //Blog
@@ -110,17 +118,12 @@ import FreelancerDetails from "./components/freelancer-details";
 import OnboardScreenEmployer from "./components/pages/onboardScreen/onboard-screen-employer";
 import TalentList from "./components/foremployers/talent/talentList";
 import PostJob from "./components/jobs/post_job";
-import Faq from "./pages/faq";
 import Favouritelist from "./components/foremployers/favourites/favouritelist";
 import OnboardScreen from "./components/pages/onboardScreen";
-import { useHistory } from 'react-router-dom';
 import { useUserContext } from "./context/UserContext";
-import ProtectedRoute from "./ProtectedRoute";
-import Messges from "./pages/messages";
 // import PostJob from "./components/jobs/post-job";
 import userSession from "./hooks/useUserSession";
 import { createBrowserHistory } from 'history'
-import Loader from "./components/loader";
 if (
   !window.location.pathname.includes("admin")
 
@@ -145,7 +148,6 @@ const AppContainer = function (props) {
           <Route exact path="/company-profile" component={CompanyProfile} />
           <Route exact path="/company-project" component={CompanyProject} />
           <Route exact path="/search/providers" component={Providers} />
-          <Route exact path="/provider-details/:userId" component={DeveloperDetails} />
           <Route exact path="/search/providers/:query/developer-list" component={TalentList} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/edit-project" component={EditProject} />
