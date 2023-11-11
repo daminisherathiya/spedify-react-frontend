@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Select2 from "react-select2-wrapper";
 import "react-select2-wrapper/css/select2.css";
 // Import Images
 import {
@@ -25,20 +24,11 @@ import FeaturedDevelopers from "./components/Featureddevelopers";
 import TopReviews1 from "./components/TopReviews1";
 import Blogs from "./components/Blogs";
 import Slider from "react-slick";
-import { FiArrowRight } from "react-icons/fi";
-import { useHistory } from "react-router-dom";
-import { useEnumsContext } from "../../context/EnumsContext";
 import ProjectCategories from "./components/ProjectCategories";
-// import Achievements from "./components/Achievements";
+import Search from "./components/Search";
 
 const Home3 = () => {
   const [scroll, setScroll] = useState(true);
-  const query = React.useRef(null);
-  query.current = { userType: 1 }
-  const { enumsState } = useEnumsContext();
-  // console.log('Enums.enumsState', enumsState);
-  const options1 = enumsState.UserRoles || []
-
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -112,12 +102,7 @@ const Home3 = () => {
   //     }, 100);
   //   }, 500);
   // }, []);
-  const history = useHistory();
-  const eventclick = () => {
-    const { userType = 1, queryStr = '' } = query.current;
-    if (userType === 1) history.push(queryStr ? `/search/providers/?q=${queryStr}` : `/search/providers`)
-    else history.push(queryStr ? `/search/work/?q=${queryStr}` : `/search/work`)
-  };
+
   return (
     <>
       <div className="main-wrapper">
@@ -183,54 +168,9 @@ const Home3 = () => {
                   <h5>TRUSED BY OVER 2M+ USERS</h5>
                 </div>
                 <h1>
-                  Get the Perfect Providers &amp; <br /> Work{" "}
+                  Get the Perfect Providers &amp; <br /> Support{" "}
                 </h1>
-                <form
-                  className="form"
-                  // name="store"
-                  // id="store"
-                  // method="post"
-                  // action={`${config.publicPath}project`}
-                  style={{ width: "105%" }}
-                >
-                  <div className="form-inner">
-                    <div className="input-group">
-                      <span className="drop-detail">
-                        <Select2
-                          className="select form-control"
-                          data={options1}
-                          options={{
-                            placeholder: options1[0]?.text,
-                          }}
-                          onSelect={(e) => {
-                            query.current = {
-                              ...query.current,
-                              userType: e.target.value
-                            }
-                          }}
-                        />
-                      </span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="What are you looking for"
-                        onChange={e => {
-                          query.current = {
-                            ...query.current,
-                            queryStr: e.target.value
-                          }
-                        }}
-                      />
-                      <button
-                        type="button"
-                        className="btn btn-primary sub-btn"
-                        onClick={eventclick}
-                      >
-                        Search Now
-                      </button>
-                    </div>
-                  </div>
-                </form>
+                <Search />
               </div>
             </div>
           </div>
