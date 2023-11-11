@@ -1,5 +1,5 @@
 import Axios from '../Axios';
-import { toast } from 'react-toastify';
+import { toast,  } from 'react-toastify';
 const catchError = (error) => {
     console.log('[catchError].error', error);
     const errorData = error?.response?.data ?? null;

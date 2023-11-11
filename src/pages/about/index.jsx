@@ -72,17 +72,36 @@ const Aboutus = () => {
                   About <span className="orange-text">Spedify</span>
                 </h2>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est
-                  modi, saepe hic esse maxime quasi, sapiente ex debitis quis
-                  dolorum unde, neque quibusdam eveniet nobis enim porro repudiandae
-                  nesciunt quidem.
+                  Welcome to Spedify, a community  committed to transforming the landscape of special education by focusing on two key objectives: improving outcomes for students with special needs, and connecting caring specialists with parents to alleviate stress and enhance the individualized education plan (IEP) process for their child.
                 </p>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni
-                  delectus soluta adipisci beatae ullam quisquam, quia recusandae
-                  rem assumenda, praesentium porro sequi eaque doloremque tenetur
-                  incidunt officiis explicabo optio perferendis.
+                  At Spedify, we understand the unique challenges that children with special needs, and their families face in their educational journey. Special education procedures, including identification, evaluation, and decision-making regarding a child's need for special education supports and services, can be complex and overwhelming. We believe that every child deserves an education tailored to their individual needs, and we are dedicated to making this process more accessible and less stressful for both students and their support networks.
                 </p>
+
+                <p>
+                  Our core mission is to enhance the outcome of special education procedures, to ensure that every child with special needs benefits from their educational experience. We strive to create a positive impact by streamlining the IEP process, ensuring that it is more effective and results in better educational experiences for children with diverse learning needs. By leveraging technology, and the expertise of a vast network of specialists, Spedify aims to be a catalyst for positive change in the special education environment.
+                </p>
+
+                <p>
+                  We recognize that parents and caretakers play a pivotal role in the educational journey of their children with special needs. We provide a supportive and informative platform that empowers parents and caretakers with the knowledge and resources they need to navigate the intricacies of the system. Spedify is here to be your ally, offering guidance and assistance every step of the way.
+
+                </p>
+
+                <p>
+                  At Spedify, we are more than a platform; we are a community dedicated to making a positive impact on the lives of children with special needs and their families.
+                </p>
+
+                <p>
+                  Join us on this transformative journey, where we strive to create a brighter and more inclusive future for every child, one IEP at a time,
+
+                </p>
+
+                <p>
+                  Jen Parker,
+                  President/CEO, Spedify
+
+                </p>
+
                 <Link to="/project" className="btn learn-btn">
                   LEARN MORE
                 </Link>
@@ -145,7 +164,7 @@ const Aboutus = () => {
             </div>
           </div>
           <div id="testimonial-slider" class="owl-theme testimonial-slider">
-            <OwlCarousel  className="owl-theme review-slider owl-loaded owl-drag" {...options}>
+            <OwlCarousel className="owl-theme review-slider owl-loaded owl-drag" {...options}>
               {/* Review Widget */}
               <div className="review-blog">
                 <div className="review-top d-flex align-items-center">

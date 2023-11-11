@@ -129,7 +129,7 @@ const Providers = (props) => {
                       </Link>
                     </li>
                     <li className="breadcrumb-item" aria-current="page">
-                      Talents
+                      Providers
                     </li>
                   </ol>
                 </nav>
