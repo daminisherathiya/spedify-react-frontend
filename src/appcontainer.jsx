@@ -73,8 +73,6 @@ import ForgotPassword from "./components/pages/forgot_password";
 
 //Blog
 import BlogList from "./pages/blog";
-import BlogGrid from "./components/blog/blog_grid";
-import BlogDetails from "./components/blog/blog_details";
 
 import PrivacyPolicy from "./components/privacyPages/privacy_policy";
 import TermsCondition from "./components/privacyPages/term_condition";
@@ -220,8 +218,6 @@ const AppContainer = function (props) {
           <Route exact path="/forgot-password" component={ForgotPassword} />
 
           <Route exact path="/blog-list" component={BlogList} />
-          <Route exact path="/blog-grid" component={BlogGrid} />
-          <Route exact path="/blog-details" component={BlogDetails} />
           <Route exact path="/privacy-policy" component={PrivacyPolicy} />
           <Route exact path="/term-condition" component={TermsCondition} />
           <Route exact path="/post-job" component={PostJob} />
