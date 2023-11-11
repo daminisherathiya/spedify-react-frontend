@@ -20382,7 +20382,7 @@ input.select2-search__field {
 /* Float four columns side by side */
 .list-container {
 	float: left;
-	width: 30%;
+	width: 100%;
 	padding: 0 8px;
   }
   

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
 import { debounce } from "@material-ui/core";
-import Axios from "../../Axios";
 import { Post } from "../../services/Api";
 import { uniqueArray } from "../../helpers";
 import { useUserContext } from "../../context/UserContext";
@@ -29,8 +28,8 @@ const Skills = ({ skills = [], onSkillSelect = () => { }, hide = () => { } }) =>
             </div>
 
           ))}
-          <button type="button" className="btn" onClick={hide}>
-            close
+          <button type="button" className="btn" onClick={hide} style={{ color: "#FE4A23" }}>
+            Close
           </button>
         </div>
       </div>
@@ -51,25 +50,27 @@ const SelectedSkills = ({ selectedSkills = [], onSkillSelect = () => { } }) => {
     }
   </div>
 }
+const initState = {
+  "_id": "",
+  "title": "",
+  "description": "",
+  "supportType": 0,
+  "pricingType": 0,
+  "skills": [],
+  "deliveryStamp": 0,
+  "deliveryType": 0,
+  "location": '',
+  "fixedPrice": 0,
+  "hourlyMin": 0,
+  "hourlyMax": 0,
+  "proposals": []
+}
 const PostProject = (props) => {
   const { enumsState } = useEnumsContext();
   const { state } = useUserContext();
   const currentUser = state.user;
-  const [payload, setPayload] = React.useState({
-    "_id": "",
-    "title": "",
-    "description": "",
-    "supportType": 0,
-    "pricingType": 0,
-    "skills": [],
-    "deliveryStamp": 0,
-    "deliveryType": 0,
-    "location": `${currentUser.addressLine}, ${currentUser.state}`,
-    "fixedPrice": 0,
-    "hourlyMin": 0,
-    "hourlyMax": 0,
-    "proposals": []
-  });
+  const [payload, setPayload] = React.useState(initState);
+  console.log('payload', payload);
   const [skills, setSkills] = React.useState([]);
   const [show, setShow] = React.useState(false)
   const onSkillSelect = (skill) => {
@@ -99,6 +100,16 @@ const PostProject = (props) => {
       [id]: value
     }))
   };
+  const onSubmit = async () => {
+    try {
+      const data = await Post('api/v1/project/createUpdate', { ...payload, skills: skills.filter(s => s.selected)?._id, "location": `${currentUser.addressLine}, ${currentUser.state}` })
+      setPayload(initState)
+      alert(data.doc.message)
+    } catch (error) {
+
+    }
+
+  }
   return (
     <>
       {/* Breadcrumb */}
@@ -167,7 +178,7 @@ const PostProject = (props) => {
                         <div className="title-detail">
                           <h3>Support Needed By</h3>
                           <div className="form-group mb-0">
-                            <select className="form-control select" id="supportType">
+                            <select className="form-control select" id="supportType" onChange={onChange}>
                               <option value={0}>Select</option>
                               {(enumsState.DeliveryTypes || []).map((supportType, index) => {
                                 return <option value={supportType.value} key={`support-key-${index}`}>{supportType.text}</option>
@@ -205,6 +216,7 @@ const PostProject = (props) => {
                               className="form-control mr-2"
                               placeholder={20.0}
                               id="fixedPrice"
+                              onChange={onChange}
                             />{" "}
                             <label> / hr</label>
                           </div>
@@ -256,7 +268,7 @@ const PostProject = (props) => {
                             ]
                           }}
                         /> */}
-                          <textarea className="form-control summernote" rows={5} defaultValue={""} />
+                          <textarea onChange={onChange} id="description" className="form-control summernote" rows={5} defaultValue={""} />
                         </div>
                       </div>
                     </div>
@@ -270,7 +282,7 @@ const PostProject = (props) => {
                     <div className="row">
                       <div className="col-md-12 text-end">
                         <div className="btn-item">
-                          <button type="submit" className="btn next-btn">
+                          <button type="button" className="btn next-btn" onClick={onSubmit}>
                             Submit
                           </button>
                         </div>
