@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 // Import Images
-import { Img_404, Logo } from "../imagepath";
+import { Img_404, Logo } from "../components/imagepath";
 
 const Page404 = () => {
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Logo, home_icon } from '../imagepath';
+import { home_icon } from '../components/imagepath';
 
 const BlankPage = () => {
   return (
@@ -28,7 +28,7 @@ const BlankPage = () => {
           </div>
         </div>
       </div>
-     {/* /Breadcrumb */}
+      {/* /Breadcrumb */}
       {/* Page Content */}
       <div className="content">
         <div className="container">
@@ -40,7 +40,7 @@ const BlankPage = () => {
         </div>
       </div>
       {/* /Page Content */}
-      
+
 
     </>
   )
