@@ -107,10 +107,7 @@ import './assets/css/owl.theme.default.css';
 import './assets/css/owl.theme.default.min.css';
 
 import FreelancerDetails from "./components/freelancer-details";
-import CompanyDetails from "./components/CompanyDetails";
 import OnboardScreenEmployer from "./components/pages/onboardScreen/onboard-screen-employer";
-import CompanyGallery from "./components/CompanyDetails/company-gallery";
-import CompanyReview from "./components/CompanyDetails/companyreview";
 import TalentList from "./components/foremployers/talent/talentList";
 import PostJob from "./components/jobs/post_job";
 import Faq from "./pages/faq";
@@ -175,9 +172,6 @@ const AppContainer = function (props) {
           <Route exact path="/delete-account" component={DeleteAccount} />
           <Route exact path="/verify-identity" component={VerifyIdentity} />
           <Route exact path="/project-proposals" component={Projectproposal} />
-          <Route exact path="/company-details" component={CompanyDetails} />
-          <Route exact path="/company-gallery" component={CompanyGallery} />
-          <Route exact path="/company-review" component={CompanyReview} />
           <Route exact path="/userDetails/:userId" component={UserDetails} />
           <Route exact path="/search/work" component={Project} />
           <Route exact path="/project-details" component={ProjectDetails} />
