@@ -5,14 +5,9 @@ import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
-// Import Images
-import {
-  home_icon, Avatar_1, Avatar_2, Avatar_3, Avatar_4, Avatar_5, Avatar_6,
-  Avatar_7, Avatar_8, Avatar_9, Avatar_10, Avatar_11, Avatar_12, Logo
-} from "../../components/imagepath";
+import { home_icon} from "../../components/imagepath";
 import { Post } from "../../services/Api";
 import GridUser from "./GridUser";
-import Button from "../../components/Button";
 import ListUser from "./ListUser";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
