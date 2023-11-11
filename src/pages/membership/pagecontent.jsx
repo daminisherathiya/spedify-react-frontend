@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 // Import Images
-import { Mem_icon_01,Mem_icon_02,Mem_icon_03 } from "../imagepath";
+import { Mem_icon_01,Mem_icon_02,Mem_icon_03 } from "../../components/imagepath";
 
 class Pagecontent extends Component {
    

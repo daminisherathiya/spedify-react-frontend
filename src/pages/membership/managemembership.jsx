@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Pagecontent from "./pagecontent"
 // Import Images
-import { Redeem_icon } from "../imagepath";
+import { Redeem_icon } from "../../components/imagepath";
 
 class Managemembership extends Component {
    

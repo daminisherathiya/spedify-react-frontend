@@ -2,6 +2,7 @@ import React from "react";
 import config from "config";
 
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+
 import Manageprojects from "./pages/manageprojects";
 import Favourites from "./pages/favourites";
 import Review from "./pages/review";
@@ -18,16 +19,14 @@ import BlogList from "./pages/blog";
 import Providers from './pages/providers/Providers';
 import UserDetails from './pages/profile/UserDetails';
 import Home from "./pages/home/Home";
-
-import ProtectedRoute from "./ProtectedRoute";
 import BlankPage from "./pages/blank_page";
 import Page404 from "./pages/page_404";
+
 import Loader from "./components/loader";
-
-
-
 import Header from "./components/header";
 import Footer from "./components/footer";
+
+import ProtectedRoute from "./ProtectedRoute";
 
 // CSS Files
 // Bootstrap CSS

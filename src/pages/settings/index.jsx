@@ -7,7 +7,7 @@ import { useEnumsContext } from "../../context/EnumsContext";
 import { useUserContext } from "../.././context/UserContext";
 import Avatar from "../../components/common/Avatar";
 import { Post } from "../.././services/Api";
-import Select from "../../components/Select";
+import Select from "../../components/select";
 
 function findObjectDifferences(obj1, obj2) {
   const diffs = {};
