@@ -37,7 +37,7 @@ const Header = ({ location }) => {
     root.classList.remove("menu-opened");
   };
 
-  const pathname = history.location.pathname.split("/")[1];
+  const pathname = location.pathname.split("/")[1];
   // console.log('[header].pathname', pathname);
   // const exclusionArray = [
   //   "/onboard-screen",
