@@ -26,9 +26,6 @@ const AppRouter = (props) => {
             <ToastContainer />
             <Header {...props} location={location} />
             <AppContainer />
-            {/* <Routes>
-                <Route render={(props) => <AppContainer {...props} />} />
-            </Routes> */}
             <Footer {...props} location={location} />
             <NotificationContainer />
         </>

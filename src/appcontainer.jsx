@@ -53,6 +53,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import PostJob from "./components/jobs/post-job";
 import { createBrowserHistory } from 'history'
 import useUserSession from "./hooks/useUserSession";
+import BlogDetails from "./pages/blog/BlogDetails";
 if (
   !window.location.pathname.includes("admin")
 
@@ -87,6 +88,7 @@ const AppContainer = function (props) {
         <Route exact path="/search/providers" Component={Providers} />
         <Route exact path="/blog-list" Component={BlogList} />
         <Route exact path="/userDetails/:userId" Component={UserDetails} />
+        <Route exact path="/blog-details" Component={BlogDetails} />
       </Routes>
     );
 };
