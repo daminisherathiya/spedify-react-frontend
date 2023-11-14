@@ -2,11 +2,12 @@ import React from 'react'
 import { useUserContext } from '../context/UserContext';
 import { PreferencesKeys, getItem } from '../preferences/Preferences';
 import { getSetUser, validateUser } from '../helpers';
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 const useUserSession = () => {
     const { state, dispatch } = useUserContext();
     const location = useLocation();
-    const history = useHistory();
     const user = state;
     const toLogin = (message = '') => {
         // history.push({ pathname: `/` });

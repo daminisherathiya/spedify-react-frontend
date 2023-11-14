@@ -10,9 +10,9 @@ import { Post } from "../../services/Api";
 import GridUser from "./GridUser";
 import ListUser from "./ListUser";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useUserContext } from "../../context/UserContext";
-
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 const options = [
   { id: 1, text: 'Select Category', },
   { id: 2, text: 'Providers', },
@@ -50,7 +50,6 @@ const User = ({ isGrid, user, openChat }) => {
 }
 
 const Providers = (props) => {
-  const history = useHistory();
   const { state, dispatch } = useUserContext();
   const loggedInUser = state.user;
   // console.log('loggedInUser', loggedInUser);

@@ -4,14 +4,12 @@ import { Logo, Img_04, avatar_1, Avatar_1, Top_icon, Reg_icon, Lock_icon, loader
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL, ME } from "../.././keys";
-import { useHistory } from "react-router-dom";
 import { useUserContext } from "../.././context/UserContext";
 import Socket from "../.././socket/Socket";
 import Avatar from "../common/Avatar";
-
-
-const Header = (props) => {
-  const history = useHistory();
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
+const Header = ({ location }) => {
   const { state, dispatch } = useUserContext();
   const [isSideMenu, setSideMenu] = useState("");
   const [isSideMenu1, setSideMenu1] = useState("");
@@ -46,10 +44,10 @@ const Header = (props) => {
   //   "/onboard-screen-employer"
   // ];
 
-  // if (exclusionArray.indexOf(props.location.pathname) >= 0) {
+  // if (exclusionArray.indexOf(location.pathname) >= 0) {
   //   return "";
   // }
-  // console.log(props.location, "location")
+  // console.log(location, "location")
 
   //nav transparent
 
@@ -94,7 +92,7 @@ const Header = (props) => {
     <>
 
       {/* Header */}
-      {!props.location.pathname.includes("onboard-screen") && !props.location.pathname.includes("onboard-screen-employer") && (!props.location.pathname.includes("/index-two") && !props.location.pathname.includes("/index-three") && !props.location.pathname.includes("/index-four") && !props.location.pathname.includes("/index-five")) &&
+      {!location.pathname.includes("onboard-screen") && !location.pathname.includes("onboard-screen-employer") && (!location.pathname.includes("/index-two") && !location.pathname.includes("/index-three") && !location.pathname.includes("/index-four") && !location.pathname.includes("/index-five")) &&
         <header className={`header ${navbar ? 'sticky' : ''} header-bg`}>
           <nav className="navbar navbar-expand-lg header-nav">
             <div className="navbar-header">

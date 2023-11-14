@@ -8,12 +8,17 @@ import 'react-toggle-switch/dist/css/switch.min.css';
 import { UserProvider } from './context/UserContext';
 import { LoaderProvider } from './context/LoaderContext';
 import { EnumsProvider } from './context/EnumsContext';
+import { BrowserRouter as Router, } from 'react-router-dom';
+import config from "config";
+
 const root = createRoot(document.getElementById('root'));
 root.render(
   <LoaderProvider>
     <EnumsProvider>
       <UserProvider>
-        <AppRouter />
+        <Router basename={`${config.publicPath}`}>
+          <AppRouter />
+        </Router>
       </UserProvider>
     </EnumsProvider>
   </LoaderProvider>

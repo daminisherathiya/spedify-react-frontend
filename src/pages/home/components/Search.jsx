@@ -1,15 +1,14 @@
 import React from 'react'
-import Select2 from "react-select2-wrapper";
-import { useHistory } from "react-router-dom";
 import { useEnumsContext } from '../../../context/EnumsContext';
 import { useUserContext } from '../../../context/UserContext';
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 
 export default function Search() {
     const { enumsState } = useEnumsContext();
     const { state } = useUserContext();
     if (!state.isLoggedIn) return null;
     const userRoles = enumsState.UserRoles || [];
-    const history = useHistory();
     const query = React.useRef(null);
     query.current = { queryStr: '' }
     const eventclick = () => {

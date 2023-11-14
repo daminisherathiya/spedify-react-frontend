@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Appstore, Googleplay, Top_icon } from "../imagepath";
-import { useHistory } from "react-router-dom";
-const FooterThree = (props) => {
-  const pathname = props.location && props.location.pathname.split("/")[1];
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
+const FooterThree = ({ location }) => {
+  const pathname = location && location.pathname.split("/")[1];
 
   const exclusionArray = ["/index-three"];
-  if (props.location && exclusionArray.indexOf(props.location.pathname) >= 0) {
+  if (location && exclusionArray.indexOf(location.pathname) >= 0) {
     return "";
   }
-  // console.log(props.location,"location")
-  const history = useHistory();
+  // console.log(location,"location")
   const eventclick = () => {
     history.push("/project");
   };

@@ -1,7 +1,6 @@
 import React from "react";
-import config from "config";
 
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, Routes, } from "react-router-dom";
 
 import Manageprojects from "./pages/manageprojects";
 import Favourites from "./pages/favourites";
@@ -22,8 +21,7 @@ import Home from "./pages/home/Home";
 import BlankPage from "./pages/blank_page";
 import Page404 from "./pages/page_404";
 
-import Header from "./components/header";
-import Footer from "./components/footer";
+
 
 import ProtectedRoute from "./ProtectedRoute";
 import AuthRoute from "./AuthRoute";
@@ -68,30 +66,28 @@ const AppContainer = function (props) {
   const loader = document.getElementById("global-loader");
   if (loader?.style?.display === 'none')
     return (
-      <Router basename={`${config.publicPath}`} history={history}>
-        <Header {...props} />
-        <Switch>
-          <ProtectedRoute exact path="/messages" component={Messges} />
-          <ProtectedRoute exact path="/post-project" component={PostProject} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/manage-projects" component={Manageprojects} />
-          <Route exact path="/favourites" component={Favourites} />
-          <Route exact path="/review" component={Review} />
-          <Route exact path="/profile-settings" component={Settings} />
-          <Route exact path="/search/work" component={Project} />
-          <Route exact path="/project-details" component={ProjectDetails} />
-          <Route exact path="/about" component={Aboutus} />
-          <AuthRoute exact path="/login" component={Login} />
-          <AuthRoute exact path="/register" component={Register} />
-          <Route exact path="/faq" component={Faq} />
-          <Route exact path="/blank-page" component={BlankPage} />
-          <Route exact path="/404-page" component={Page404} />
-          <Route exact path="/search/providers" component={Providers} />
-          <Route exact path="/blog-list" component={BlogList} />
-          <Route exact path="/userDetails/:userId" component={UserDetails} />
-        </Switch>
-        <Route render={(props) => <Footer {...props} />} />
-      </Router>
+      <Routes>
+        <Route exact path="/login" element={<AuthRoute><Login /></AuthRoute>} />
+        <Route exact path="/register" element={<AuthRoute><Register /></AuthRoute>} />
+
+        <Route exact path="/messages" element={<ProtectedRoute><Messges /></ProtectedRoute>} />
+        <Route exact path="/post-project" element={<ProtectedRoute><PostProject /></ProtectedRoute>} />
+
+        <Route exact path="/" Component={Home} />
+        <Route exact path="/manage-projects" Component={Manageprojects} />
+        <Route exact path="/favourites" Component={Favourites} />
+        <Route exact path="/review" Component={Review} />
+        <Route exact path="/profile-settings" Component={Settings} />
+        <Route exact path="/search/work" Component={Project} />
+        <Route exact path="/project-details" Component={ProjectDetails} />
+        <Route exact path="/about" Component={Aboutus} />
+        <Route exact path="/faq" Component={Faq} />
+        <Route exact path="/blank-page" Component={BlankPage} />
+        <Route exact path="/404-page" Component={Page404} />
+        <Route exact path="/search/providers" Component={Providers} />
+        <Route exact path="/blog-list" Component={BlogList} />
+        <Route exact path="/userDetails/:userId" Component={UserDetails} />
+      </Routes>
     );
 };
 
