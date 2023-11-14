@@ -22,11 +22,11 @@ import Home from "./pages/home/Home";
 import BlankPage from "./pages/blank_page";
 import Page404 from "./pages/page_404";
 
-import Loader from "./components/loader";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
 import ProtectedRoute from "./ProtectedRoute";
+import AuthRoute from "./AuthRoute";
 
 // CSS Files
 // Bootstrap CSS
@@ -52,11 +52,9 @@ import './assets/css/owl.theme.default.css';
 import './assets/css/owl.theme.default.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useUserContext } from "./context/UserContext";
 // import PostJob from "./components/jobs/post-job";
-import userSession from "./hooks/useUserSession";
 import { createBrowserHistory } from 'history'
-import { ToastContainer } from 'react-toastify';
+import useUserSession from "./hooks/useUserSession";
 if (
   !window.location.pathname.includes("admin")
 
@@ -66,17 +64,15 @@ if (
 }
 const history = createBrowserHistory();
 const AppContainer = function (props) {
-  const { dispatch } = useUserContext();
-  userSession(dispatch, history);
-  if (props) {
+  useUserSession();
+  const loader = document.getElementById("global-loader");
+  if (loader?.style?.display === 'none')
     return (
       <Router basename={`${config.publicPath}`} history={history}>
-        <Loader />
-        <ToastContainer />
         <Header {...props} />
         <Switch>
-          <ProtectedRoute exact path="/messages"><Messges /></ProtectedRoute>
-          <ProtectedRoute exact path="/post-project"><PostProject /></ProtectedRoute>
+          <ProtectedRoute exact path="/messages" component={Messges} />
+          <ProtectedRoute exact path="/post-project" component={PostProject} />
           <Route exact path="/" component={Home} />
           <Route exact path="/manage-projects" component={Manageprojects} />
           <Route exact path="/favourites" component={Favourites} />
@@ -85,8 +81,8 @@ const AppContainer = function (props) {
           <Route exact path="/search/work" component={Project} />
           <Route exact path="/project-details" component={ProjectDetails} />
           <Route exact path="/about" component={Aboutus} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
+          <AuthRoute exact path="/login" component={Login} />
+          <AuthRoute exact path="/register" component={Register} />
           <Route exact path="/faq" component={Faq} />
           <Route exact path="/blank-page" component={BlankPage} />
           <Route exact path="/404-page" component={Page404} />
@@ -97,8 +93,6 @@ const AppContainer = function (props) {
         <Route render={(props) => <Footer {...props} />} />
       </Router>
     );
-  };
-  return null;
 };
 
 export default AppContainer;

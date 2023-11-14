@@ -1,5 +1,5 @@
 import Axios from '../Axios';
-import { toast,  } from 'react-toastify';
+import { toast, } from 'react-toastify';
 const catchError = (error) => {
     console.log('[catchError].error', error);
     const errorData = error?.response?.data ?? null;
@@ -7,10 +7,10 @@ const catchError = (error) => {
         errorData.errors.map((err, idx) => toast(`${err.message}`))
     }
     throw error;
-
 }
 const loaderHanlder = (isLoading = true) => {
     const loader = document.getElementById("global-loader");
+    // console.log('[loaderHanlder].isLoading', isLoading);
     loader.style.display = isLoading ? 'flex' : 'none'
 }
 const Post = async (url = '', payload = {}, headers = {}) => {
