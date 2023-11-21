@@ -1,41 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
-import { debounce } from "@material-ui/core";
 import { Post } from "../../services/Api";
-import { uniqueArray } from "../../helpers";
 import { useUserContext } from "../../context/UserContext";
+import Price from "./components/Price";
 // import ReactSummernote from 'react-summernote';
 // import 'react-summernote/dist/react-summernote.css'; 
-const Skills = ({ skills = [], onSkillSelect = () => { }, hide = () => { } }) => {
-  if (!skills.length) return null;
-  else return (
-    <div className="list-row">
-      <div className="list-container">
-        <div className="card">
-          {skills.map((skill, j) => (
-            <div key={`skill-key-${j}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <p
-                className="list-text"
-                onClick={() => onSkillSelect(skill)}
-              >
-                {skill.name}
-              </p>
-              {skill.selected ?
-                <span style={{ marginLeft: 10 }}>{"✔"}</span>
-                : null
-              }
-            </div>
-
-          ))}
-          <button type="button" className="btn" onClick={hide} style={{ color: "#FE4A23" }}>
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
 const SelectedSkills = ({ selectedSkills = [], onSkillSelect = () => { } }) => {
   if (!selectedSkills.length) return null;
   return <div style={{ margin: 10, }}>
@@ -63,7 +33,6 @@ const initState = {
   "fixedPrice": 0,
   "hourlyMin": 0,
   "hourlyMax": 0,
-  "proposals": []
 }
 const PostProject = (props) => {
   const { enumsState } = useEnumsContext();
@@ -72,26 +41,13 @@ const PostProject = (props) => {
   const [payload, setPayload] = React.useState(initState);
   console.log('payload', payload);
   const [skills, setSkills] = React.useState([]);
-  const [show, setShow] = React.useState(false)
   const onSkillSelect = (skill) => {
     setSkills([...skills].map((sk, j) => {
       if (sk._id === skill._id) return { ...sk, selected: !sk.selected }
       else return sk;
     }))
   }
-  const onChangeSkills = debounce(async (e) => {
-    // console.log('[onChangeSkills]', e.target.value);
-    const value = e.target.value;
-    if (value.length < 2) return null;
-    const data = await Post('api/v1/skill/search', { searchQuery: `${value}` });
-    // console.log('[onChangeSkills].data', data);
-    if (data.statusCode === 200) {
-      setShow(true);
-      setSkills(uniqueArray([...skills].filter(s => s.selected).concat(data.doc.skills)))
 
-    }
-  }, 1500)
-  const hide = () => setShow(false);
   const onChange = e => {
     const id = e.target.id;
     const value = e.target.value;
@@ -108,8 +64,17 @@ const PostProject = (props) => {
     } catch (error) {
 
     }
-
   }
+  const getSkills = async () => {
+    const data = await Post('api/v1/skill/search', { searchQuery: `` });
+    // console.log('[onChangeSkills].data', data);
+    if (data.statusCode === 200) {
+      setSkills(data.doc.skills)
+    }
+  }
+  React.useEffect(() => {
+    getSkills()
+  }, [])
   return (
     <>
       {/* Breadcrumb */}
@@ -178,7 +143,7 @@ const PostProject = (props) => {
                         <div className="title-detail">
                           <h3>Support Needed By</h3>
                           <div className="form-group mb-0">
-                            <select className="form-control select" id="supportType" onChange={onChange}>
+                            <select className="form-control select" id="deliveryType" onChange={onChange}>
                               <option value={0}>Select</option>
                               {(enumsState.DeliveryTypes || []).map((supportType, index) => {
                                 return <option value={supportType.value} key={`support-key-${index}`}>{supportType.text}</option>
@@ -188,6 +153,7 @@ const PostProject = (props) => {
                           </div>
                         </div>
                       </div>
+
 
                     </div>
 
@@ -207,37 +173,20 @@ const PostProject = (props) => {
                         </div>
                       </div>
 
-                      <div className="title-content col-md-4">
-                        <div className="title-detail">
-                          <h3>Price</h3>
-                          <div className="input-group">
-                            <input
-                              type="text"
-                              className="form-control mr-2"
-                              placeholder={20.0}
-                              id="fixedPrice"
-                              onChange={onChange}
-                            />{" "}
-                            <label> / hr</label>
-                          </div>
-                        </div>
-                      </div>
+                      <Price onChange={onChange} pricingType={payload.pricingType} />
 
                       <div className="title-content col-md-4">
                         <div className="title-detail">
                           <h3>Desired areas of expertise </h3>
                           <div className="form-group mb-0">
-                            <input
-                              type="text"
-                              data-role="tagsinput"
-                              className="input-tags form-control"
-                              name="services"
-                              defaultValue=""
-                              id="services"
-                              placeholder="UX, UI, App Design, Wireframing, Branding"
-                              onChange={onChangeSkills}
-                            />
-                            {show && <Skills skills={skills} onSkillSelect={onSkillSelect} hide={hide} />}
+                            <select name="price" className="form-control select" onChange={e => {
+                              onSkillSelect(skills.find(s => s._id === e.target.value))
+                            }}>
+                              <option value={0}>Select</option>
+                              {(skills || []).map((skill, index) => {
+                                return <option value={skill._id} key={`support-key-${index}`}>{skill.name}</option>
+                              })}
+                            </select>
                             <SelectedSkills selectedSkills={skills.filter(s => s.selected)} onSkillSelect={onSkillSelect} />
                           </div>
                         </div>
