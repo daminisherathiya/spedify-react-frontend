@@ -67,7 +67,7 @@ export const ProjectCard = ({project}) => {
                             <Link to="#">{project.description}</Link>
                         </h3>
                         <div className="freelance-location mb-1">
-                            <i className="fas fa-clock" />{createdAgoMessage}
+                            <i className="fas fa-clock" /> {createdAgoMessage}
                         </div>
                         <div className="freelance-location">
                             <i className="fas fa-map-marker-alt me-1" />
