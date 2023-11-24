@@ -6,38 +6,15 @@ import "nouislider/distribute/nouislider";
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import Axios from "../../Axios";
-// Import Images
-import { Alert } from '../../components/common/Alert';
-import { home_icon } from "../../components/imagepath";
-import { InlineLoader } from '../../components/common/InlineLoader';
-import { ProjectCard } from '../../components/common/ProjectCard';
-
-const Breadcrumb = () => {
-    return <div className="bread-crumb-bar">
-        <div className="container">
-            <div className="row align-items-center inner-banner">
-                <div className="col-md-12 col-12 text-center">
-                    <div className="breadcrumb-list">
-                        <nav aria-label="breadcrumb" className="page-breadcrumb">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item"><Link to="/"><img src={home_icon} alt="Post Author" /> Home</Link></li>
-                                <li className="breadcrumb-item" aria-current="page">Projects</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-const ProjectsList = ({projects}) => {
-    return <div className="row">
-        {projects.map(item => <ProjectCard project={item} />)}
-    </div>
-}
+import { Alert } from "../../components/common/Alert";
+import { InlineLoader } from "../../components/common/InlineLoader";
+import { useAOS } from "../../hooks/useAOS";
+import { Breadcrumb } from "./components/Breadcrumb";
+import { ProjectsList } from "./components/ProjectsList";
 
 const Projects = (props) => {
+    useAOS();
+
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
     const [projectsFetchingError, setProjectsFetchingError] = useState();
@@ -47,7 +24,7 @@ const Projects = (props) => {
             setIsFetchingProjects(true);
 
             try {
-                const response = await Axios.get('/api/v1/project');
+                const response = await Axios.get('/api/v1/project/getAll');
                 setProjectsFetchingError('testing error');  // For testing, uncomment this
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error('Failed to fetch projects');
@@ -94,7 +71,7 @@ const Projects = (props) => {
         <>
             <Breadcrumb />
             {/* Page Content */}
-            <div className="content">
+            <div className="content pt-3">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">

@@ -76,7 +76,7 @@ export const ProjectCard = ({project}) => {
                     </div>
                     <div className="freelance-tags">
                         {project.skills.map(skill => (
-                            <Link to="">
+                            <Link key={skill._id} to="">
                                 <span className="badge badge-pill badge-design">
                                     {skill.name}
                                 </span>
@@ -89,6 +89,7 @@ export const ProjectCard = ({project}) => {
                     <ul>
                         <li>
                              {/* Todo: Discuss whether to show 27 or 28 for 27.5? */}
+                             {/* Todo: Make it dynamic similar to createdAt */}
                             <h3 className="counter-value">{Math.floor((project.expiresIn - Date.now()) / (1000 * 60 * 60 * 24))} Days Left</h3>
                             <h5>Expiry</h5>
                         </li>
