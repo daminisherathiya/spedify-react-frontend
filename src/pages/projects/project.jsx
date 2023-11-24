@@ -52,19 +52,10 @@ const Projects = (props) => {
         { id: 2, text: 'UK', },
         { id: 3, text: 'London', },
     ];
-    const options2 = [
-        { id: 1, text: 'Select Projects', },
-        { id: 2, text: 'Node projects', },
-        { id: 3, text: 'UI projects', },
-      ];
       const options3 = [
         { id: 1, text: 'Hourly Rate', },
         { id: 2, text: 'Full Day Rate', },
         { id: 3, text: 'Half Day Rate', },
-      ];
-      const options4 = [
-        { id: 1, text: 'USD', },
-        { id: 2, text: 'Euro', },
       ];
 
     return (
@@ -106,17 +97,6 @@ const Projects = (props) => {
                                             </div>
                                         </div>
                                         <div className="filter-widget">
-                                            <h4>Completed Projects</h4>
-                                            <div className="form-group">
-                                            <Select2
-                                                    className="select form-control "
-                                                    data={options2}
-                                                    options={{
-                                                        placeholder: 'Select Projects',
-                                                    }} />
-                                            </div>
-                                        </div>
-                                        <div className="filter-widget">
                                             <h4>Pricing Type</h4>
                                             <div className="form-group">
                                             <Select2
@@ -146,27 +126,6 @@ const Projects = (props) => {
                                                     + Wordpress
                                                 </span>
                                                 <input type="text" className="form-control" />
-                                            </div>
-                                        </div>
-                                        <div className="filter-widget">
-                                            <h4>Avalability</h4>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_time" defaultChecked />
-                                                    <span className="checkmark" /> Hourly
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_time" />
-                                                    <span className="checkmark" /> Part Time
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_time" />
-                                                    <span className="checkmark" /> Full Time
-                                                </label>
                                             </div>
                                         </div>
                                         <div className="filter-widget">
@@ -235,17 +194,6 @@ const Projects = (props) => {
                                                     className="form-control"
                                                     placeholder="Enter Keywords"
                                                 />
-                                            </div>
-                                        </div>
-                                        <div className="filter-widget">
-                                            <h4>Currency</h4>
-                                            <div className="form-group">
-                                            <Select2
-                                                    className="select form-control "
-                                                    data={options4}
-                                                    options={{
-                                                        placeholder: 'USD',
-                                                    }} />
                                             </div>
                                         </div>
                                         <div className="btn-search">
