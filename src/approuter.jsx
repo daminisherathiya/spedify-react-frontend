@@ -26,7 +26,7 @@ const AppRouter = (props) => {
             <ToastContainer />
             <Header {...props} location={location} />
             <AppContainer />
-            <Footer {...props} location={location} />
+            {location.pathname !== "/search/work" && <Footer {...props} location={location} />}
             <NotificationContainer />
         </>
     );
