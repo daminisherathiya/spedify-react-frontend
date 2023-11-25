@@ -207,7 +207,7 @@ const Projects = (props) => {
                             {/* /Search Filter */}
                         </div>
                         <div className="col-md-12 col-lg-8 col-xl-9 card py-0 mb-0 overflow-auto projects-filter-and-list">
-                            <div className="pt-3 pb-1 bg-white sticky-top">
+                            <div className="pt-3 pb-1 bg-white sticky-xl-top">
                                 <div className="sort-tab mb-1">
                                     <div className="row align-items-center">
                                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">

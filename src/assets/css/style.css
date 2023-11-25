@@ -18822,6 +18822,9 @@ input.select2-search__field {
 		width: 150px;
 		min-height: 70px;
 	}
+	.projects-filter-and-list {
+		height: auto;
+	}
 }
 @media only screen and (max-width:767.98px) {
 	body {
@@ -19504,9 +19507,6 @@ input.select2-search__field {
 	}
 	.develop-list-select .list-grid {
 		margin-left: 0;
-	}
-	.freelance-view {
-		margin-bottom: 15px;
 	}
 	.list-develop-group .about-author,
 	.list-develop-group .about-author .about-list-author {
@@ -20296,7 +20296,9 @@ input.select2-search__field {
 	.card-top .dev-text {
 		padding: 10px;
 	}
-
+	.freelance-view {
+		margin-bottom: 15px;
+	}
 }
 @media only screen and (max-width:479px) {
 	.card-top .dev-text {
