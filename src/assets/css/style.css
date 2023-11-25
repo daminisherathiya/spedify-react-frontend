@@ -16567,6 +16567,14 @@ button.scroll-top:focus{
 }
 
 /*-----------------
+	38. Projects list
+-----------------------*/
+
+.projects-filter-and-list {
+	height: calc(100vh - 148px - 0.5rem);
+}
+
+/*-----------------
 	38. Project Details
 -----------------------*/
 

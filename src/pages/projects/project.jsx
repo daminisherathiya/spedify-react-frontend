@@ -62,13 +62,13 @@ const Projects = (props) => {
         <>
             <Breadcrumb />
             {/* Page Content */}
-            <div className="content pt-3">
+            <div className="content pt-0 pb-2">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
+                        <div className="col-md-12 col-lg-4 col-xl-3 card pb-3 mb-0 overflow-auto projects-filter-and-list">
                             {/* Search Filter */}
-                            <StickyBox offsetTop={20} offsetBottom={20}>
-                                <div className="card search-filter">
+                            <StickyBox>
+                                <div className="search-filter">
                                     <div className="card-header d-flex justify-content-between">
                                         <h4 className="card-title mb-0">FILTERS</h4>
                                         <Link to="">Clear All</Link>
@@ -206,63 +206,65 @@ const Projects = (props) => {
                             </StickyBox>
                             {/* /Search Filter */}
                         </div>
-                        <div className="col-md-12 col-lg-8 col-xl-9">
-                            <div className="sort-tab">
-                                <div className="row align-items-center">
-                                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div className="d-flex align-items-center">
-                                            <div className="freelance-view">
-                                                <h4>Showing 1 - 12 of 455</h4>
+                        <div className="col-md-12 col-lg-8 col-xl-9 card py-0 mb-0 overflow-auto projects-filter-and-list">
+                            <div className="pt-3 pb-1 bg-white sticky-top">
+                                <div className="sort-tab mb-1">
+                                    <div className="row align-items-center">
+                                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <div className="d-flex align-items-center">
+                                                <div className="freelance-view">
+                                                    <h4>Showing 1 - 12 of 455</h4>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div className="d-flex justify-content-sm-end">
-                                            <div className="sort-by">
-                                                <select className="custom-select">
-                                                    <option>Relevance</option>
-                                                    <option>Rating</option>
-                                                    <option>Popular</option>
-                                                    <option>Latest</option>
-                                                    <option>Free</option>
-                                                </select>
+                                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <div className="d-flex justify-content-sm-end">
+                                                <div className="sort-by">
+                                                    <select className="custom-select">
+                                                        <option>Relevance</option>
+                                                        <option>Rating</option>
+                                                        <option>Popular</option>
+                                                        <option>Latest</option>
+                                                        <option>Free</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="bootstrap-tags text-start pl-0">
-                                <span className="badge badge-pill badge-skills">
-                                    UI/UX Developer{" "}
-                                    <span className="tag-close" data-role="remove">
-                                        <i className="fas fa-times" />
+                                <div className="bootstrap-tags text-start pl-0 pb-0">
+                                    <span className="badge badge-pill badge-skills">
+                                        UI/UX Developer{" "}
+                                        <span className="tag-close" data-role="remove">
+                                            <i className="fas fa-times" />
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="badge badge-pill badge-skills">
-                                    USA{" "}
-                                    <span className="tag-close" data-role="remove">
-                                        <i className="fas fa-times" />
+                                    <span className="badge badge-pill badge-skills">
+                                        USA{" "}
+                                        <span className="tag-close" data-role="remove">
+                                            <i className="fas fa-times" />
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="badge badge-pill badge-skills">
-                                    Hourly{" "}
-                                    <span className="tag-close" data-role="remove">
-                                        <i className="fas fa-times" />
+                                    <span className="badge badge-pill badge-skills">
+                                        Hourly{" "}
+                                        <span className="tag-close" data-role="remove">
+                                            <i className="fas fa-times" />
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="badge badge-pill badge-skills">
-                                    0-1 years{" "}
-                                    <span className="tag-close" data-role="remove">
-                                        <i className="fas fa-times" />
+                                    <span className="badge badge-pill badge-skills">
+                                        0-1 years{" "}
+                                        <span className="tag-close" data-role="remove">
+                                            <i className="fas fa-times" />
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="badge badge-pill badge-skills">
-                                    USD{" "}
-                                    <span className="tag-close" data-role="remove">
-                                        <i className="fas fa-times" />
+                                    <span className="badge badge-pill badge-skills">
+                                        USD{" "}
+                                        <span className="tag-close" data-role="remove">
+                                            <i className="fas fa-times" />
+                                        </span>
                                     </span>
-                                </span>
-                            </div>
+                                </div>
+                            </div>                            
                             {isFetchingProjects && <InlineLoader />}
                             {projectsFetchingError && <Alert message={projectsFetchingError} />}
                             <ProjectsList projects={projects} />

@@ -64,7 +64,7 @@ export const ProjectCard = ({project}) => {
                     </div>
                     <div className="freelance-info">
                         <h3>
-                            <Link to="#">{project.description}</Link>
+                            <Link to="#">{project.description ? project.description : "-"}</Link>
                         </h3>
                         <div className="freelance-location mb-1">
                             <i className="fas fa-clock" /> {createdAgoMessage}
