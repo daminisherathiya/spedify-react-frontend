@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useEnumsContext } from "../../context/EnumsContext";
 import { getFilePath } from '../../helpers';
 
-const timeSince = (createdAt) => {
+const getCreatedAgoMessage = (createdAt) => {
     const now = Date.now(); // Current timestamp in milliseconds
     const difference = now - createdAt; // Difference in milliseconds
 
@@ -13,17 +13,39 @@ const timeSince = (createdAt) => {
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    return `${seconds} seconds ago`;  // Added this line to show the working functionality to the client, remove this line once approved.
-
     if (seconds < 60) {
         return 'just now';
     } else if (minutes < 60) {
-        // Todo: We can show "1 minute ago" instead of "1 minutes ago".
-        return `${minutes} minutes ago`;
+        return minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
     } else if (hours < 24) {
-        return `${hours} hours ago`;
+        return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
     } else {
-        return `${days} days ago`;
+        return days === 1 ? '1 day ago' : `${days} days ago`;
+    }    
+}
+
+const getExpiryMessage = (expiresIn) => {
+    const now = Date.now(); // Current timestamp in milliseconds
+    const difference = expiresIn - now; // Difference in milliseconds
+
+    // If the expiry time is in the past
+    if (difference <= 0) {
+        return 'Expired';
+    }
+
+    const seconds = Math.floor(difference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (seconds < 60) {
+        return 'Less than a minute';
+    } else if (minutes < 60) {
+        return minutes === 1 ? '1 minute' : `${minutes} minutes`;
+    } else if (hours < 24) {
+        return hours === 1 ? '1 hour' : `${hours} hours`;
+    } else {
+        return days === 1 ? '1 day' : `${days} days`;
     }
 }
 
@@ -35,17 +57,28 @@ const getPricingTypeText = (pricingTypes, pricingTypeValue) => {
 
 export const ProjectCard = ({project}) => {
     const { enumsState } = useEnumsContext();
-    const [createdAgoMessage, setCreatedAgoMessage] = useState(() => timeSince(project.createdAt));
+    const [createdAgoMessage, setCreatedAgoMessage] = useState(() => getCreatedAgoMessage(project.createdAt));
+    const [expiryMessage, setExpiryMessage] = useState(() => getExpiryMessage(project.expiresIn));
 
     useEffect(() => {
         const timerId = setInterval(() => {
-            setCreatedAgoMessage(timeSince(project.createdAt));
-        }, 1000);  // Todo: Set to 60 seconds
+            setCreatedAgoMessage(getCreatedAgoMessage(project.createdAt));
+        }, 60000);
 
         return () => {
             clearInterval(timerId);  // Clear the previous interval when the component unmounts.
         }
     }, [project.createdAt]);
+
+    useEffect(() => {
+        const timerId = setInterval(() => {
+            setExpiryMessage(getExpiryMessage(project.expiresIn));
+        }, 60000);
+
+        return () => {
+            clearInterval(timerId);  // Clear the previous interval when the component unmounts.
+        }
+    }, [project.expiresIn]);
 
     return <div key={project._id} className="col-md-6 col-lg-12 col-xl-6">
         <div className="freelance-widget widget-author">
@@ -95,9 +128,7 @@ export const ProjectCard = ({project}) => {
                 <div className="counter-stats">
                     <ul>
                         <li>
-                             {/* Todo: Discuss whether to show 27 or 28 for 27.5? */}
-                             {/* Todo: Make it dynamic similar to createdAt */}
-                            <h3 className="counter-value">{Math.floor((project.expiresIn - Date.now()) / (1000 * 60 * 60 * 24))} Days Left</h3>
+                            <h3 className="counter-value">{expiryMessage}</h3>
                             <h5>Expiry</h5>
                         </li>
                         <li>
