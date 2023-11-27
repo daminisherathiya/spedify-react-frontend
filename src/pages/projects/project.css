@@ -1,0 +1,13 @@
+.projects-filter-and-list {
+	height: calc(100vh - 148px - 0.5rem);
+}
+.select2-like-placeholder::placeholder {
+	color: #999 !important;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 991.98px) {
+	.projects-filter-and-list {
+		height: auto;
+	}
+}

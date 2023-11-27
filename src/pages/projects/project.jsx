@@ -8,12 +8,17 @@ import 'react-select2-wrapper/css/select2.css';
 import Axios from "../../Axios";
 import { Alert } from "../../components/common/Alert";
 import { InlineLoader } from "../../components/common/InlineLoader";
+import { useEnumsContext } from "../../context/EnumsContext";
 import { useAOS } from "../../hooks/useAOS";
 import { Breadcrumb } from "./components/Breadcrumb";
 import { ProjectsList } from "./components/ProjectsList";
+import "./project.css";
 
 const Projects = (props) => {
     useAOS();
+
+    const { enumsState } = useEnumsContext();
+    console.log('enumsState:', enumsState);
 
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
@@ -40,24 +45,6 @@ const Projects = (props) => {
         fetchProjects();
     }, []);
 
-    const options = [
-        { id: 1, text: 'Select Category', },
-        { id: 2, text: 'Developer', },
-        { id: 3, text: 'UI Developer', },
-        { id: 4, text: 'React Developer', },
-        { id: 5, text: '.Net Developer', },
-    ]
-    const options1 = [
-        { id: 1, text: 'Country, City, Zipcode', },
-        { id: 2, text: 'UK', },
-        { id: 3, text: 'London', },
-    ];
-      const options3 = [
-        { id: 1, text: 'Hourly Rate', },
-        { id: 2, text: 'Full Day Rate', },
-        { id: 3, text: 'Half Day Rate', },
-      ];
-
     return (
         <>
             <Breadcrumb />
@@ -75,25 +62,24 @@ const Projects = (props) => {
                                     </div>
                                     <div className="card-body">
                                         <div className="filter-widget">
-                                            <h4>Category</h4>
+                                            <h4>Support Type</h4>
                                             <div className="form-group">
                                                 <Select2
                                                     className="select form-control "
-                                                    data={options}
+                                                    data={(enumsState.SupportTypes || []).map(item => ({ id: item.value, text: item.text }))}
                                                     options={{
-                                                        placeholder: 'Select Category',
+                                                        placeholder: 'Select Support Type',
                                                     }} />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Location</h4>
                                             <div className="form-group">
-                                            <Select2
-                                                    className="select form-control "
-                                                    data={options1}
-                                                    options={{
-                                                        placeholder: 'Country, City, Zipcode',
-                                                    }} />
+                                                <input
+                                                    type="text"
+                                                    className="form-control select2-like-placeholder"
+                                                    placeholder="Enter Location"
+                                                />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
@@ -101,71 +87,35 @@ const Projects = (props) => {
                                             <div className="form-group">
                                             <Select2
                                                     className="select form-control "
-                                                    data={options3}
+                                                    data={(enumsState.PricingTypes || []).map(item => ({ id: item.value, text: item.text }))}
                                                     options={{
-                                                        placeholder: 'Hourly Rate',
+                                                        placeholder: 'Select Pricing Type',
                                                     }} />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Add Skills</h4>
                                             <div className="form-group">
-                                                <span className="badge badge-pill badge-skill">
+                                                {/* <span className="badge badge-pill badge-skill">
                                                     + Web Design
-                                                </span>
-                                                <span className="badge badge-pill badge-skill">
-                                                    + UI Design
-                                                </span>
-                                                <span className="badge badge-pill badge-skill">
-                                                    + Node Js
-                                                </span>
-                                                <span className="badge badge-pill badge-skill">
-                                                    + Angular
-                                                </span>
-                                                <span className="badge badge-pill badge-skill">
-                                                    + Wordpress
-                                                </span>
-                                                <input type="text" className="form-control" />
+                                                </span> */}
+                                                <input
+                                                    type="text"
+                                                    className="form-control select2-like-placeholder"
+                                                    placeholder="Enter Skill"
+                                                />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Experience</h4>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_specialist" />
-                                                    <span className="checkmark" /> 0-1 years
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_exp" defaultChecked />
-                                                    <span className="checkmark" /> 2-5 years
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_exp" />
-                                                    <span className="checkmark" /> 5-8 years
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_exp" />
-                                                    <span className="checkmark" /> 9-12 years
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_exp" />
-                                                    <span className="checkmark" /> Mastered
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label className="custom_check">
-                                                    <input type="checkbox" name="select_exp" />
-                                                    <span className="checkmark" /> Professional
-                                                </label>
-                                            </div>
+                                            {(enumsState.ExperienceLevels || []).map((experienceLevel) => (
+                                                <div key={experienceLevel.value}>
+                                                    <label className="custom_check">
+                                                        <input type="checkbox" name="select_exp" defaultChecked={experienceLevel.value===2} />
+                                                        <span className="checkmark" /> {experienceLevel.text}
+                                                    </label>
+                                                </div>
+                                            ))}
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Hourly Rate</h4>
@@ -191,7 +141,7 @@ const Projects = (props) => {
                                             <div className="form-group">
                                                 <input
                                                     type="text"
-                                                    className="form-control"
+                                                    className="form-control select2-like-placeholder"
                                                     placeholder="Enter Keywords"
                                                 />
                                             </div>
