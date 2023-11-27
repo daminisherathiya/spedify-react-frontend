@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Pagination from "react-js-pagination";
 import { Link } from "react-router-dom";
 import StickyBox from "react-sticky-box";
 import Nouislider from "nouislider-react";
@@ -23,6 +24,8 @@ const Projects = (props) => {
     const [projectsFetchingError, setProjectsFetchingError] = useState();
     const [minHourlyRate, setMinHourlyRate] = useState(15);
     const [maxHourlyRate, setMaxHourlyRate] = useState(35);
+    const [activePage, setActivePage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -45,10 +48,18 @@ const Projects = (props) => {
         fetchProjects();
     }, []);
 
-    const handleHourlyRateChange = (values) => {
+    const handleHourlyRateChange = values => {
         setMinHourlyRate(Math.round(values[0]));
         setMaxHourlyRate(Math.round(values[1]));
     }
+
+    const handlePaginationPageChange = pageNumber => {
+        setActivePage(pageNumber);
+    }
+
+    const handlePaginationPageSizeChange = event => {
+        setPageSize(event.target.value);
+    };
 
     return (
         <>
@@ -153,13 +164,33 @@ const Projects = (props) => {
                             {/* /Search Filter */}
                         </div>
                         <div className="col-md-12 col-lg-8 col-xl-9 card py-0 mb-0 overflow-auto projects-filter-and-list">
+                            <div className="d-flex py-3 justify-content-center">
+                                <div className="form-group mb-0 me-3 pagination-page-size">
+                                    <Select2
+                                        className="select form-control"
+                                        data={([10, 20, 50, 100]).map(item => ({ id: item, text: item.toString() }))}
+                                        value={pageSize}
+                                        onChange={handlePaginationPageSizeChange}
+                                        />
+                                </div>
+                                <Pagination
+                                    activePage={activePage}
+                                    itemsCountPerPage={pageSize}
+                                    totalItemsCount={projects.length}
+                                    pageRangeDisplayed={5}
+                                    itemClass="page-item"
+                                    linkClass="page-link h-100 d-flex align-items-center"
+                                    onChange={handlePaginationPageChange}
+                                    innerClass="pagination mb-0"
+                                />
+                            </div>
                             <div className="pt-3 pb-1 bg-white sticky-xl-top">
                                 <div className="sort-tab mb-1">
                                     <div className="row align-items-center">
                                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                             <div className="d-flex align-items-center">
                                                 <div className="freelance-view">
-                                                    <h4>Showing 1 - 12 of 455</h4>
+                                                    <h4>Showing {Math.min((activePage - 1) * pageSize + 1, projects.length)} - {Math.min((activePage) * pageSize, projects.length)} of {projects.length}</h4>
                                                 </div>
                                             </div>
                                         </div>

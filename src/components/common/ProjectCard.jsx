@@ -137,7 +137,7 @@ export const ProjectCard = ({project}) => {
                         </li>
                         <li>
                             <h3 className="counter-value">
-                                <span className="jobtype">{getPricingTypeText(enumsState.PricingTypes, project.pricingType)}</span>
+                                <span className="jobtype">{getPricingTypeText(enumsState.PricingTypes || [], project.pricingType)}</span>
                             </h3>
                             <h5>Job Type</h5>
                         </li>

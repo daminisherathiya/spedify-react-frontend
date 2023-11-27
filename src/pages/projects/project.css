@@ -5,6 +5,9 @@
 	color: #999 !important;
   font-weight: 500;
 }
+.pagination-page-size {
+	width: 100px;
+}
 
 @media only screen and (max-width: 991.98px) {
 	.projects-filter-and-list {
