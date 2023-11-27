@@ -164,26 +164,6 @@ const Projects = (props) => {
                             {/* /Search Filter */}
                         </div>
                         <div className="col-md-12 col-lg-8 col-xl-9 card py-0 mb-0 overflow-auto projects-filter-and-list">
-                            <div className="d-flex py-3 justify-content-center">
-                                <div className="form-group mb-0 me-3 pagination-page-size">
-                                    <Select2
-                                        className="select form-control"
-                                        data={([10, 20, 50, 100]).map(item => ({ id: item, text: item.toString() }))}
-                                        value={pageSize}
-                                        onChange={handlePaginationPageSizeChange}
-                                        />
-                                </div>
-                                <Pagination
-                                    activePage={activePage}
-                                    itemsCountPerPage={pageSize}
-                                    totalItemsCount={projects.length}
-                                    pageRangeDisplayed={5}
-                                    itemClass="page-item"
-                                    linkClass="page-link h-100 d-flex align-items-center"
-                                    onChange={handlePaginationPageChange}
-                                    innerClass="pagination mb-0"
-                                />
-                            </div>
                             <div className="pt-3 pb-1 bg-white sticky-xl-top">
                                 <div className="sort-tab mb-1">
                                     <div className="row align-items-center">
@@ -245,6 +225,26 @@ const Projects = (props) => {
                             {isFetchingProjects && <InlineLoader />}
                             {projectsFetchingError && <Alert message={projectsFetchingError} />}
                             <ProjectsList projects={projects} />
+                            <div className="d-flex pb-4 justify-content-center">
+                                <div className="form-group mb-0 me-3 pagination-page-size">
+                                    <Select2
+                                        className="select form-control"
+                                        data={([10, 20, 50, 100]).map(item => ({ id: item, text: item.toString() }))}
+                                        value={pageSize}
+                                        onChange={handlePaginationPageSizeChange}
+                                        />
+                                </div>
+                                <Pagination
+                                    activePage={activePage}
+                                    itemsCountPerPage={pageSize}
+                                    totalItemsCount={projects.length}
+                                    pageRangeDisplayed={5}
+                                    itemClass="page-item"
+                                    linkClass="page-link h-100 d-flex align-items-center"
+                                    onChange={handlePaginationPageChange}
+                                    innerClass="pagination mb-0"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
