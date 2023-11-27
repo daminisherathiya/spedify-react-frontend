@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
 import { Post } from "../../services/Api";
 import { useUserContext } from "../../context/UserContext";
@@ -10,11 +10,7 @@ import moment from "moment/moment";
 import { TextField } from "@material-ui/core";
 // import ReactSummernote from 'react-summernote';
 // import 'react-summernote/dist/react-summernote.css';
-const SelectedSkills = ({
-  selectedSkills = [],
-  onSkillSelect = () => {},
-  handleRemoveSkills,
-}) => {
+const SelectedSkills = ({ selectedSkills = [], onSkillSelect = () => {} }) => {
   if (!selectedSkills.length) return null;
   // const removeSkills = (removedSkill) => {
   //   const updatedSkills = selectedSkills.filter(
@@ -25,40 +21,37 @@ const SelectedSkills = ({
   return (
     <div style={{ margin: 10, display: "flex", flexWrap: "wrap" }}>
       {selectedSkills.map((s, i) => (
-        <>
-          <span
-            key={`selected-skill-${i}`}
-            className="mb-0 position-relative"
+        <span
+          key={`selected-skill-${i}`}
+          className="mb-0 position-relative"
+          style={{
+            cursor: "pointer",
+            textAlign: "center",
+            padding: 10,
+            borderRadius: 5,
+            backgroundColor: "#d3dded",
+            margin: 10,
+          }}
+          onClick={() => onSkillSelect(s)}
+        >
+          {s.name}
+          <IoCloseSharp
+            size={10}
             style={{
-              cursor: "pointer",
-              textAlign: "center",
-              padding: 10,
-              borderRadius: 5,
-              backgroundColor: "#d3dded",
-              margin: 10,
+              backgroundColor: "#fff",
+              position: "absolute",
+              top: "-10px",
+              right: "-10px",
+              // paddingTop: "10px",
+              borderRadius: "50%",
+              width: "20px",
+              height: "20px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            onClick={() => onSkillSelect(s)}
-          >
-            {s.name}
-            <IoCloseSharp
-              size={10}
-              onClick={() => handleRemoveSkills(s)}
-              style={{
-                backgroundColor: "#fff",
-                position: "absolute",
-                top: "-10px",
-                right: "-10px",
-                // paddingTop: "10px",
-                borderRadius: "50%",
-                width: "20px",
-                height: "20px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            />
-          </span>
-        </>
+          />
+        </span>
       ))}
     </div>
   );
@@ -80,12 +73,13 @@ const initState = {
 const PostProject = (props) => {
   const { enumsState } = useEnumsContext();
   const { state } = useUserContext();
+  const navigate = useNavigate();
   const currentUser = state.user;
   const [payload, setPayload] = React.useState(initState);
   // const [selectedOption, setSelectedOption] = React.useState("Select");
   // const [selectedDate, setSelectedDate] = React.useState(null);
 
-  const handleDateChange = (date, dateString) => {
+  const handleDateChange = (date) => {
     // setSelectedOption(dateString);
     enumsState.DeliveryTypes[1] = { text: date.target.value, value: 2 };
     setPayload((pre) => ({
@@ -93,8 +87,8 @@ const PostProject = (props) => {
       deliveryStamp: new Date(date.target.value).getTime(),
     }));
   };
-  console.log("payload", payload, enumsState);
   const [skills, setSkills] = React.useState([]);
+  const [inputValidate, setInputValidate] = React.useState(false);
   const onSkillSelect = (skill) => {
     setSkills(
       [...skills].map((sk, j) => {
@@ -103,12 +97,8 @@ const PostProject = (props) => {
       })
     );
   };
-  const handleRemoveSkills = (removeSkill) => {
-    setSkills(
-      [...skills].filter((singleSkill) => singleSkill?._id !== removeSkill?._id)
-    );
-  };
 
+  console.log("payload", payload, enumsState, skills);
   const onChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
@@ -118,16 +108,45 @@ const PostProject = (props) => {
       [id]: value,
     }));
   };
-  const onSubmit = async () => {
+  // const validateAllInput = () => {
+  //   // ["title", "supportType",'description','deliveryType === 2','hourlyMax','hourlyMin','pricingType === 2','projectDuration','supportLevel','providerType','experienceLevel','qualificationType'];
+  //   if (
+  //     payload.title &&
+  //     payload.supportType.toString() !== "0" &&
+  //     payload.description.toString() !== "0" &&
+  //     payload.deliveryType.toString() !== "0" &&
+  //     payload.pricingType.toString() !== "0" &&
+  //     payload.projectDuration.toString() !== "0" &&
+  //     payload.supportType.toString() !== "0" &&
+  //     payload.providerType.toString() !== "0" &&
+  //     payload.experienceLevel.toString() !== "0" &&
+  //     payload.supportLevel.toString() !== "0" &&
+  //     payload.qualificationType.toString() !== "0" // &&
+  //     // payload.deliveryStamp.toString() !== "0"
+  //   ) {
+  //     if (payload.deliveryType === "2") {
+  //       if (payload.deliveryStamp !== 0) {
+  //         const isSkillSelected = skills.filter((s) => s.selected);
+  //         if (isSkillSelected.length > 0) {
+  //           console.log("object");
+  //         }
+  //       }
+  //       console.log("asdf");
+  //     }
+  //   }
+  // };
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const data = await Post("api/v1/project/createUpdate", {
-        ...payload,
-        skills: skills.filter((s) => s.selected)?._id,
-        location: `${currentUser.addressLine}, ${currentUser.state}`,
-      });
-      setPayload(initState);
-      alert(data.doc.message);
-      console.log(data);
+      // console.log(skills.filter((s) => s.selected));
+      // const data = await Post("api/v1/project/createUpdate", {
+      //   ...payload,
+      //   skills: skills.filter((s) => s.selected),
+      //   location: `${currentUser.addressLine}, ${currentUser.state}`,
+      // });
+      // alert(data.doc.message);
+      // setPayload(initState);
+      // navigate("/");
     } catch (error) {}
   };
   const getSkills = async () => {
@@ -170,7 +189,7 @@ const PostProject = (props) => {
           <div className="row">
             <div className="col-md-12">
               <div className="select-project mb-4">
-                <form>
+                <form onSubmit={onSubmit}>
                   <div className="title-box widget-box">
                     <div className="row">
                       <div className="title-content col-md-4">
@@ -183,6 +202,7 @@ const PostProject = (props) => {
                               placeholder="Enter Support title"
                               id="title"
                               onChange={onChange}
+                              required
                             />
                           </div>
                         </div>
@@ -196,6 +216,7 @@ const PostProject = (props) => {
                               className="form-control select"
                               id="supportType"
                               onChange={onChange}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(enumsState.SupportTypes || []).map(
@@ -225,6 +246,7 @@ const PostProject = (props) => {
                                   className="form-control select col-5"
                                   id="deliveryType"
                                   onChange={onChange}
+                                  required
                                 >
                                   <option value={0}>Select</option>
                                   {(enumsState.DeliveryTypes || []).map(
@@ -270,6 +292,7 @@ const PostProject = (props) => {
                                 className="form-control select"
                                 id="deliveryType"
                                 onChange={onChange}
+                                required
                               >
                                 <option value={0}>Select</option>
                                 {(enumsState.DeliveryTypes || []).map(
@@ -341,6 +364,7 @@ const PostProject = (props) => {
                               className="form-control select"
                               id="pricingType"
                               onChange={onChange}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(enumsState.PricingTypes || []).map(
@@ -377,6 +401,7 @@ const PostProject = (props) => {
                                   skills.find((s) => s._id === e.target.value)
                                 );
                               }}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(skills || []).map((skill, index) => {
@@ -393,7 +418,6 @@ const PostProject = (props) => {
                             <SelectedSkills
                               selectedSkills={skills.filter((s) => s.selected)}
                               onSkillSelect={onSkillSelect}
-                              handleRemoveSkills={handleRemoveSkills}
                             />
                           </div>
                         </div>
@@ -409,6 +433,7 @@ const PostProject = (props) => {
                               className="form-control select"
                               id="projectDuration"
                               onChange={onChange}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(enumsState.ProjectDurations || []).map(
@@ -436,6 +461,7 @@ const PostProject = (props) => {
                               className="form-control select"
                               id="supportLevel"
                               onChange={onChange}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(enumsState.SupportLevels || []).map(
@@ -462,6 +488,7 @@ const PostProject = (props) => {
                               className="form-control select"
                               id="providerType"
                               onChange={onChange}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(enumsState.ProviderTypes || []).map(
@@ -490,6 +517,7 @@ const PostProject = (props) => {
                               className="form-control select"
                               id="experienceLevel"
                               onChange={onChange}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(enumsState.ExperienceLevels || []).map(
@@ -516,6 +544,7 @@ const PostProject = (props) => {
                               className="form-control select"
                               id="qualificationType"
                               onChange={onChange}
+                              required
                             >
                               <option value={0}>Select</option>
                               {(enumsState.QualificationTypes || []).map(
@@ -565,6 +594,7 @@ const PostProject = (props) => {
                             className="form-control summernote"
                             rows={5}
                             defaultValue={""}
+                            required
                           />
                         </div>
                       </div>
@@ -585,9 +615,9 @@ const PostProject = (props) => {
                       <div className="col-md-12 text-end">
                         <div className="btn-item">
                           <button
-                            type="button"
+                            type="submit"
                             className="btn next-btn"
-                            onClick={onSubmit}
+                            // onClick={}
                           >
                             Submit
                           </button>

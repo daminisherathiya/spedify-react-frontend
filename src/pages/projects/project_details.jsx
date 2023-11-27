@@ -27,11 +27,19 @@ import {
 } from "../../components/imagepath";
 import Axios from "../../Axios";
 import moment from "moment/moment";
+import { useEnumsContext } from "../../context/EnumsContext";
 
 const ProjectDetails = (props) => {
+  const { enumsState } = useEnumsContext();
   const [details, setDetails] = useState({});
   const { projectId } = useParams();
-  console.log("this is project id: ", projectId, details);
+  console.log(
+    "this is project id: ",
+    projectId,
+    details,
+    "enumstate",
+    enumsState
+  );
   // const getDetails = async () => {
   //   const response = await Axios.get(
   //     `/api/v1/project/projectDetails/${projectId}`
@@ -39,11 +47,15 @@ const ProjectDetails = (props) => {
   //   setDetails(response);
   //   // dispatch({ type: "SET_ENUMS", payload: response.data.enums });
   // };
-  useEffect(() => {
-    Axios.get(`/api/v1/project/projectDetails/${projectId}`).then((data) =>
-      setDetails(data?.data?.doc?.project)
+  const getDetails = async () => {
+    const response = await Axios.get(
+      `/api/v1/project/projectDetails/${projectId}`
     );
-  }, [projectId]);
+    setDetails(response?.data?.doc?.project);
+  };
+  useEffect(() => {
+    getDetails();
+  }, []);
 
   return (
     <>
@@ -165,9 +177,14 @@ const ProjectDetails = (props) => {
                             <div className="pro-post-head">
                               <p>Price type</p>
                               <h6>
-                                {details?.fixedPrice === 0
-                                  ? "Not fixed"
-                                  : "Fixed"}
+                                {/* {details?.fixedPrice === 1
+                                  ? details?.fixedPrice
+                                  : details?.fixedPrice === 2
+                                  ? `{${details?.hourlyMin}, "-", ${details?.hourlyMax}/h}`
+                                  : "Either"} */}
+                                {details?.pricingType === 2
+                                  ? `${details?.hourlyMin} - ${details?.hourlyMax}/h`
+                                  : details?.fixedPrice}
                               </h6>
                             </div>
                             <div className="post-job-icon green-color">
@@ -260,7 +277,13 @@ const ProjectDetails = (props) => {
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
                               <p>Qualifications</p>
-                              <h6>Under Garduate</h6>
+                              <h6>
+                                {
+                                  enumsState?.QualificationTypes[
+                                    details?.qualificationType - 1
+                                  ]?.text
+                                }
+                              </h6>
                             </div>
                             <div className="post-job-icon">
                               <img
@@ -440,17 +463,19 @@ const ProjectDetails = (props) => {
                           </div>
                         </div>
                         <hr className="my-3" />
-                        <div className="row align-items-center">
-                          <div className="col">
-                            <h6 className="text-start mb-0">
-                              <i className="fab fa-linkedin me-2" />
-                              LinkedIn
-                            </h6>
+                        {details?.createdBy?.likedin && (
+                          <div className="row align-items-center">
+                            <div className="col">
+                              <h6 className="text-start mb-0">
+                                <i className="fab fa-linkedin me-2" />
+                                LinkedIn
+                              </h6>
+                            </div>
+                            <div className="col-auto">
+                              <span>{details?.createdBy?.likedin}</span>
+                            </div>
                           </div>
-                          <div className="col-auto">
-                            <span>{details?.createdBy?.likedin}</span>
-                          </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
