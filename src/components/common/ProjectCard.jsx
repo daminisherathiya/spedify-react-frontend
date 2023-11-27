@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useEnumsContext } from "../../context/EnumsContext";
 import { getFilePath } from '../../helpers';
 
-function timeSince(createdAt) {
+const timeSince = (createdAt) => {
     const now = Date.now(); // Current timestamp in milliseconds
     const difference = now - createdAt; // Difference in milliseconds
 
@@ -26,8 +27,14 @@ function timeSince(createdAt) {
     }
 }
 
+const getPricingTypeText = (pricingTypes, pricingTypeValue) => {
+    const type = pricingTypes.find(pt => pt.value === pricingTypeValue);
+    return type ? type.text : '-';
+}
+
 
 export const ProjectCard = ({project}) => {
+    const { enumsState } = useEnumsContext();
     const [createdAgoMessage, setCreatedAgoMessage] = useState(() => timeSince(project.createdAt));
 
     useEffect(() => {
@@ -99,7 +106,7 @@ export const ProjectCard = ({project}) => {
                         </li>
                         <li>
                             <h3 className="counter-value">
-                                <span className="jobtype">Full Time</span>
+                                <span className="jobtype">{getPricingTypeText(enumsState.PricingTypes, project.pricingType)}</span>
                             </h3>
                             <h5>Job Type</h5>
                         </li>
