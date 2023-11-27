@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { company_img1 } from '../../components/imagepath';
+import { getFilePath } from '../../helpers';
 
 function timeSince(createdAt) {
     const now = Date.now(); // Current timestamp in milliseconds
@@ -53,7 +53,7 @@ export const ProjectCard = ({project}) => {
                 <div className="author-heading">
                     <div className="profile-img">
                         <Link to="#">
-                            <img src={company_img1} alt="author" />
+                            <img src={getFilePath(project.createdBy.picture)} alt="author" />
                         </Link>
                     </div>
                     <div className="profile-name">
