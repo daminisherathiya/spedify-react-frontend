@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import StickyBox from "react-sticky-box";
 import Nouislider from "nouislider-react";
-import "nouislider/distribute/nouislider";
+import "nouislider/distribute/nouislider.css";
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import Axios from "../../Axios";
@@ -18,11 +18,11 @@ const Projects = (props) => {
     useAOS();
 
     const { enumsState } = useEnumsContext();
-    console.log('enumsState:', enumsState);
-
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
     const [projectsFetchingError, setProjectsFetchingError] = useState();
+    const [minHourlyRate, setMinHourlyRate] = useState(15);
+    const [maxHourlyRate, setMaxHourlyRate] = useState(35);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -44,6 +44,11 @@ const Projects = (props) => {
         };
         fetchProjects();
     }, []);
+
+    const handleHourlyRateChange = (values) => {
+        setMinHourlyRate(Math.round(values[0]));
+        setMaxHourlyRate(Math.round(values[1]));
+    }
 
     return (
         <>
@@ -119,22 +124,13 @@ const Projects = (props) => {
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Hourly Rate</h4>
-                                            <Nouislider range={{ min: 0, max: 50 }} start={[20, 80]} connect />
+                                            <Nouislider range={{ min: 0, max: 50 }} start={[minHourlyRate, maxHourlyRate]} step={1} connect onUpdate={handleHourlyRateChange} />
                                             <div id="slider-range" />
                                             <div className="row slider-labels">
                                                 <div className="col-xs-12 caption">
-                                                    <span id="slider-range-value1" />0 -{" "}<span id="slider-range-value2" />50
+                                                    <span id="slider-range-value1" />{minHourlyRate} -{" "}<span id="slider-range-value2" />{maxHourlyRate}
                                                 </div>
                                             </div>
-                                            <div className="row">
-                                                <div className="col-sm-12">
-                                                    <form>
-                                                        <input type="hidden" name="min-value" defaultValue="" />
-                                                        <input type="hidden" name="max-value" defaultValue="" />
-                                                    </form>
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Keywords</h4>
