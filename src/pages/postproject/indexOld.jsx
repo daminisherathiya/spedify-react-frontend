@@ -427,7 +427,7 @@ const PostProject = (props) => {
                     <div className="row">
                       <div className="title-content col-md-4">
                         <div className="title-detail">
-                          <h3>Project Durtion</h3>
+                          <h3>Project Duration</h3>
                           <div className="form-group mb-0 pr-md-3">
                             <select
                               className="form-control select"

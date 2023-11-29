@@ -7,7 +7,7 @@ import Price from "./components/Price";
 import { IoCloseSharp } from "react-icons/io5";
 import { TextField } from "@material-ui/core";
 import Select from "../../components/Select";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 const SelectedSkills = ({ selectedSkills = [], onSkillSelect = () => {} }) => {
   if (!selectedSkills.length) return null;
   return (
@@ -72,6 +72,8 @@ const PostProject = (props) => {
     control,
     handleSubmit,
     watch,
+    setValue,
+    reset,
     register,
     formState: { errors },
   } = useForm();
@@ -87,14 +89,14 @@ const PostProject = (props) => {
   const [skills, setSkills] = React.useState([]);
   const onSkillSelect = (skill) => {
     setSkills(
-      [...skills].map((sk, j) => {
+      [...skills].map((sk) => {
         if (sk._id === skill._id) return { ...sk, selected: !sk.selected };
         else return sk;
       })
     );
   };
 
-  console.log("payload", payload, enumsState, skills, deliveryType);
+  // console.log("payload", payload, enumsState, skills, deliveryType);
   const onChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
@@ -105,26 +107,42 @@ const PostProject = (props) => {
     // if (id === "deliveryType" && value === "2")
     //   payload.deliveryStamp = new Date().getTime();
   };
-  if (deliveryType === "2")
-    payload.deliveryStamp = new Date().toISOString().slice(0, 10);
+  if (deliveryType === "2") payload.deliveryStamp = new Date().getTime();
 
   const onSubmit = async (e) => {
-    console.log(e, "asdfsd");
     Object.keys(e).forEach((key) => (payload[key] = e[key]));
+    // console.log(e, skills, "asdfsd", {
+    //   ...payload,
+    //   skills: skills.filter((s) => s.selected),
+    //   location: `${currentUser.addressLine}, ${currentUser.state}`,
+    // });
     try {
-      // const data = await Post("api/v1/project/createUpdate", {
-      //   ...payload,
-      //   skills: skills.filter((s) => s.selected),
-      //   location: `${currentUser.addressLine}, ${currentUser.state}`,
-      // });
-      // alert(data.doc.message);
-      // setPayload(initState);
-      // navigate("/");
+      const data = await Post("api/v1/project/createUpdate", {
+        ...payload,
+        skills: skills.filter((s) => s.selected),
+        location: `${currentUser.addressLine}, ${currentUser.state}`,
+      });
+      alert(data.doc.message);
+
+      setPayload((pre) => {
+        Object.keys(pre).forEach((k) => {
+          k === "skills" ? (pre[k] = []) : (pre[k] = "");
+        });
+        return pre;
+      });
+      setSkills(
+        [...skills].map((sk) => {
+          if (sk.selected) sk.selected = false;
+          return sk;
+        })
+      );
+      reset();
     } catch (error) {}
   };
   const getSkills = async () => {
     const data = await Post("api/v1/skill/search", { searchQuery: `` });
     if (data.statusCode === 200) {
+      enumsState.Skills = data.doc.skills;
       setSkills(data.doc.skills);
     }
   };
@@ -188,7 +206,7 @@ const PostProject = (props) => {
                             id="supportType"
                             onChange={onChange}
                             options={enumsState.SupportTypes}
-                            defaultValue={"0"}
+                            defaultValue={""}
                             register={register}
                             errors={errors}
                             message="Support type is required"
@@ -302,6 +320,122 @@ const PostProject = (props) => {
                             register={register}
                           />
                         </div>
+                        <div className="col-md-4">
+                          <Select
+                            label="Desired areas of expertise"
+                            id="experience"
+                            onChange={(e) => {
+                              onSkillSelect(
+                                skills.find((s) => s._id === e.target.value)
+                              );
+                            }}
+                            options={skills}
+                            defaultValue={""}
+                            register={register}
+                            errors={errors}
+                            message="Desired areas of expertise is required"
+                          />
+                          <SelectedSkills
+                            selectedSkills={skills.filter((s) => s.selected)}
+                            onSkillSelect={onSkillSelect}
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <Select
+                            label="Project Duration"
+                            id="projectDuration"
+                            onChange={onChange}
+                            options={enumsState.ProjectDurations}
+                            defaultValue={""}
+                            register={register}
+                            errors={errors}
+                            message="Project duration is required"
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <Select
+                            label="Level"
+                            id="supportLevel"
+                            onChange={onChange}
+                            options={enumsState.SupportLevels}
+                            defaultValue={""}
+                            register={register}
+                            errors={errors}
+                            message="Level is required"
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <Select
+                            label="Job type"
+                            id="providerType"
+                            onChange={onChange}
+                            options={enumsState.ProviderTypes}
+                            defaultValue={""}
+                            register={register}
+                            errors={errors}
+                            message="Job type is required"
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <Select
+                            label="Experience"
+                            id="experienceLevel"
+                            onChange={onChange}
+                            options={enumsState.ExperienceLevels}
+                            defaultValue={""}
+                            register={register}
+                            errors={errors}
+                            message="Experience is required"
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <Select
+                            label="Qualification"
+                            id="qualificationType"
+                            onChange={onChange}
+                            options={enumsState.QualificationTypes}
+                            defaultValue={""}
+                            register={register}
+                            errors={errors}
+                            message="Qualification is required"
+                          />
+                        </div>
+                        <br />
+                        <div className="col-md-12">
+                          <h5>
+                            Describe the concern(s) for which you are seeking
+                            support{" "}
+                          </h5>
+                          <textarea
+                            onChange={onChange}
+                            id="description"
+                            className="form-control summernote"
+                            rows={5}
+                            defaultValue={""}
+                            {...register("description", {
+                              required: {
+                                value: true,
+                                message: "Description is required",
+                              },
+                            })}
+                          />
+                          {errors.description && (
+                            <p className="text-danger">
+                              {errors?.description.message}
+                            </p>
+                          )}
+                          <p>
+                            <p>Disclaimer:</p>
+                            Your support request will be posted and accessible
+                            by eligible provoiders on our site. While the
+                            providers are verified, it is best to avoid sharing
+                            any personally identifying details at this juncture.
+                            Once you connect with a provider, you will have the
+                            ability to securely transmit personally identifiable
+                            information
+                          </p>
+                        </div>
+
                         {/* <div className="col-md-4">
                           <Select
                             label="Support Needed By"
@@ -642,15 +776,15 @@ const PostProject = (props) => {
                           </div>
                         </div>
                       </div>
-                    </div> */}
-                    <div className="title-content pb-0">
-                      <div className="title-detail">
-                        <h3>
-                          Describe the concern(s) for which you are seeking
-                          support{" "}
-                        </h3>
-                        <div className="form-group mb-0">
-                          {/* <RichTextEditor
+                    </div> 
+                 <div className="title-content pb-0">
+                     <div className="title-detail"> 
+                      <h3>
+                        Describe the concern(s) for which you are seeking
+                        support{" "}
+                      </h3>
+                      <div className="form-group">
+                        <RichTextEditor
                           value="Default value"
                           options={{
                             lang: 'ru-RU',
@@ -666,27 +800,27 @@ const PostProject = (props) => {
                               ['view', ['fullscreen', 'codeview']]
                             ]
                           }}
-                        /> */}
-                          <textarea
-                            onChange={onChange}
-                            id="description"
-                            className="form-control summernote"
-                            rows={5}
-                            defaultValue={""}
-                            {...register("description", {
-                              required: {
-                                value: true,
-                                message: "Description is required",
-                              },
-                            })}
-                          />
-                        </div>
-                        {errors.description && (
-                          <p className="text-danger">
-                            {errors?.description.message}
-                          </p>
-                        )}
+                        /> 
+                        <textarea
+                          onChange={onChange}
+                          id="description"
+                          className="form-control summernote"
+                          rows={5}
+                          defaultValue={""}
+                          {...register("description", {
+                            required: {
+                              value: true,
+                              message: "Description is required",
+                            },
+                          })}
+                        />
                       </div>
+                      {errors.description && (
+                        <p className="text-danger">
+                          {errors?.description.message}
+                        </p>
+                      )}
+                       </div> 
                     </div>
                     <div style={{ padding: 20 }}>
                       <p>
@@ -698,7 +832,7 @@ const PostProject = (props) => {
                         with a provider, you will have the ability to securely
                         transmit personally identifiable information
                       </p>
-                    </div>
+                    </div> */}
 
                     <div className="row">
                       <div className="col-md-12 text-end">

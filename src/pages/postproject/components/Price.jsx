@@ -6,11 +6,8 @@ export default function Price({
   register,
   errors,
 }) {
-  console.log(pricingType, "this is pricing type");
   return (
     <>
-      {/* <div className="title-content col-md-4"> */}
-      {/* <div className="title-detail"> */}
       {<label className="h5">{"Price"}</label>}
       {pricingType == 2 ? (
         <div className="row pr-3">
@@ -48,11 +45,10 @@ export default function Price({
               })}
             />
           </div>
-          {errors.hourlyMax && errors?.hourlyMax.type === "required" && (
+          {/* {errors.hourlyMax && errors?.hourlyMax.type === "required" && (
             <p className="text-danger">{errors?.hourlyMax.message}</p>
-          )}
-          {((errors.hourlyMax && errors?.hourlyMax.type === "max") ||
-            (errors.hourlyMin && errors?.hourlyMin.type === "min")) && (
+          )} */}
+          {(errors.hourlyMax || errors.hourlyMin) && (
             <p className="text-danger">Both value must be between 50-100</p>
           )}
           {/* {errors?.hourlyMin.type === "required" && (
