@@ -38,22 +38,15 @@ export default function Price({
               {...register("hourlyMax", {
                 max: {
                   value: 100,
-                  // message: "Both value must be between 50-100",
                 },
                 min: 50,
                 required: { value: true, message: "Maximum price is required" },
               })}
             />
           </div>
-          {/* {errors.hourlyMax && errors?.hourlyMax.type === "required" && (
-            <p className="text-danger">{errors?.hourlyMax.message}</p>
-          )} */}
           {(errors.hourlyMax || errors.hourlyMin) && (
             <p className="text-danger">Both value must be between 50-100</p>
           )}
-          {/* {errors?.hourlyMin.type === "required" && (
-            <p className="text-danger">{errors?.hourlyMin.message}</p>
-          )} */}
         </div>
       ) : (
         <>
@@ -76,9 +69,6 @@ export default function Price({
           )}
         </>
       )}
-
-      {/* </div> */}
-      {/* </div> */}
     </>
   );
 }

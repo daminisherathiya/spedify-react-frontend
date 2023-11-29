@@ -16,14 +16,17 @@ export default ({
       {id === "experience" ? (
         <select
           id={id}
-          // onChange={onChange}
           className="form-select"
           defaultValue={defaultValue}
           {...register(id, { required: message, onChange: onChange })}
         >
           <option value="">Select</option>
           {options.map((option) => (
-            <option key={`option-key-${option._id}}`} value={option._id}>
+            <option
+              className={option?.selected ? "text-white bg-success " : ""}
+              key={`option-key-${option._id}}`}
+              value={option._id}
+            >
               {option.name}
             </option>
           ))}
@@ -44,40 +47,8 @@ export default ({
           ))}
         </select>
       )}
-      {/* <select
-        id={id}
-        onChange={onChange}
-        className="form-select"
-        defaultValue={defaultValue}
-        {...register(id, { required: message })}
-      >
-        <option value="">Select</option>
-        {options.map((option, i) => (
-          <option key={`option-key-${i}}`} value={option.value}>
-            {option.text}
-          </option>
-        ))}
-      </select> */}
+
       {errors?.[id] && <p className="text-danger">{errors?.[id].message}</p>}
-      {/* <select
-        onChange={onChange}
-        id={id}
-        className="form-select"
-        // defaultValue={defaultValue}
-        // value={defaultValue}
-      >
-        {/* <option value={0}>Select</option> */}
-      {/*    {options.map((option, index) => {
-          return (
-            <option
-              key={`option-key-${Math.random() + index}`}
-              value={option.value}
-            >
-              {option.text}
-            </option>
-          );
-        })}
-      </select> */}
     </div>
   );
 };
