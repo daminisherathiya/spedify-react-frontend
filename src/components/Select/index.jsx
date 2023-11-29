@@ -1,16 +1,52 @@
-import React from 'react'
+import React from "react";
 
-export default ({ label = '', id = '', onChange = () => { }, options = [], defaultValue = "" }) => {
-    return (
-        <div className="form-group col-md-6">
-            <label>{label}</label>
-            <select onChange={onChange} id={id} className="form-control select" defaultValue={defaultValue} value={defaultValue}>
-                {
-                    options.map((option, index) => {
-                        return <option key={`option-key-${Math.random() + index}`} value={option.value}>{option.text}</option>
-                    })
-                }
-            </select>
-        </div>
-    )
-}
+export default ({
+  label = "",
+  id = "",
+  onChange = () => {},
+  options = [],
+  defaultValue = "",
+  register,
+  errors,
+  message = "This field is required",
+}) => {
+  return (
+    <div className="form-group">
+      {label && <label className="h5">{label}</label>}
+      <select
+        id={id}
+        onChange={onChange}
+        className="form-select"
+        defaultValue={defaultValue}
+        {...register(id, { required: message })}
+      >
+        <option value="">Select</option>
+        {options.map((option, i) => (
+          <option key={`option-key-${i}}`} value={option.value}>
+            {option.text}
+          </option>
+        ))}
+      </select>
+      {errors?.[id] && <p className="text-danger">{errors?.[id].message}</p>}
+      {/* <select
+        onChange={onChange}
+        id={id}
+        className="form-select"
+        // defaultValue={defaultValue}
+        // value={defaultValue}
+      >
+        {/* <option value={0}>Select</option> */}
+      {/*    {options.map((option, index) => {
+          return (
+            <option
+              key={`option-key-${Math.random() + index}`}
+              value={option.value}
+            >
+              {option.text}
+            </option>
+          );
+        })}
+      </select> */}
+    </div>
+  );
+};

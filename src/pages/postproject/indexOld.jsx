@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEnumsContext } from "../../context/EnumsContext";
 import { Post } from "../../services/Api";
 import { useUserContext } from "../../context/UserContext";
 import Price from "./components/Price";
 import { IoCloseSharp } from "react-icons/io5";
+import { DatePicker, Input } from "antd";
+import moment from "moment/moment";
 import { TextField } from "@material-ui/core";
-import Select from "../../components/Select";
-import { useForm } from "react-hook-form";
+// import ReactSummernote from 'react-summernote';
+// import 'react-summernote/dist/react-summernote.css';
 const SelectedSkills = ({ selectedSkills = [], onSkillSelect = () => {} }) => {
   if (!selectedSkills.length) return null;
+  // const removeSkills = (removedSkill) => {
+  //   const updatedSkills = selectedSkills.filter(
+  //     (skill) => skill?._id !== removedSkill?._id
+  //   );
+  //   onSkillSelect(updatedSkills);
+  // };
   return (
     <div style={{ margin: 10, display: "flex", flexWrap: "wrap" }}>
       {selectedSkills.map((s, i) => (
@@ -64,27 +72,23 @@ const initState = {
 };
 const PostProject = (props) => {
   const { enumsState } = useEnumsContext();
-  const [payload, setPayload] = React.useState(initState);
   const { state } = useUserContext();
   const navigate = useNavigate();
   const currentUser = state.user;
-  const {
-    control,
-    handleSubmit,
-    watch,
-    register,
-    formState: { errors },
-  } = useForm();
-  const deliveryType = watch("deliveryType");
-  const pricingType = watch("pricingType");
+  const [payload, setPayload] = React.useState(initState);
+  // const [selectedOption, setSelectedOption] = React.useState("Select");
+  // const [selectedDate, setSelectedDate] = React.useState(null);
+
   const handleDateChange = (date) => {
-    // enumsState.DeliveryTypes[1] = { text: date.target.value, value: 2 };
+    // setSelectedOption(dateString);
+    enumsState.DeliveryTypes[1] = { text: date.target.value, value: 2 };
     setPayload((pre) => ({
       ...pre,
       deliveryStamp: new Date(date.target.value).getTime(),
     }));
   };
   const [skills, setSkills] = React.useState([]);
+  const [inputValidate, setInputValidate] = React.useState(false);
   const onSkillSelect = (skill) => {
     setSkills(
       [...skills].map((sk, j) => {
@@ -94,36 +98,60 @@ const PostProject = (props) => {
     );
   };
 
-  console.log("payload", payload, enumsState, skills, deliveryType);
+  console.log("payload", payload, enumsState, skills);
   const onChange = (e) => {
     const id = e.target.id;
     const value = e.target.value;
+    // setSelectedOption(value);
     setPayload((pre) => ({
       ...pre,
       [id]: value,
     }));
-    // if (id === "deliveryType" && value === "2")
-    //   payload.deliveryStamp = new Date().getTime();
   };
-  if (deliveryType === "2")
-    payload.deliveryStamp = new Date().toISOString().slice(0, 10);
-
+  // const validateAllInput = () => {
+  //   // ["title", "supportType",'description','deliveryType === 2','hourlyMax','hourlyMin','pricingType === 2','projectDuration','supportLevel','providerType','experienceLevel','qualificationType'];
+  //   if (
+  //     payload.title &&
+  //     payload.supportType.toString() !== "0" &&
+  //     payload.description.toString() !== "0" &&
+  //     payload.deliveryType.toString() !== "0" &&
+  //     payload.pricingType.toString() !== "0" &&
+  //     payload.projectDuration.toString() !== "0" &&
+  //     payload.supportType.toString() !== "0" &&
+  //     payload.providerType.toString() !== "0" &&
+  //     payload.experienceLevel.toString() !== "0" &&
+  //     payload.supportLevel.toString() !== "0" &&
+  //     payload.qualificationType.toString() !== "0" // &&
+  //     // payload.deliveryStamp.toString() !== "0"
+  //   ) {
+  //     if (payload.deliveryType === "2") {
+  //       if (payload.deliveryStamp !== 0) {
+  //         const isSkillSelected = skills.filter((s) => s.selected);
+  //         if (isSkillSelected.length > 0) {
+  //           console.log("object");
+  //         }
+  //       }
+  //       console.log("asdf");
+  //     }
+  //   }
+  // };
   const onSubmit = async (e) => {
-    console.log(e, "asdfsd");
-    Object.keys(e).forEach((key) => (payload[key] = e[key]));
+    e.preventDefault();
     try {
-      // const data = await Post("api/v1/project/createUpdate", {
-      //   ...payload,
-      //   skills: skills.filter((s) => s.selected),
-      //   location: `${currentUser.addressLine}, ${currentUser.state}`,
-      // });
-      // alert(data.doc.message);
-      // setPayload(initState);
-      // navigate("/");
+      console.log(skills.filter((s) => s.selected));
+      const data = await Post("api/v1/project/createUpdate", {
+        ...payload,
+        skills: skills.filter((s) => s.selected),
+        location: `${currentUser.addressLine}, ${currentUser.state}`,
+      });
+      alert(data.doc.message);
+      setPayload(initState);
+      navigate("/");
     } catch (error) {}
   };
   const getSkills = async () => {
     const data = await Post("api/v1/skill/search", { searchQuery: `` });
+    // console.log('[onChangeSkills].data', data);
     if (data.statusCode === 200) {
       setSkills(data.doc.skills);
     }
@@ -145,6 +173,7 @@ const PostProject = (props) => {
                     <Link to="/">Home</Link>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
+                    {" "}
                     Post a Request for Live Support
                   </li>
                 </ol>
@@ -160,162 +189,9 @@ const PostProject = (props) => {
           <div className="row">
             <div className="col-md-12">
               <div className="select-project mb-4">
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={onSubmit}>
                   <div className="title-box widget-box">
-                    <div className="container">
-                      <div className="row g-5">
-                        <div className="col-md-4">
-                          <label className="h5">Title of Support Request</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Enter Support title"
-                            id="title"
-                            onChange={onChange}
-                            {...register("title", {
-                              required: "Title of Support Request is required",
-                            })}
-                          />
-                          {errors?.title && (
-                            <p className="text-danger">
-                              {errors?.title.message}
-                            </p>
-                          )}
-                        </div>
-                        <div className="col-md-4">
-                          <Select
-                            label="Support Type"
-                            id="supportType"
-                            onChange={onChange}
-                            options={enumsState.SupportTypes}
-                            defaultValue={"0"}
-                            register={register}
-                            errors={errors}
-                            message="Support type is required"
-                          />
-                        </div>
-                        <div className="col-md-4">
-                          <div className="form-group">
-                            <>
-                              <label className="h5">Support Needed By</label>
-                              <div className="container">
-                                <div className="row justify-content-between align-items-center">
-                                  <select
-                                    className={`form-select ${
-                                      deliveryType === "2" ? "col-5" : "col"
-                                    }`}
-                                    id="deliveryType"
-                                    // onChange={onChange}
-                                    defaultValue={""}
-                                    {...register("deliveryType", {
-                                      required: "Support needed by is required",
-                                    })}
-                                  >
-                                    <option value={""}>Select</option>
-                                    {(enumsState.DeliveryTypes || []).map(
-                                      (supportType, index) => {
-                                        return (
-                                          <option
-                                            value={supportType.value}
-                                            key={`support-key-${index}`}
-                                          >
-                                            {supportType.text}
-                                          </option>
-                                        );
-                                      }
-                                    )}
-                                  </select>
-                                  {deliveryType === "2" ? (
-                                    <TextField
-                                      id="date"
-                                      // label="Pick Time"
-                                      type="date"
-                                      onChange={handleDateChange}
-                                      value={new Date(payload.deliveryStamp)
-                                        .toISOString()
-                                        .slice(0, 10)}
-                                      InputProps={{
-                                        inputProps: {
-                                          min: new Date().toJSON().slice(0, 10),
-                                        },
-                                      }}
-                                      className="form-control col-6 pl-3"
-                                      InputLabelProps={{
-                                        shrink: true,
-                                      }}
-                                    />
-                                  ) : (
-                                    ""
-                                  )}
-                                  {errors?.deliveryType && (
-                                    <p className="text-danger">
-                                      Support needed by is required
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </>
-                            {/* ) : (
-                              <>
-                                <label className="h5">Support Needed By</label>
-                                <select
-                                  className="form-select"
-                                  id="deliveryType"
-                                  onChange={onChange}
-                                  required
-                                >
-                                  <option value={0}>Select</option>
-                                  {(enumsState.DeliveryTypes || []).map(
-                                    (supportType, index) => {
-                                      return (
-                                        <option
-                                          value={supportType.value}
-                                          key={`support-key-${index}`}
-                                        >
-                                          {supportType.text}
-                                        </option>
-                                      );
-                                    }
-                                  )}
-                                </select>
-                              </>
-                            )} */}
-                          </div>
-                          {/* </div> */}
-                        </div>
-                        <div className="col-md-4">
-                          <Select
-                            label="Pricing Type"
-                            id="pricingType"
-                            onChange={onChange}
-                            options={enumsState.PricingTypes}
-                            register={register}
-                            errors={errors}
-                            message="Pricing Type is required"
-                          />
-                        </div>
-                        <div className="col-md-4">
-                          <Price
-                            onChange={onChange}
-                            pricingType={pricingType}
-                            errors={errors}
-                            register={register}
-                          />
-                        </div>
-                        {/* <div className="col-md-4">
-                          <Select
-                            label="Support Needed By"
-                            id="deliveryType"
-                            onChange={onChange}
-                            options={enumsState.DeliveryTypes}
-                            register={register}
-                            errors={errors}
-                            message="Support Needed By is required"
-                          />
-                        </div> */}
-                      </div>
-                    </div>
-                    {/* <div className="row">
+                    <div className="row">
                       <div className="title-content col-md-4">
                         <div className="title-detail">
                           <h3>Title of Support Request</h3>
@@ -386,6 +262,14 @@ const PostProject = (props) => {
                                     }
                                   )}
                                 </select>
+                                {/* <Input
+                                  type="date"
+                                  required
+                                  min={new Date().toJSON().slice(0, 10)}
+                                  className="form-control input col-6"
+                                  onChange={handleDateChange}
+                                  value={payload.deliveryStamp}
+                                /> */}
                                 <TextField
                                   id="date"
                                   label="Pick Time"
@@ -425,12 +309,49 @@ const PostProject = (props) => {
                                 )}
                               </select>
                             )}
+                            {/* <select
+                              className="form-control select"
+                              id="deliveryType"
+                              onChange={onChange}
+                            >
+                              <option value={0}>Select</option>
+                              {(enumsState.DeliveryTypes || []).map(
+                                (supportType, index) => {
+                                  return (
+                                    <option
+                                      value={supportType.value}
+                                      key={`support-key-${index}`}
+                                    >
+                                      {supportType.text}
+                                    </option>
+                                  );
+                                }
+                              )}
+                            </select>
+                            {payload.deliveryType === "2" && (
+                              // <DatePicker
+                              //   onChange={handleDateChange}
+                              //   value={
+                              //     payload.deliveryType &&
+                              //     moment(payload.deliveryType)
+                              //   }
+                              // />
+                              <input
+                                type="date"
+                                className="form-control select"
+                                onChange={handleDateChange}
+                                value={
+                                  payload.deliveryType &&
+                                  moment(payload.deliveryType)
+                                }
+                              />
+                            )} */}
                           </div>
                         </div>
                       </div>
-                    </div> */}
+                    </div>
 
-                    {/* <div className="row">
+                    <div className="row">
                       <div className="title-content col-md-4">
                         <div className="title-detail">
                           <h3>Pricing Type</h3>
@@ -642,7 +563,7 @@ const PostProject = (props) => {
                           </div>
                         </div>
                       </div>
-                    </div> */}
+                    </div>
                     <div className="title-content pb-0">
                       <div className="title-detail">
                         <h3>
@@ -673,19 +594,9 @@ const PostProject = (props) => {
                             className="form-control summernote"
                             rows={5}
                             defaultValue={""}
-                            {...register("description", {
-                              required: {
-                                value: true,
-                                message: "Description is required",
-                              },
-                            })}
+                            required
                           />
                         </div>
-                        {errors.description && (
-                          <p className="text-danger">
-                            {errors?.description.message}
-                          </p>
-                        )}
                       </div>
                     </div>
                     <div style={{ padding: 20 }}>
@@ -703,7 +614,11 @@ const PostProject = (props) => {
                     <div className="row">
                       <div className="col-md-12 text-end">
                         <div className="btn-item">
-                          <button type="submit" className="btn next-btn">
+                          <button
+                            type="submit"
+                            className="btn next-btn"
+                            // onClick={}
+                          >
                             Submit
                           </button>
                         </div>
