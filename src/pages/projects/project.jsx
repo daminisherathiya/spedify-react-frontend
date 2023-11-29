@@ -27,6 +27,9 @@ const Projects = (props) => {
     const [activePage, setActivePage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
 
+    const startIndex = (activePage - 1) * pageSize;  // Inclusive
+    const endIndex = Math.min(activePage * pageSize, projects.length) - 1;  // Inclusive
+
     useEffect(() => {
         const fetchProjects = async () => {
             setIsFetchingProjects(true);
@@ -170,7 +173,7 @@ const Projects = (props) => {
                                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                             <div className="d-flex align-items-center">
                                                 <div className="freelance-view">
-                                                    <h4>Showing {Math.min((activePage - 1) * pageSize + 1, projects.length)} - {Math.min((activePage) * pageSize, projects.length)} of {projects.length}</h4>
+                                                    <h4>Showing {Math.min(startIndex + 1, projects.length)} - {endIndex + 1} of {projects.length}</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,26 +227,28 @@ const Projects = (props) => {
                             </div>                            
                             {isFetchingProjects && <InlineLoader />}
                             {projectsFetchingError && <Alert message={projectsFetchingError} />}
-                            <ProjectsList projects={projects} />
-                            <div className="d-flex pb-4 justify-content-center">
-                                <div className="form-group mb-0 me-3 pagination-page-size">
-                                    <Select2
-                                        className="select form-control"
-                                        data={([10, 20, 50, 100]).map(item => ({ id: item, text: item.toString() }))}
-                                        value={pageSize}
-                                        onChange={handlePaginationPageSizeChange}
-                                        />
+                            <ProjectsList projects={projects.slice(startIndex, endIndex + 1)} />
+                            <div className="pagination-sticky-bottom py-3">
+                                <div className="d-flex py-3 justify-content-center">
+                                    <div className="form-group mb-0 me-3 pagination-page-size">
+                                        <Select2
+                                            className="select form-control"
+                                            data={([10, 20, 50, 100]).map(item => ({ id: item, text: item.toString() }))}
+                                            value={pageSize}
+                                            onChange={handlePaginationPageSizeChange}
+                                            />
+                                    </div>
+                                    <Pagination
+                                        activePage={activePage}
+                                        itemsCountPerPage={pageSize}
+                                        totalItemsCount={projects.length}
+                                        pageRangeDisplayed={5}
+                                        itemClass="page-item"
+                                        linkClass="page-link h-100 d-flex align-items-center"
+                                        onChange={handlePaginationPageChange}
+                                        innerClass="pagination mb-0"
+                                    />
                                 </div>
-                                <Pagination
-                                    activePage={activePage}
-                                    itemsCountPerPage={pageSize}
-                                    totalItemsCount={projects.length}
-                                    pageRangeDisplayed={5}
-                                    itemClass="page-item"
-                                    linkClass="page-link h-100 d-flex align-items-center"
-                                    onChange={handlePaginationPageChange}
-                                    innerClass="pagination mb-0"
-                                />
                             </div>
                         </div>
                     </div>

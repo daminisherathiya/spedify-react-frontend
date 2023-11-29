@@ -5,6 +5,16 @@
 	color: #999 !important;
   font-weight: 500;
 }
+.pagination-sticky-bottom {
+	position: sticky;
+	bottom: 0;
+	z-index: 1;
+	background-color: #ffffff;
+}
+.pagination-sticky-bottom > div {
+	background-color: #edeef3;
+	border-radius: 6px;
+}
 .pagination-page-size {
 	width: 100px;
 }
