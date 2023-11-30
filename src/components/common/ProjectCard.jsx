@@ -93,7 +93,7 @@ export const ProjectCard = ({project}) => {
                 <div className="author-heading">
                     <div className="profile-img">
                         <Link to="#">
-                            <img src={getFilePath(project.createdBy.picture)} alt="author" />
+                            <img src={getFilePath(project.createdBy.picture, true)} alt="author" />
                         </Link>
                     </div>
                     <div className="profile-name">

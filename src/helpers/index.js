@@ -100,9 +100,9 @@ export const getSetUser = async (dispatch, token) => {
     }
 
 }
-export const getFilePath = (pictureObj = {}) => {
+export const getFilePath = (pictureObj = {}, useThumbnailUrl=false) => {
     if (!pictureObj || !Object.keys(pictureObj).length) return ''
-    if (pictureObj.files) return `${BASE_URL}/${pictureObj.files.find((x, index) => index === 0).path}`;
+    if (pictureObj.files) return `${pictureObj.files.find((x, index) => index === 0)[useThumbnailUrl ? "thumbnailUrl" : "path"]}`;
     else return ''
 }
 
