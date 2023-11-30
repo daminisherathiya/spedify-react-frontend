@@ -20,14 +20,31 @@ const Projects = (props) => {
     useAOS();
 
     const { enumsState } = useEnumsContext();
+
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
-    const [projectsFetchingError, setProjectsFetchingError] = useState();
+    const [projectsFetchingError, setProjectsFetchingError] = useState('');
+
+    const [selectedSupportType, setSelectedSupportType] = useState(null);
+    const [typedLocation, setTypedLocation] = useState('');
+    const [selectedPricingType, setSelectedPricingType] = useState(null);
     const [selectedSkills, setSelectedSkills] = useState([]);
+    const [selectedExperienceLevels, setSelectedExperienceLevels] = useState([]);
     const [minHourlyRate, setMinHourlyRate] = useState(15);
     const [maxHourlyRate, setMaxHourlyRate] = useState(35);
+    const [typedKeywords, setTypedKeywords] = useState('');
+
     const [activePage, setActivePage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
+
+    console.log("selectedSupportType", selectedSupportType);
+    console.log("typedLocation", typedLocation);
+    console.log("selectedPricingType", selectedPricingType);
+    console.log("selectedSkills", selectedSkills);
+    console.log("selectedExperienceLevels", selectedExperienceLevels);
+    console.log("minHourlyRate", minHourlyRate);
+    console.log("maxHourlyRate", maxHourlyRate);
+    console.log("typedKeywords", typedKeywords);
 
     const startIndex = (activePage - 1) * pageSize;  // Inclusive
     const endIndex = Math.min(activePage * pageSize, projects.length) - 1;  // Inclusive
@@ -94,13 +111,28 @@ const Projects = (props) => {
         .then(response => {
             setSelectedSkills(prevSkills => {
                 // Filter out any existing entry to avoid duplication
-                return [...prevSkills.filter(skill => skill.value !== selectedOption.value), {label: selectedOption.label, value: response.data.doc.skillId}];
+                return [
+                    ...prevSkills.filter(skill => skill.value !== selectedOption.value),
+                    {label: selectedOption.label, value: response.data.doc.skillId}
+                ];
             });
             console.log('Skill created/updated:', response.data);
         })
         .catch(error => {
             console.error('Error in creating/updating skill:', error);
         });
+    };
+
+    const handleExperienceLevelChange = event => {
+        console.log("event", event);
+        const experienceLevel = event.target.value;
+        setSelectedExperienceLevels(prevExperienceLevels => {
+            if (prevExperienceLevels.some(el => el.value === experienceLevel)) {
+                return prevExperienceLevels.filter(item => item.value !== experienceLevel);
+            }
+            return [...prevExperienceLevels, {value: experienceLevel, label: event.target.dataset.label} ];
+        });
+
     };
 
     const handleHourlyRateChange = values => {
@@ -116,6 +148,20 @@ const Projects = (props) => {
         setPageSize(event.target.value);
     };
 
+    const clearAllSelectedFilters = event => {
+        event.preventDefault();
+
+        // setSelectedSupportType();
+        setSelectedSupportType(null);
+        setTypedLocation('');
+        setSelectedPricingType(null);
+        setSelectedSkills([]);
+        setSelectedExperienceLevels([]);
+        setMinHourlyRate(15);
+        setMaxHourlyRate(35);
+        setTypedKeywords('');
+    };
+
     return (
         <>
             <Breadcrumb />
@@ -129,17 +175,19 @@ const Projects = (props) => {
                                 <div className="search-filter">
                                     <div className="card-header d-flex justify-content-between">
                                         <h4 className="card-title mb-0">FILTERS</h4>
-                                        <Link to="">Clear All</Link>
+                                        <Link to="" onClick={clearAllSelectedFilters}>Clear All</Link>
                                     </div>
                                     <div className="card-body">
                                         <div className="filter-widget">
                                             <h4>Support Type</h4>
                                             <div className="form-group">
                                                 <Select
+                                                    value={selectedSupportType}
                                                     options={(enumsState.SupportTypes || []).map(item => ({ value: item.value, label: item.text }))}
                                                     className="react-select"
                                                     classNamePrefix="react-select"
                                                     placeholder="Select Support Type"
+                                                    onChange={setSelectedSupportType}
                                                     />
                                             </div>
                                         </div>
@@ -147,9 +195,11 @@ const Projects = (props) => {
                                             <h4>Location</h4>
                                             <div className="form-group">
                                                 <input
+                                                    value={typedLocation}
                                                     type="text"
                                                     className="form-control react-select-like-placeholder"
                                                     placeholder="Enter Location"
+                                                    onChange={event => setTypedLocation(event.target.value)}
                                                 />
                                             </div>
                                         </div>
@@ -157,10 +207,12 @@ const Projects = (props) => {
                                             <h4>Pricing Type</h4>
                                             <div className="form-group">
                                                 <Select
+                                                    value={selectedPricingType}
                                                     options={(enumsState.PricingTypes || []).map(item => ({ value: item.value, label: item.text }))}
                                                     className="react-select"
                                                     classNamePrefix="react-select"
                                                     placeholder="Select Pricing Type"
+                                                    onChange={setSelectedPricingType}
                                                     />
                                             </div>
                                         </div>
@@ -192,7 +244,14 @@ const Projects = (props) => {
                                             {(enumsState.ExperienceLevels || []).map((experienceLevel) => (
                                                 <div key={experienceLevel.value}>
                                                     <label className="custom_check">
-                                                        <input type="checkbox" name="select_exp" defaultChecked={experienceLevel.value===2} />
+                                                        <input
+                                                            type="checkbox"
+                                                            name="select_exp"
+                                                            value={experienceLevel.value}
+                                                            data-label={experienceLevel.text}
+                                                            onChange={handleExperienceLevelChange}
+                                                            checked={selectedExperienceLevels.some(item => item.value == experienceLevel.value)}
+                                                            />
                                                         <span className="checkmark" /> {experienceLevel.text}
                                                     </label>
                                                 </div>
@@ -212,9 +271,11 @@ const Projects = (props) => {
                                             <h4>Keywords</h4>
                                             <div className="form-group">
                                                 <input
+                                                    value={typedKeywords}
                                                     type="text"
                                                     className="form-control react-select-like-placeholder"
                                                     placeholder="Enter Keywords"
+                                                    onChange={event => setTypedKeywords(event.target.value)}
                                                 />
                                             </div>
                                         </div>
