@@ -419,65 +419,65 @@ const Projects = (props) => {
                                 </div>
                                 <div className="bootstrap-tags text-start pl-0 pb-0">
                                     {appliedFilters.selectedSupportType && (
-                                        <span className="badge badge-pill badge-skills">
-                                            Support: {appliedFilters.selectedSupportType.label}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="selectedSupportType" data-value={appliedFilters.selectedSupportType.value} onClick={removeAppliedFilter}>
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Support: {appliedFilters.selectedSupportType.label}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedSupportType" data-value={appliedFilters.selectedSupportType.value} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
                                     {appliedFilters.typedLocation && (
-                                        <span className="badge badge-pill badge-skills">
-                                            Location: {appliedFilters.typedLocation}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="typedLocation" data-value={appliedFilters.typedLocation} onClick={removeAppliedFilter}>
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Location: {appliedFilters.typedLocation}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="typedLocation" data-value={appliedFilters.typedLocation} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
                                     {appliedFilters.selectedPricingType && (
-                                        <span className="badge badge-pill badge-skills">
-                                            Pricing: {appliedFilters.selectedPricingType.label}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="selectedPricingType" data-value={appliedFilters.selectedPricingType.value} onClick={removeAppliedFilter}>
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Pricing: {appliedFilters.selectedPricingType.label}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedPricingType" data-value={appliedFilters.selectedPricingType.value} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
                                     {appliedFilters.selectedSkills.map(skill => (
-                                        <span key={skill.value} className="badge badge-pill badge-skills">
-                                            Skill: {skill.label}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="selectedSkills" data-value={skill.value} onClick={removeAppliedFilter}>
+                                        <span key={skill.value} className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Skill: {skill.label}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedSkills" data-value={skill.value} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     ))}
                                     {appliedFilters.selectedExperienceLevels.map(experienceLevel => (
-                                        <span key={experienceLevel.value} className="badge badge-pill badge-skills">
-                                            Experience: {experienceLevel.label}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="selectedExperienceLevels" data-value={experienceLevel.value} onClick={removeAppliedFilter}>
+                                        <span key={experienceLevel.value} className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Experience: {experienceLevel.label}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedExperienceLevels" data-value={experienceLevel.value} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     ))}
                                     {appliedFilters.minHourlyRate && (
-                                        <span className="badge badge-pill badge-skills">
-                                            Min rate: {appliedFilters.minHourlyRate}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="minHourlyRate" data-value={appliedFilters.minHourlyRate} onClick={removeAppliedFilter}>
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Min rate: {appliedFilters.minHourlyRate}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="minHourlyRate" data-value={appliedFilters.minHourlyRate} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
                                     {appliedFilters.maxHourlyRate && (
-                                        <span className="badge badge-pill badge-skills">
-                                            Max rate: {appliedFilters.maxHourlyRate}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="maxHourlyRate" data-value={appliedFilters.maxHourlyRate} onClick={removeAppliedFilter}>
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Max rate: {appliedFilters.maxHourlyRate}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="maxHourlyRate" data-value={appliedFilters.maxHourlyRate} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
                                     {appliedFilters.typedKeywords && (
-                                        <span className="badge badge-pill badge-skills">
-                                            Keywords: {appliedFilters.typedKeywords}{" "}
-                                            <span className="tag-close" data-role="remove" data-type="typedKeywords" data-value={appliedFilters.typedKeywords} onClick={removeAppliedFilter}>
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Keywords: {appliedFilters.typedKeywords}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="typedKeywords" data-value={appliedFilters.typedKeywords} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
