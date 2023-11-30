@@ -33,13 +33,7 @@ const ProjectDetails = (props) => {
   const { enumsState } = useEnumsContext();
   const [details, setDetails] = useState({});
   const { projectId } = useParams();
-  console.log(
-    "this is project id: ",
-    projectId,
-    details,
-    "enumstate",
-    enumsState
-  );
+  console.log(details, "enumstate", enumsState);
   // const getDetails = async () => {
   //   const response = await Axios.get(
   //     `/api/v1/project/projectDetails/${projectId}`
@@ -47,6 +41,11 @@ const ProjectDetails = (props) => {
   //   setDetails(response);
   //   // dispatch({ type: "SET_ENUMS", payload: response.data.enums });
   // };
+  const submitProposals = async (e) => {
+    e.preventDefault();
+    const response = await Axios.post(`api/v1/proposal/createUpdate`);
+    console.log(response);
+  };
   const getDetails = async () => {
     const response = await Axios.get(
       `/api/v1/project/projectDetails/${projectId}`
@@ -103,7 +102,9 @@ const ProjectDetails = (props) => {
                       <i className="fas fa-clock" />
                       Poster {new Date(details?.createdAt).getHours()} hours ago
                     </li>
-                    <li className="full-time">Full time</li>
+                    <li className="full-time">
+                      {enumsState?.SupportTypes[details?.supportType]?.text}
+                    </li>
                   </ul>
                   <div className="proposal-box">
                     <div className="proposal-value">
@@ -217,7 +218,10 @@ const ProjectDetails = (props) => {
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
                               <p>Project Duration</p>
-                              <h6>Less than a month</h6>
+                              <h6>
+                                {moment(details?.expiresIn)?.format("D")} Days{" "}
+                                {moment(details?.expiresIn)?.format("H")} Hours
+                              </h6>
                             </div>
                             <div className="post-job-icon">
                               <img
@@ -695,7 +699,10 @@ const ProjectDetails = (props) => {
               </div>
               <div className="modal-body">
                 <div className="modal-info">
-                  <form action="freelancer-project-proposals.html">
+                  <form
+                    // action="freelancer-project-proposals.html"
+                    onSubmit={submitProposals}
+                  >
                     <div className="feedback-form">
                       <div className="row">
                         <div className="col-md-6 form-group">

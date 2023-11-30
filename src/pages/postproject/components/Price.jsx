@@ -15,15 +15,15 @@ export default function Price({
             <input
               type="text"
               className="form-control mr-2"
-              placeholder={`min-$50`}
+              placeholder={`min-$3`}
               id="hourlyMin"
               onChange={onChange}
               {...register("hourlyMin", {
                 min: {
-                  value: 50,
+                  value: 3,
                   message: "Both value must be between 50-100",
                 },
-                max: 100,
+                max: 500,
                 required: { value: true, message: "Minimum price is required" },
               })}
             />
@@ -32,20 +32,20 @@ export default function Price({
             <input
               type="text"
               className="form-control mr-2"
-              placeholder={`max-$100`}
+              placeholder={`max-$500`}
               id="hourlyMax"
               onChange={onChange}
               {...register("hourlyMax", {
                 max: {
-                  value: 100,
+                  value: 500,
                 },
-                min: 50,
+                min: 3,
                 required: { value: true, message: "Maximum price is required" },
               })}
             />
           </div>
           {(errors.hourlyMax || errors.hourlyMin) && (
-            <p className="text-danger">Both value must be between 50-100</p>
+            <p className="text-danger">Both value must be between $3-500</p>
           )}
         </div>
       ) : (
@@ -54,12 +54,12 @@ export default function Price({
             <input
               type="text"
               className="form-control mr-2"
-              placeholder={`${pricingType == 1 ? "$50" : "$0"}`}
+              placeholder={`min-$3`}
               id="fixedPrice"
               onChange={onChange}
               {...register("fixedPrice", {
-                min: { value: 0, message: "price must be in between 0-50" },
-                max: { value: 50, message: "price must be in between 0-50" },
+                min: { value: 3, message: "price must be in between 3-500" },
+                max: { value: 500, message: "price must be in between 3-500" },
                 required: { value: true, message: "Price is required" },
               })}
             />
