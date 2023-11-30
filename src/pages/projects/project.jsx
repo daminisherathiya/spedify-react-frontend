@@ -16,6 +16,14 @@ import { Breadcrumb } from "./components/Breadcrumb";
 import { ProjectsList } from "./components/ProjectsList";
 import "./project.css";
 
+const SortingTypes = [
+    { value: 1, label: 'Relevance' },
+    { value: 2, label: 'Rating' },
+    { value: 3, label: 'Popular' },
+    { value: 4, label: 'Latest' },
+    { value: 5, label: 'Free' },
+];
+
 const Projects = (props) => {
     useAOS();
 
@@ -23,19 +31,31 @@ const Projects = (props) => {
 
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
-    const [projectsFetchingError, setProjectsFetchingError] = useState('');
+    const [projectsFetchingError, setProjectsFetchingError] = useState("");
 
     const [selectedSupportType, setSelectedSupportType] = useState(null);
-    const [typedLocation, setTypedLocation] = useState('');
+    const [typedLocation, setTypedLocation] = useState("");
     const [selectedPricingType, setSelectedPricingType] = useState(null);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedExperienceLevels, setSelectedExperienceLevels] = useState([]);
     const [minHourlyRate, setMinHourlyRate] = useState(15);
     const [maxHourlyRate, setMaxHourlyRate] = useState(35);
-    const [typedKeywords, setTypedKeywords] = useState('');
+    const [typedKeywords, setTypedKeywords] = useState("");
+    const [selectedSortingType, setSelectedSortingType] = useState(SortingTypes[0]);
 
     const [activePage, setActivePage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
+
+    const [appliedFilters, setAppliedFilters] = useState({
+        selectedSupportType: null,
+        typedLocation: "",
+        selectedPricingType: null,
+        selectedSkills: [],
+        selectedExperienceLevels: [],
+        minHourlyRate: null,
+        maxHourlyRate: null,
+        typedKeywords: "",
+    });
 
     console.log("selectedSupportType", selectedSupportType);
     console.log("typedLocation", typedLocation);
@@ -45,17 +65,19 @@ const Projects = (props) => {
     console.log("minHourlyRate", minHourlyRate);
     console.log("maxHourlyRate", maxHourlyRate);
     console.log("typedKeywords", typedKeywords);
+    console.log("selectedSortingType", selectedSortingType);
 
     const startIndex = (activePage - 1) * pageSize;  // Inclusive
     const endIndex = Math.min(activePage * pageSize, projects.length) - 1;  // Inclusive
 
     useEffect(() => {
-        const fetchProjects = async () => {
+        const fetchProjects = async (queryParamsString) => {
             setIsFetchingProjects(true);
 
             try {
-                const response = await Axios.get('/api/v1/project/getAll');
-                setProjectsFetchingError('testing error');  // For testing, uncomment this
+                const response = await Axios.get(`/api/v1/project/getAll`);
+                // const response = await Axios.get(`/api/v1/project/getAll?${queryParamsString}`);
+                // setProjectsFetchingError('testing error');  // For testing, uncomment this
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error('Failed to fetch projects');
                 }
@@ -67,8 +89,39 @@ const Projects = (props) => {
 
             setIsFetchingProjects(false);
         };
-        fetchProjects();
-    }, []);
+        const getProjectsFilterQueryParamsString = () => {
+            let params = '';
+            if (appliedFilters.selectedSupportType) {
+                params += `&supportType=${appliedFilters.selectedSupportType.value}`;
+            }
+            if (appliedFilters.typedLocation) {
+                params += `&location=${appliedFilters.typedLocation}`;
+            }
+            if (appliedFilters.selectedPricingType) {
+                params += `&pricingType=${appliedFilters.selectedPricingType.value}`;
+            }
+            for (let i = 0; i < appliedFilters.selectedSkills.length; i++) {
+                params += `&skills=${appliedFilters.selectedSkills[i].value}`;
+            }
+            for (let i = 0; i < appliedFilters.selectedExperienceLevels.length; i++) {
+                params += `&experience=${appliedFilters.selectedExperienceLevels[i].value}`;
+            }
+            if (appliedFilters.minHourlyRate) {
+                params += `&hourlyMin=${appliedFilters.minHourlyRate}`;
+            }
+            if (appliedFilters.maxHourlyRate) {
+                params += `&hourlyMax=${appliedFilters.maxHourlyRate}`;
+            }
+            if (appliedFilters.typedKeywords) {
+                params += `&keywords=${appliedFilters.typedKeywords}`;
+            }
+            params += `&sorting=${selectedSortingType.value}`;
+            params = params.replace(/^&/, '');  // Remove leading '&'
+            console.log("params", params);
+            return params;
+        };
+        fetchProjects(getProjectsFilterQueryParamsString());
+    }, [appliedFilters, selectedSortingType]);
 
     const skillsNoOptionsMessage = ({ inputValue }) => {
         if (!inputValue) {
@@ -153,13 +206,62 @@ const Projects = (props) => {
 
         // setSelectedSupportType();
         setSelectedSupportType(null);
-        setTypedLocation('');
+        setTypedLocation("");
         setSelectedPricingType(null);
         setSelectedSkills([]);
         setSelectedExperienceLevels([]);
         setMinHourlyRate(15);
         setMaxHourlyRate(35);
-        setTypedKeywords('');
+        setTypedKeywords("");
+    };
+
+    const searchProjects = () => {
+        setAppliedFilters({
+            selectedSupportType,
+            typedLocation,
+            selectedPricingType,
+            selectedSkills,
+            selectedExperienceLevels,
+            minHourlyRate,
+            maxHourlyRate,
+            typedKeywords,
+        });
+    };
+
+    const removeAppliedFilter = event => {
+        console.log("event", event);
+        const filterType = event.currentTarget.dataset.type;
+        const filterValue = event.currentTarget.dataset.value;
+        console.log("filterType", filterType);
+        console.log("filterValue", filterValue);
+        switch (filterType) {
+            case 'selectedSupportType':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedSupportType: null}));
+                break;
+            case 'typedLocation':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, typedLocation: ""}));
+                break;
+            case 'selectedPricingType':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedPricingType: null}));
+                break;
+            case 'selectedSkills':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedSkills: prevAppliedFilters.selectedSkills.filter(skill => skill.value !== filterValue)}));
+                break;
+            case 'selectedExperienceLevels':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedExperienceLevels: prevAppliedFilters.selectedExperienceLevels.filter(experienceLevel => experienceLevel.value !== filterValue)}));
+                break;
+            case 'minHourlyRate':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, minHourlyRate: null}));
+                break;
+            case 'maxHourlyRate':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, maxHourlyRate: null}));
+                break;
+            case 'typedKeywords':
+                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, typedKeywords: ""}));
+                break;
+            default:
+                break;
+        }
     };
 
     return (
@@ -280,7 +382,7 @@ const Projects = (props) => {
                                             </div>
                                         </div>
                                         <div className="btn-search">
-                                            <button type="button" className="btn btn-block">
+                                            <button type="button" className="btn btn-block" onClick={searchProjects}>
                                                 Search
                                             </button>
                                         </div>
@@ -302,50 +404,84 @@ const Projects = (props) => {
                                         </div>
                                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                             <div className="d-flex justify-content-sm-end">
-                                                <div className="sort-by">
-                                                    <select className="custom-select">
-                                                        <option>Relevance</option>
-                                                        <option>Rating</option>
-                                                        <option>Popular</option>
-                                                        <option>Latest</option>
-                                                        <option>Free</option>
-                                                    </select>
-                                                </div>
+                                                <Select
+                                                    value={selectedSortingType}
+                                                    options={(SortingTypes || []).map(item => ({ value: item.value, label: item.label }))}
+                                                    className="react-select"
+                                                    classNamePrefix="react-select"
+                                                    placeholder="Sort by"
+                                                    onChange={setSelectedSortingType}
+                                                    // menuIsOpen={true}
+                                                    />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="bootstrap-tags text-start pl-0 pb-0">
-                                    <span className="badge badge-pill badge-skills">
-                                        UI/UX Developer{" "}
-                                        <span className="tag-close" data-role="remove">
-                                            <i className="fas fa-times" />
+                                    {appliedFilters.selectedSupportType && (
+                                        <span className="badge badge-pill badge-skills">
+                                            Support: {appliedFilters.selectedSupportType.label}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="selectedSupportType" data-value={appliedFilters.selectedSupportType.value} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span className="badge badge-pill badge-skills">
-                                        USA{" "}
-                                        <span className="tag-close" data-role="remove">
-                                            <i className="fas fa-times" />
+                                    )}
+                                    {appliedFilters.typedLocation && (
+                                        <span className="badge badge-pill badge-skills">
+                                            Location: {appliedFilters.typedLocation}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="typedLocation" data-value={appliedFilters.typedLocation} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span className="badge badge-pill badge-skills">
-                                        Hourly{" "}
-                                        <span className="tag-close" data-role="remove">
-                                            <i className="fas fa-times" />
+                                    )}
+                                    {appliedFilters.selectedPricingType && (
+                                        <span className="badge badge-pill badge-skills">
+                                            Pricing: {appliedFilters.selectedPricingType.label}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="selectedPricingType" data-value={appliedFilters.selectedPricingType.value} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span className="badge badge-pill badge-skills">
-                                        0-1 years{" "}
-                                        <span className="tag-close" data-role="remove">
-                                            <i className="fas fa-times" />
+                                    )}
+                                    {appliedFilters.selectedSkills.map(skill => (
+                                        <span key={skill.value} className="badge badge-pill badge-skills">
+                                            Skill: {skill.label}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="selectedSkills" data-value={skill.value} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span className="badge badge-pill badge-skills">
-                                        USD{" "}
-                                        <span className="tag-close" data-role="remove">
-                                            <i className="fas fa-times" />
+                                    ))}
+                                    {appliedFilters.selectedExperienceLevels.map(experienceLevel => (
+                                        <span key={experienceLevel.value} className="badge badge-pill badge-skills">
+                                            Experience: {experienceLevel.label}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="selectedExperienceLevels" data-value={experienceLevel.value} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
                                         </span>
-                                    </span>
+                                    ))}
+                                    {appliedFilters.minHourlyRate && (
+                                        <span className="badge badge-pill badge-skills">
+                                            Min rate: {appliedFilters.minHourlyRate}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="minHourlyRate" data-value={appliedFilters.minHourlyRate} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
+                                        </span>
+                                    )}
+                                    {appliedFilters.maxHourlyRate && (
+                                        <span className="badge badge-pill badge-skills">
+                                            Max rate: {appliedFilters.maxHourlyRate}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="maxHourlyRate" data-value={appliedFilters.maxHourlyRate} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
+                                        </span>
+                                    )}
+                                    {appliedFilters.typedKeywords && (
+                                        <span className="badge badge-pill badge-skills">
+                                            Keywords: {appliedFilters.typedKeywords}{" "}
+                                            <span className="tag-close" data-role="remove" data-type="typedKeywords" data-value={appliedFilters.typedKeywords} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
+                                        </span>
+                                    )}
                                 </div>
                             </div>                            
                             {isFetchingProjects && <InlineLoader />}

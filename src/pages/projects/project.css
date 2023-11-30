@@ -45,6 +45,9 @@
 	color: #6e727d;
   border: 0;
 }
+.react-select .react-select__menu {
+	z-index: 100;
+}
 
 @media only screen and (max-width: 991.98px) {
 	.projects-filter-and-list {
