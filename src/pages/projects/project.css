@@ -1,10 +1,6 @@
 .projects-filter-and-list {
 	height: calc(100vh - 148px - 0.5rem);
 }
-.select2-like-placeholder::placeholder {
-	color: #999 !important;
-  font-weight: 500;
-}
 .pagination-sticky-bottom {
 	position: sticky;
 	bottom: 0;
@@ -17,6 +13,36 @@
 }
 .pagination-page-size {
 	width: 100px;
+}
+.react-select .react-select__indicator-separator {
+	width: 0;
+}
+.react-select .react-select__placeholder, .react-select-like-placeholder::placeholder {
+	color: #999;
+  font-weight: 500;
+}
+.react-select .react-select__control, .react-select .react-select__control:hover {
+	box-shadow: none;
+	border: 1px solid #ecf0f9;
+  border-radius: 6px;
+}
+.react-select .react-select__option--is-focused, .react-select .react-select__option--is-focused:active {
+	background-color: #161c2d;
+	color: #ffffff;
+  border: 0;
+}
+.react-select .react-select__option--is-focused .button-disable-hover {
+	color: #ffffff !important;
+	text-decoration: none;
+}
+.react-select .react-select__option .button-disable-hover {
+	color: #000000;
+	text-decoration: none;
+}
+.react-select .react-select__option--is-selected {
+	background-color: #e7E8ea;
+	color: #6e727d;
+  border: 0;
 }
 
 @media only screen and (max-width: 991.98px) {

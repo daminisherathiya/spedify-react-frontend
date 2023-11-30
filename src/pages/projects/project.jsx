@@ -5,6 +5,7 @@ import StickyBox from "react-sticky-box";
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
 import Select2 from 'react-select2-wrapper';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import 'react-select2-wrapper/css/select2.css';
 import Axios from "../../Axios";
 import { Alert } from "../../components/common/Alert";
@@ -22,6 +23,7 @@ const Projects = (props) => {
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
     const [projectsFetchingError, setProjectsFetchingError] = useState();
+    const [selectedSkills, setSelectedSkills] = useState([]);
     const [minHourlyRate, setMinHourlyRate] = useState(15);
     const [maxHourlyRate, setMaxHourlyRate] = useState(35);
     const [activePage, setActivePage] = useState(1);
@@ -50,6 +52,56 @@ const Projects = (props) => {
         };
         fetchProjects();
     }, []);
+
+    const skillsNoOptionsMessage = ({ inputValue }) => {
+        if (!inputValue) {
+          return "Start typing skill to search ...";
+        }
+        return "No skills found";
+    };
+
+    const loadSkillsOptions = (inputValue) => {
+        console.log("loadOptions", inputValue);
+        return Axios.post('/api/v1/skill/search', {
+            searchQuery: inputValue
+        })
+        .then(response => {
+            return response.data.doc.skills.map(item => ({ label: item.name, value: item._id }));
+        })
+        .catch(error => {
+            console.error('Error fetching data: ', error);
+            return [];
+        });
+    };
+
+    const formatSkillCreateLabel = (inputValue) => {
+        return <span>{inputValue} <button className="btn btn-link text-left p-0 button-disable-hover">(create a new skill)</button></span>;
+    };
+
+    const handleSkillSelection = (selectedOption) => {
+        console.log("selectedOption", selectedOption);
+        console.log("selectedSkills", selectedSkills);
+    
+        const optionalPostParams = {};
+        if (!selectedOption.__isNew__) {
+            optionalPostParams._id = selectedOption.value;
+        }
+
+        Axios.post('/api/v1/skill/createUpdate', {
+            name: selectedOption.label,
+            ...optionalPostParams
+        })
+        .then(response => {
+            setSelectedSkills(prevSkills => {
+                // Filter out any existing entry to avoid duplication
+                return [...prevSkills.filter(skill => skill.value !== selectedOption.value), {label: selectedOption.label, value: response.data.doc.skillId}];
+            });
+            console.log('Skill created/updated:', response.data);
+        })
+        .catch(error => {
+            console.error('Error in creating/updating skill:', error);
+        });
+    };
 
     const handleHourlyRateChange = values => {
         setMinHourlyRate(Math.round(values[0]));
@@ -96,7 +148,7 @@ const Projects = (props) => {
                                             <div className="form-group">
                                                 <input
                                                     type="text"
-                                                    className="form-control select2-like-placeholder"
+                                                    className="form-control react-select-like-placeholder"
                                                     placeholder="Enter Location"
                                                 />
                                             </div>
@@ -104,25 +156,36 @@ const Projects = (props) => {
                                         <div className="filter-widget">
                                             <h4>Pricing Type</h4>
                                             <div className="form-group">
-                                            <Select2
+                                                <Select2
                                                     className="select form-control "
                                                     data={(enumsState.PricingTypes || []).map(item => ({ id: item.value, text: item.text }))}
                                                     options={{
                                                         placeholder: 'Select Pricing Type',
+                                                        minimumResultsForSearch: Infinity
                                                     }} />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Add Skills</h4>
                                             <div className="form-group">
-                                                {/* <span className="badge badge-pill badge-skill">
-                                                    + Web Design
-                                                </span> */}
-                                                <input
-                                                    type="text"
-                                                    className="form-control select2-like-placeholder"
+                                                {selectedSkills.map(skill => (
+                                                    <span key={skill.value} className="badge badge-pill badge-skill">
+                                                        + {skill.label}
+                                                    </span>
+                                                ))}
+                                                
+                                                <AsyncCreatableSelect
+                                                    value=""
+                                                    loadOptions={loadSkillsOptions}
                                                     placeholder="Enter Skill"
-                                                />
+                                                    noOptionsMessage={skillsNoOptionsMessage}
+                                                    formatCreateLabel={formatSkillCreateLabel}
+                                                    createOptionPosition="first"
+                                                    className="react-select"
+                                                    classNamePrefix="react-select"
+                                                    // menuIsOpen={true}
+                                                    onChange={handleSkillSelection}
+                                                    />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
@@ -151,7 +214,7 @@ const Projects = (props) => {
                                             <div className="form-group">
                                                 <input
                                                     type="text"
-                                                    className="form-control select2-like-placeholder"
+                                                    className="form-control react-select-like-placeholder"
                                                     placeholder="Enter Keywords"
                                                 />
                                             </div>
@@ -236,6 +299,10 @@ const Projects = (props) => {
                                             data={([10, 20, 50, 100]).map(item => ({ id: item, text: item.toString() }))}
                                             value={pageSize}
                                             onChange={handlePaginationPageSizeChange}
+                                            options={{
+                                                placeholder: 'Select Page Size',
+                                                minimumResultsForSearch: Infinity,
+                                            }}
                                             />
                                     </div>
                                     <Pagination
