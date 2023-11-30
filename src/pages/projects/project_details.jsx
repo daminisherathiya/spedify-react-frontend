@@ -28,28 +28,38 @@ import {
 import Axios from "../../Axios";
 import moment from "moment/moment";
 import { useEnumsContext } from "../../context/EnumsContext";
+import { useForm } from "react-hook-form";
+import { Post } from "../../services/Api";
+import { PreferencesKeys, getItem } from "../../preferences/Preferences";
 
 const ProjectDetails = (props) => {
   const { enumsState } = useEnumsContext();
   const [details, setDetails] = useState({});
+  const [authKey, setAuthKey] = useState(false);
   const { projectId } = useParams();
-  console.log(details, "enumstate", enumsState);
-  // const getDetails = async () => {
-  //   const response = await Axios.get(
-  //     `/api/v1/project/projectDetails/${projectId}`
-  //   );
-  //   setDetails(response);
-  //   // dispatch({ type: "SET_ENUMS", payload: response.data.enums });
-  // };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const submitProposals = async (e) => {
-    e.preventDefault();
-    const response = await Axios.post(`api/v1/proposal/createUpdate`);
-    console.log(response);
+    e.project = projectId;
+    e.estimateType = 1;
+    try {
+      await Post(`api/v1/proposal/createUpdate`, e, {
+        Authorization: `Bearer ${authKey.token}`,
+      });
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
   const getDetails = async () => {
     const response = await Axios.get(
       `/api/v1/project/projectDetails/${projectId}`
     );
+    setAuthKey((await getItem(PreferencesKeys.authKey)) || false);
     setDetails(response?.data?.doc?.project);
   };
   useEffect(() => {
@@ -122,6 +132,7 @@ const ProjectDetails = (props) => {
                       data-bs-toggle="modal"
                       to="#file"
                       className="btn proposal-btn btn-primary"
+                      // onClick={showModal(true)}
                     >
                       Send Proposal{" "}
                       <i className="fas fa-long-arrow-alt-right" />{" "}
@@ -178,11 +189,6 @@ const ProjectDetails = (props) => {
                             <div className="pro-post-head">
                               <p>Price type</p>
                               <h6>
-                                {/* {details?.fixedPrice === 1
-                                  ? details?.fixedPrice
-                                  : details?.fixedPrice === 2
-                                  ? `{${details?.hourlyMin}, "-", ${details?.hourlyMax}/h}`
-                                  : "Either"} */}
                                 {details?.pricingType === 2
                                   ? `${details?.hourlyMin} - ${details?.hourlyMax}/h`
                                   : details?.fixedPrice}
@@ -202,8 +208,15 @@ const ProjectDetails = (props) => {
                         <div className="col-12 col-sm-6 col-md-4 d-flex">
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
-                              <p>Developer Type </p>
-                              <h6>Individual</h6>
+                              <p>Provider Type</p>
+                              <h6>
+                                {" "}
+                                {
+                                  enumsState?.ProviderTypes[
+                                    details?.providerType - 1
+                                  ]?.text
+                                }{" "}
+                              </h6>
                             </div>
                             <div className="post-job-icon">
                               <img
@@ -236,7 +249,13 @@ const ProjectDetails = (props) => {
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
                               <p>Level </p>
-                              <h6>Intermediate </h6>
+                              <h6>
+                                {
+                                  enumsState?.SupportLevels[
+                                    details?.supportLevelType - 1
+                                  ]?.text
+                                }
+                              </h6>
                             </div>
                             <div className="post-job-icon">
                               <img
@@ -251,7 +270,13 @@ const ProjectDetails = (props) => {
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
                               <p>Job Type</p>
-                              <h6>Remote Job</h6>
+                              <h6>
+                                {
+                                  enumsState?.ProviderTypes[
+                                    details?.providerType - 1
+                                  ]?.text
+                                }
+                              </h6>
                             </div>
                             <div className="post-job-icon">
                               <img
@@ -266,7 +291,14 @@ const ProjectDetails = (props) => {
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
                               <p>Experience</p>
-                              <h6>+5 years</h6>
+                              <h6>
+                                {" "}
+                                {
+                                  enumsState?.ExperienceLevels[
+                                    details?.experienceLevelType - 1
+                                  ]?.text
+                                }{" "}
+                              </h6>
                             </div>
                             <div className="post-job-icon">
                               <img
@@ -699,25 +731,40 @@ const ProjectDetails = (props) => {
               </div>
               <div className="modal-body">
                 <div className="modal-info">
-                  <form
-                    // action="freelancer-project-proposals.html"
-                    onSubmit={submitProposals}
-                  >
+                  <form onSubmit={handleSubmit(submitProposals)}>
                     <div className="feedback-form">
                       <div className="row">
                         <div className="col-md-6 form-group">
                           <input
-                            type="text"
+                            type="number"
                             className="form-control"
                             placeholder="Your Price"
-                          />
+                            name="bidAmount"
+                            {...register("bidAmount", {
+                              required: "Price is required",
+                            })}
+                          />{" "}
+                          {errors?.bidAmount && (
+                            <p className="text-danger">
+                              {errors?.bidAmount?.message}
+                            </p>
+                          )}
                         </div>
                         <div className="col-md-6 form-group">
                           <input
-                            type="email"
+                            type="number"
                             className="form-control"
                             placeholder="Estimated Hours"
+                            name="estimate"
+                            {...register("estimate", {
+                              required: "Estimated hours is required",
+                            })}
                           />
+                          {errors?.estimate && (
+                            <p className="text-danger">
+                              {errors?.estimate?.message}
+                            </p>
+                          )}
                         </div>
                         <div className="col-md-12 form-group">
                           <textarea
@@ -725,14 +772,27 @@ const ProjectDetails = (props) => {
                             className="form-control"
                             placeholder="Cover Letter"
                             defaultValue={""}
-                          />
+                            name="coverLetter"
+                            {...register("coverLetter", {
+                              required: "Cover letter is required",
+                            })}
+                          />{" "}
+                          {errors.coverLetter && (
+                            <p className="text-danger">
+                              {errors.coverLetter.message}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className="proposal-features">
                       <div className="proposal-widget proposal-success">
                         <label className="custom_check">
-                          <input type="checkbox" name="select_time" />
+                          <input
+                            type="checkbox"
+                            name="isStick"
+                            {...register("isStick")}
+                          />
                           <span className="checkmark" />
                           <span className="proposal-text">
                             Stick this Proposal to the Top
@@ -748,7 +808,11 @@ const ProjectDetails = (props) => {
                       </div>
                       <div className="proposal-widget proposal-light">
                         <label className="custom_check">
-                          <input type="checkbox" name="select_time" />
+                          <input
+                            type="checkbox"
+                            name="isSealed"
+                            {...register("isSealed")}
+                          />
                           <span className="checkmark" />
                           <span className="proposal-text">
                             $ Make Sealed Proposal
@@ -762,10 +826,14 @@ const ProjectDetails = (props) => {
                       </div>
                       <div className="proposal-widget proposal-danger">
                         <label className="custom_check">
-                          <input type="checkbox" name="select_time" />
+                          <input
+                            type="checkbox"
+                            name="isFeatured"
+                            {...register("isFeatured")}
+                          />
                           <span className="checkmark" />
                           <span className="proposal-text">
-                            $ Make Sealed Proposal
+                            $ Make featured proposal
                           </span>
                           <span className="proposal-text float-end">
                             $15.00
@@ -781,15 +849,29 @@ const ProjectDetails = (props) => {
                     <div className="row">
                       <div className="col-md-12 submit-section">
                         <label className="custom_check">
-                          <input type="checkbox" name="select_time" />
+                          <input
+                            type="checkbox"
+                            name="terms"
+                            {...register("terms", {
+                              required: "Please check term box",
+                            })}
+                          />
                           <span className="checkmark" /> I agree to the Terms
                           And Conditions
                         </label>
+                        {errors.terms && (
+                          <p className="text-danger">{errors.terms.message}</p>
+                        )}
                       </div>
                       <div className="col-md-12 submit-section text-end">
                         <button
                           className="btn btn-primary submit-btn"
                           type="submit"
+                          // data-dismiss="modal"
+                          // data-bs-toggle="modal"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                          to="#file"
                         >
                           SUBMIT PROPOSAL
                         </button>
