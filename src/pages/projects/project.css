@@ -17,7 +17,7 @@
 .react-select .react-select__indicator-separator {
 	width: 0;
 }
-.react-select .react-select__placeholder, .react-select-like-placeholder::placeholder {
+.react-select .react-select__placeholder, .form-control.react-select-like-placeholder::placeholder, .react-select .react-select__single-value {
 	color: #999;
   font-weight: 500;
 }
@@ -25,6 +25,7 @@
 	box-shadow: none;
 	border: 1px solid #ecf0f9;
   border-radius: 6px;
+	padding: 6px;
 }
 .react-select .react-select__option--is-focused, .react-select .react-select__option--is-focused:active {
 	background-color: #161c2d;

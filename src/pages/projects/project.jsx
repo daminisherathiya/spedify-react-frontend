@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import StickyBox from "react-sticky-box";
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
-import Select2 from 'react-select2-wrapper';
+import Select from 'react-select';
 import AsyncCreatableSelect from 'react-select/async-creatable';
-import 'react-select2-wrapper/css/select2.css';
+import Select2 from 'react-select2-wrapper';
 import Axios from "../../Axios";
 import { Alert } from "../../components/common/Alert";
 import { InlineLoader } from "../../components/common/InlineLoader";
@@ -135,12 +135,12 @@ const Projects = (props) => {
                                         <div className="filter-widget">
                                             <h4>Support Type</h4>
                                             <div className="form-group">
-                                                <Select2
-                                                    className="select form-control "
-                                                    data={(enumsState.SupportTypes || []).map(item => ({ id: item.value, text: item.text }))}
-                                                    options={{
-                                                        placeholder: 'Select Support Type',
-                                                    }} />
+                                                <Select
+                                                    options={(enumsState.SupportTypes || []).map(item => ({ value: item.value, label: item.text }))}
+                                                    className="react-select"
+                                                    classNamePrefix="react-select"
+                                                    placeholder="Select Support Type"
+                                                    />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
@@ -156,13 +156,12 @@ const Projects = (props) => {
                                         <div className="filter-widget">
                                             <h4>Pricing Type</h4>
                                             <div className="form-group">
-                                                <Select2
-                                                    className="select form-control "
-                                                    data={(enumsState.PricingTypes || []).map(item => ({ id: item.value, text: item.text }))}
-                                                    options={{
-                                                        placeholder: 'Select Pricing Type',
-                                                        minimumResultsForSearch: Infinity
-                                                    }} />
+                                                <Select
+                                                    options={(enumsState.PricingTypes || []).map(item => ({ value: item.value, label: item.text }))}
+                                                    className="react-select"
+                                                    classNamePrefix="react-select"
+                                                    placeholder="Select Pricing Type"
+                                                    />
                                             </div>
                                         </div>
                                         <div className="filter-widget">
