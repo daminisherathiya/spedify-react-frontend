@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StickyBox from "react-sticky-box";
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
@@ -19,6 +19,7 @@ import "./project.css";
 const Projects = (props) => {
     useAOS();
 
+    const navigate = useNavigate();
     const { enumsState } = useEnumsContext();
 
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
@@ -103,11 +104,15 @@ const Projects = (props) => {
             console.log("params", params);
             return params;
         };
-        fetchProjects(getProjectsFilterQueryParamsString());
+        const projectsFilterQueryParamsString = getProjectsFilterQueryParamsString();
+        const newUrl = new URL(window.location);
+        newUrl.search = projectsFilterQueryParamsString;
+        navigate(newUrl.pathname + newUrl.search, { replace: true });
+        fetchProjects(projectsFilterQueryParamsString);
     }, [
         selectedSupportType, typedLocation, selectedPricingType, selectedSkills,
         selectedExperienceLevels, minHourlyRate, maxHourlyRate, appliedKeywords,
-        selectedSortingType,
+        selectedSortingType, navigate,
     ]);
 
     const skillsNoOptionsMessage = ({ inputValue }) => {
