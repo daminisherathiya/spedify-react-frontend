@@ -86,10 +86,11 @@ const Projects = (props) => {
                 }
                 console.log(response.data.doc.projects);
                 setProjects(response.data.doc.projects);
+                setActivePage(1);
             } catch (error) {
                 setProjectsFetchingError(error.message);
             }
-
+            
             setIsFetchingProjects(false);
         };
         const getProjectsFilterQueryParamsString = () => {
