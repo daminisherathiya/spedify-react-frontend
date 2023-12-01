@@ -16,14 +16,6 @@ import { Breadcrumb } from "./components/Breadcrumb";
 import { ProjectsList } from "./components/ProjectsList";
 import "./project.css";
 
-const SortingTypes = [
-    { value: 1, label: 'Relevance' },
-    { value: 2, label: 'Rating' },
-    { value: 3, label: 'Popular' },
-    { value: 4, label: 'Latest' },
-    { value: 5, label: 'Free' },
-];
-
 const Projects = (props) => {
     useAOS();
 
@@ -41,6 +33,7 @@ const Projects = (props) => {
     const [minHourlyRate, setMinHourlyRate] = useState(15);
     const [maxHourlyRate, setMaxHourlyRate] = useState(35);
     const [typedKeywords, setTypedKeywords] = useState("");
+    const [appliedKeywords, setAppliedKeywords] = useState("");
     const [selectedSortingType, setSelectedSortingType] = useState({
         value: enumsState.RelevanceTypes[0].value,
         label: enumsState.RelevanceTypes[0].text,
@@ -48,17 +41,6 @@ const Projects = (props) => {
 
     const [activePage, setActivePage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
-
-    const [appliedFilters, setAppliedFilters] = useState({
-        selectedSupportType: null,
-        typedLocation: "",
-        selectedPricingType: null,
-        selectedSkills: [],
-        selectedExperienceLevels: [],
-        minHourlyRate: null,
-        maxHourlyRate: null,
-        typedKeywords: "",
-    });
 
     console.log("selectedSupportType", selectedSupportType);
     console.log("typedLocation", typedLocation);
@@ -68,6 +50,7 @@ const Projects = (props) => {
     console.log("minHourlyRate", minHourlyRate);
     console.log("maxHourlyRate", maxHourlyRate);
     console.log("typedKeywords", typedKeywords);
+    console.log("appliedKeywords", appliedKeywords);
     console.log("selectedSortingType", selectedSortingType);
 
     const startIndex = (activePage - 1) * pageSize;  // Inclusive
@@ -90,34 +73,30 @@ const Projects = (props) => {
             } catch (error) {
                 setProjectsFetchingError(error.message);
             }
-            
+
             setIsFetchingProjects(false);
         };
         const getProjectsFilterQueryParamsString = () => {
             let params = '';
-            if (appliedFilters.selectedSupportType) {
-                params += `&supportType=${appliedFilters.selectedSupportType.value}`;
+            if (selectedSupportType) {
+                params += `&supportType=${selectedSupportType.value}`;
             }
-            if (appliedFilters.typedLocation) {
-                params += `&location=${appliedFilters.typedLocation}`;
+            if (typedLocation) {
+                params += `&location=${typedLocation}`;
             }
-            if (appliedFilters.selectedPricingType) {
-                params += `&pricingType=${appliedFilters.selectedPricingType.value}`;
+            if (selectedPricingType) {
+                params += `&pricingType=${selectedPricingType.value}`;
             }
-            for (let i = 0; i < appliedFilters.selectedSkills.length; i++) {
-                params += `&skills=${appliedFilters.selectedSkills[i].value}`;
+            for (let i = 0; i < selectedSkills.length; i++) {
+                params += `&skills=${selectedSkills[i].value}`;
             }
-            for (let i = 0; i < appliedFilters.selectedExperienceLevels.length; i++) {
-                params += `&experience=${appliedFilters.selectedExperienceLevels[i].value}`;
+            for (let i = 0; i < selectedExperienceLevels.length; i++) {
+                params += `&experience=${selectedExperienceLevels[i].value}`;
             }
-            if (appliedFilters.minHourlyRate) {
-                params += `&hourlyMin=${appliedFilters.minHourlyRate}`;
-            }
-            if (appliedFilters.maxHourlyRate) {
-                params += `&hourlyMax=${appliedFilters.maxHourlyRate}`;
-            }
-            if (appliedFilters.typedKeywords) {
-                params += `&keywords=${appliedFilters.typedKeywords}`;
+            params += `&hourlyMin=${minHourlyRate}`;
+            params += `&hourlyMax=${maxHourlyRate}`;
+            if (appliedKeywords) {
+                params += `&keywords=${appliedKeywords}`;
             }
             params += `&sorting=${selectedSortingType.value}`;
             params = params.replace(/^&/, '');  // Remove leading '&'
@@ -125,7 +104,11 @@ const Projects = (props) => {
             return params;
         };
         fetchProjects(getProjectsFilterQueryParamsString());
-    }, [appliedFilters, selectedSortingType]);
+    }, [
+        selectedSupportType, typedLocation, selectedPricingType, selectedSkills,
+        selectedExperienceLevels, minHourlyRate, maxHourlyRate, appliedKeywords,
+        selectedSortingType,
+    ]);
 
     const skillsNoOptionsMessage = ({ inputValue }) => {
         if (!inputValue) {
@@ -166,14 +149,10 @@ const Projects = (props) => {
             ...optionalPostParams
         })
         .then(response => {
-            setSelectedSkills(prevSkills => {
-                // Filter out any existing entry to avoid duplication
-                return [
-                    ...prevSkills.filter(skill => skill.value !== selectedOption.value),
-                    {label: selectedOption.label, value: response.data.doc.skillId}
-                ];
-            });
-            console.log('Skill created/updated:', response.data);
+            if (!selectedSkills.some(skill => skill.value === selectedOption.value)) {
+                setSelectedSkills(prevSkills => [...prevSkills, {label: selectedOption.label, value: response.data.doc.skillId}]);
+                console.log('Skill created/updated:', response.data);
+            }
         })
         .catch(error => {
             console.error('Error in creating/updating skill:', error);
@@ -208,7 +187,6 @@ const Projects = (props) => {
     const clearAllSelectedFilters = event => {
         event.preventDefault();
 
-        // setSelectedSupportType();
         setSelectedSupportType(null);
         setTypedLocation("");
         setSelectedPricingType(null);
@@ -217,19 +195,11 @@ const Projects = (props) => {
         setMinHourlyRate(15);
         setMaxHourlyRate(35);
         setTypedKeywords("");
+        setAppliedKeywords("");
     };
 
     const searchProjects = () => {
-        setAppliedFilters({
-            selectedSupportType,
-            typedLocation,
-            selectedPricingType,
-            selectedSkills,
-            selectedExperienceLevels,
-            minHourlyRate,
-            maxHourlyRate,
-            typedKeywords,
-        });
+        setAppliedKeywords(typedKeywords);
     };
 
     const removeAppliedFilter = event => {
@@ -240,28 +210,28 @@ const Projects = (props) => {
         console.log("filterValue", filterValue);
         switch (filterType) {
             case 'selectedSupportType':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedSupportType: null}));
+                setSelectedSupportType(null);
                 break;
             case 'typedLocation':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, typedLocation: ""}));
+                setTypedLocation("");
                 break;
             case 'selectedPricingType':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedPricingType: null}));
+                setSelectedPricingType(null);
                 break;
             case 'selectedSkills':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedSkills: prevAppliedFilters.selectedSkills.filter(skill => skill.value !== filterValue)}));
+                setSelectedSkills(prevSelectedSkills => prevSelectedSkills.filter(skill => skill.value !== filterValue));
                 break;
             case 'selectedExperienceLevels':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, selectedExperienceLevels: prevAppliedFilters.selectedExperienceLevels.filter(experienceLevel => experienceLevel.value !== filterValue)}));
+                setSelectedExperienceLevels(prevSelectedExperienceLevels => prevSelectedExperienceLevels.filter(experienceLevel => experienceLevel.value !== filterValue));
                 break;
             case 'minHourlyRate':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, minHourlyRate: null}));
+                setMinHourlyRate(15);
                 break;
             case 'maxHourlyRate':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, maxHourlyRate: null}));
+                setMaxHourlyRate(35);
                 break;
-            case 'typedKeywords':
-                setAppliedFilters(prevAppliedFilters => ({...prevAppliedFilters, typedKeywords: ""}));
+            case 'appliedKeywords':
+                setAppliedKeywords("");
                 break;
             default:
                 break;
@@ -422,31 +392,31 @@ const Projects = (props) => {
                                     </div>
                                 </div>
                                 <div className="bootstrap-tags text-start pl-0 pb-0">
-                                    {appliedFilters.selectedSupportType && (
+                                    {selectedSupportType && (
                                         <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                            <span className="text-truncate d-inline-block">Support: {appliedFilters.selectedSupportType.label}{" "}</span>
-                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedSupportType" data-value={appliedFilters.selectedSupportType.value} onClick={removeAppliedFilter}>
+                                            <span className="text-truncate d-inline-block">Support: {selectedSupportType.label}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedSupportType" data-value={selectedSupportType.value} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
-                                    {appliedFilters.typedLocation && (
+                                    {typedLocation && (
                                         <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                            <span className="text-truncate d-inline-block">Location: {appliedFilters.typedLocation}{" "}</span>
-                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="typedLocation" data-value={appliedFilters.typedLocation} onClick={removeAppliedFilter}>
+                                            <span className="text-truncate d-inline-block">Location: {typedLocation}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="typedLocation" data-value={typedLocation} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
-                                    {appliedFilters.selectedPricingType && (
+                                    {selectedPricingType && (
                                         <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                            <span className="text-truncate d-inline-block">Pricing: {appliedFilters.selectedPricingType.label}{" "}</span>
-                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedPricingType" data-value={appliedFilters.selectedPricingType.value} onClick={removeAppliedFilter}>
+                                            <span className="text-truncate d-inline-block">Pricing: {selectedPricingType.label}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedPricingType" data-value={selectedPricingType.value} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
                                     )}
-                                    {appliedFilters.selectedSkills.map(skill => (
+                                    {selectedSkills.map(skill => (
                                         <span key={skill.value} className="badge badge-pill badge-skills d-inline-flex mw-100">
                                             <span className="text-truncate d-inline-block">Skill: {skill.label}{" "}</span>
                                             <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedSkills" data-value={skill.value} onClick={removeAppliedFilter}>
@@ -454,7 +424,7 @@ const Projects = (props) => {
                                             </span>
                                         </span>
                                     ))}
-                                    {appliedFilters.selectedExperienceLevels.map(experienceLevel => (
+                                    {selectedExperienceLevels.map(experienceLevel => (
                                         <span key={experienceLevel.value} className="badge badge-pill badge-skills d-inline-flex mw-100">
                                             <span className="text-truncate d-inline-block">Experience: {experienceLevel.label}{" "}</span>
                                             <span className="tag-close flex-shrink-0" data-role="remove" data-type="selectedExperienceLevels" data-value={experienceLevel.value} onClick={removeAppliedFilter}>
@@ -462,26 +432,23 @@ const Projects = (props) => {
                                             </span>
                                         </span>
                                     ))}
-                                    {appliedFilters.minHourlyRate && (
-                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                            <span className="text-truncate d-inline-block">Min rate: {appliedFilters.minHourlyRate}{" "}</span>
-                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="minHourlyRate" data-value={appliedFilters.minHourlyRate} onClick={removeAppliedFilter}>
-                                                <i className="fas fa-times" />
-                                            </span>
+                                    <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                        <span className="text-truncate d-inline-block">Min rate: {minHourlyRate}{" "}</span>
+                                        <span className="tag-close flex-shrink-0" data-role="remove" data-type="minHourlyRate" data-value={minHourlyRate} onClick={removeAppliedFilter}>
+                                            <i className="fas fa-times" />
                                         </span>
-                                    )}
-                                    {appliedFilters.maxHourlyRate && (
-                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                            <span className="text-truncate d-inline-block">Max rate: {appliedFilters.maxHourlyRate}{" "}</span>
-                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="maxHourlyRate" data-value={appliedFilters.maxHourlyRate} onClick={removeAppliedFilter}>
-                                                <i className="fas fa-times" />
-                                            </span>
+                                    </span>
+                                    <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                        <span className="text-truncate d-inline-block">Max rate: {maxHourlyRate}{" "}</span>
+                                        <span className="tag-close flex-shrink-0" data-role="remove" data-type="maxHourlyRate" data-value={maxHourlyRate} onClick={removeAppliedFilter}>
+                                            <i className="fas fa-times" />
                                         </span>
-                                    )}
-                                    {appliedFilters.typedKeywords && (
+                                    </span>
+                                    
+                                    {appliedKeywords && (
                                         <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                            <span className="text-truncate d-inline-block">Keywords: {appliedFilters.typedKeywords}{" "}</span>
-                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="typedKeywords" data-value={appliedFilters.typedKeywords} onClick={removeAppliedFilter}>
+                                            <span className="text-truncate d-inline-block">Keywords: {appliedKeywords}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="appliedKeywords" data-value={appliedKeywords} onClick={removeAppliedFilter}>
                                                 <i className="fas fa-times" />
                                             </span>
                                         </span>
