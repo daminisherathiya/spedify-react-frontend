@@ -41,7 +41,10 @@ const Projects = (props) => {
     const [minHourlyRate, setMinHourlyRate] = useState(15);
     const [maxHourlyRate, setMaxHourlyRate] = useState(35);
     const [typedKeywords, setTypedKeywords] = useState("");
-    const [selectedSortingType, setSelectedSortingType] = useState(SortingTypes[0]);
+    const [selectedSortingType, setSelectedSortingType] = useState({
+        value: enumsState.RelevanceTypes[0].value,
+        label: enumsState.RelevanceTypes[0].text,
+    });
 
     const [activePage, setActivePage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
@@ -406,7 +409,7 @@ const Projects = (props) => {
                                             <div className="d-flex justify-content-sm-end">
                                                 <Select
                                                     value={selectedSortingType}
-                                                    options={(SortingTypes || []).map(item => ({ value: item.value, label: item.label }))}
+                                                    options={(enumsState.RelevanceTypes || []).map(item => ({ value: item.value, label: item.text }))}
                                                     className="react-select"
                                                     classNamePrefix="react-select"
                                                     placeholder="Sort by"
