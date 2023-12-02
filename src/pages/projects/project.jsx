@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import StickyBox from "react-sticky-box";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
 import Select from 'react-select';
@@ -120,6 +122,7 @@ const Projects = (props) => {
         })
         .catch(error => {
             console.error('Error fetching all skills: ', error);
+            showErrorMessage("Something went wrong while fetching all skills. Please try again later.");
         });
     }, [enumsState]);  /*
         - Don't include location.search in dependency array as it will cause infinite loop. We are using location.search only to load initial state.
@@ -142,6 +145,7 @@ const Projects = (props) => {
                 setActivePage(1);
             } catch (error) {
                 setProjectsFetchingError(error.message);
+                showErrorMessage("Something went wrong while fetching projects. Please try again later.");
             }
 
             setIsFetchingProjects(false);
@@ -190,6 +194,8 @@ const Projects = (props) => {
         selectedSortingType, navigate,
     ]);
 
+    const showErrorMessage = (message) => toast.error(message);
+
     const skillsNoOptionsMessage = ({ inputValue }) => {
         if (!inputValue) {
           return "Start typing skill to search ...";
@@ -207,6 +213,7 @@ const Projects = (props) => {
         })
         .catch(error => {
             console.error('Error fetching skills: ', error);
+            showErrorMessage("Something went wrong while fetching relavent skills. Please try again later.");
             return [];
         });
     };
@@ -236,6 +243,7 @@ const Projects = (props) => {
         })
         .catch(error => {
             console.error('Error in creating/updating skill:', error);
+            showErrorMessage("Something went wrong while creating/updating the selected skill. Please try again later.");
         });
     };
 
@@ -275,6 +283,7 @@ const Projects = (props) => {
     };
 
     const clearAllSelectedFilters = event => {
+        console.log("clearAllSelectedFilters");
         event.preventDefault();
 
         setSelectedSupportType(null);
@@ -286,6 +295,7 @@ const Projects = (props) => {
         setMaxHourlyRate(null);
         setTypedKeywords("");
         setAppliedKeywords("");
+        setSelectedSortingType(null);
     };
 
     const searchProjects = () => {
