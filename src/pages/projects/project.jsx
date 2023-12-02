@@ -131,8 +131,8 @@ const Projects = (props) => {
             setIsFetchingProjects(true);
 
             try {
-                const response = await Axios.get(`/api/v1/project/getAll`);
-                // const response = await Axios.get(`/api/v1/project/getAll?${queryParamsString}`);
+                // const response = await Axios.get(`/api/v1/project/getAll`);
+                const response = await Axios.get(`/api/v1/project/getAll?${queryParamsString}`);
                 // setProjectsFetchingError('testing error');  // For testing, uncomment this
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error('Failed to fetch projects');
