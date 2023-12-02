@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import StickyBox from "react-sticky-box";
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
@@ -19,8 +19,10 @@ import "./project.css";
 const Projects = (props) => {
     useAOS();
 
+    const location = useLocation();
     const navigate = useNavigate();
     const { enumsState } = useEnumsContext();
+    console.log("enumsState", enumsState);
 
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
@@ -29,16 +31,14 @@ const Projects = (props) => {
     const [selectedSupportType, setSelectedSupportType] = useState(null);
     const [typedLocation, setTypedLocation] = useState("");
     const [selectedPricingType, setSelectedPricingType] = useState(null);
+    const [allSkills, setAllSkills] = useState([]);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedExperienceLevels, setSelectedExperienceLevels] = useState([]);
-    const [minHourlyRate, setMinHourlyRate] = useState(15);
-    const [maxHourlyRate, setMaxHourlyRate] = useState(35);
+    const [minHourlyRate, setMinHourlyRate] = useState(null);
+    const [maxHourlyRate, setMaxHourlyRate] = useState(null);
     const [typedKeywords, setTypedKeywords] = useState("");
     const [appliedKeywords, setAppliedKeywords] = useState("");
-    const [selectedSortingType, setSelectedSortingType] = useState({
-        value: enumsState.RelevanceTypes[0].value,
-        label: enumsState.RelevanceTypes[0].text,
-    });
+    const [selectedSortingType, setSelectedSortingType] = useState(null);
 
     const [activePage, setActivePage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
@@ -46,6 +46,7 @@ const Projects = (props) => {
     console.log("selectedSupportType", selectedSupportType);
     console.log("typedLocation", typedLocation);
     console.log("selectedPricingType", selectedPricingType);
+    console.log("allSkills", allSkills);
     console.log("selectedSkills", selectedSkills);
     console.log("selectedExperienceLevels", selectedExperienceLevels);
     console.log("minHourlyRate", minHourlyRate);
@@ -56,6 +57,74 @@ const Projects = (props) => {
 
     const startIndex = (activePage - 1) * pageSize;  // Inclusive
     const endIndex = Math.min(activePage * pageSize, projects.length) - 1;  // Inclusive
+
+    useEffect(() => {
+        const loadStateFromURL = (skillsData) => {
+            const queryParams = new URLSearchParams(location.search);
+
+            const selectedSupportTypeFromURL = queryParams.get("supportType");
+            const typedLocationFromURL = queryParams.get("location");
+            const selectedPricingTypeFromURL = queryParams.get("pricingType");
+            const selectedSkillsFromURL = queryParams.getAll("skills");
+            const selectedExperienceLevelsFromURL = queryParams.getAll("experience");
+            const minHourlyRateFromURL = queryParams.get("hourlyMin");
+            const maxHourlyRateFromURL = queryParams.get("hourlyMax");
+            const appliedKeywordsFromURL = queryParams.get("keywords");
+            const selectedSortingTypeFromURL = queryParams.get("sorting");
+    
+            console.log("selectedSupportTypeFromURL", selectedSupportTypeFromURL);
+            console.log("typedLocationFromURL", typedLocationFromURL);
+            console.log("selectedPricingTypeFromURL", selectedPricingTypeFromURL);
+            console.log("selectedSkillsFromURL", selectedSkillsFromURL);
+            console.log("selectedExperienceLevelsFromURL", selectedExperienceLevelsFromURL);
+            console.log("minHourlyRateFromURL", minHourlyRateFromURL);
+            console.log("maxHourlyRateFromURL", maxHourlyRateFromURL);
+            console.log("appliedKeywordsFromURL", appliedKeywordsFromURL);
+            console.log("selectedSortingTypeFromURL", selectedSortingTypeFromURL);
+    
+            setSelectedSupportType(
+                selectedSupportTypeFromURL
+                ? { value: selectedSupportTypeFromURL, label: enumsState.SupportTypes.find(item => item.value == selectedSupportTypeFromURL).text}
+                : null
+            );
+            setTypedLocation(typedLocationFromURL || "");
+            setSelectedPricingType(
+                selectedPricingTypeFromURL
+                ? { value: selectedPricingTypeFromURL, label: enumsState.PricingTypes.find(item => item.value == selectedPricingTypeFromURL).text}
+                : null
+            );
+            console.log("allSkills", allSkills);
+            setSelectedSkills(
+                selectedSkillsFromURL.map(skill => ({ value: skill, label: skillsData.find(item => item.value == skill).label })),
+            );
+            setSelectedExperienceLevels(
+                selectedExperienceLevelsFromURL.map(experienceLevel => ({ value: experienceLevel, label: enumsState.ExperienceLevels.find(item => item.value == experienceLevel).text})),
+            );
+            setMinHourlyRate(minHourlyRateFromURL || null);
+            setMaxHourlyRate(maxHourlyRateFromURL || null);
+            setAppliedKeywords(appliedKeywordsFromURL || "");
+            setSelectedSortingType(
+                selectedSortingTypeFromURL
+                ? { value: selectedSortingTypeFromURL, label: enumsState.RelevanceTypes.find(item => item.value == selectedSortingTypeFromURL).text } 
+                : null
+            );
+        };
+
+        Axios.post('/api/v1/skill/search', {
+            searchQuery: ""
+        })
+        .then(response => {
+            const skillsData = response.data.doc.skills.map(item => ({ label: item.name, value: item._id }));
+            setAllSkills(skillsData);
+            loadStateFromURL(skillsData);
+        })
+        .catch(error => {
+            console.error('Error fetching all skills: ', error);
+        });
+    }, [enumsState]);  /*
+        - Don't include location.search in dependency array as it will cause infinite loop. We are using location.search only to load initial state.
+        - Don't include allSkills in dependency array as it should run only once before getProjectsFilterQueryParamsString runs and updates the URL. 
+    */
 
     useEffect(() => {
         const fetchProjects = async (queryParamsString) => {
@@ -94,12 +163,18 @@ const Projects = (props) => {
             for (let i = 0; i < selectedExperienceLevels.length; i++) {
                 params += `&experience=${selectedExperienceLevels[i].value}`;
             }
-            params += `&hourlyMin=${minHourlyRate}`;
-            params += `&hourlyMax=${maxHourlyRate}`;
+            if (minHourlyRate !== null) {
+                params += `&hourlyMin=${minHourlyRate}`;
+            }
+            if (maxHourlyRate !== null) {
+                params += `&hourlyMax=${maxHourlyRate}`;
+            }
             if (appliedKeywords) {
                 params += `&keywords=${appliedKeywords}`;
             }
-            params += `&sorting=${selectedSortingType.value}`;
+            if (selectedSortingType) {
+                params += `&sorting=${selectedSortingType.value}`;
+            }
             params = params.replace(/^&/, '');  // Remove leading '&'
             console.log("params", params);
             return params;
@@ -131,7 +206,7 @@ const Projects = (props) => {
             return response.data.doc.skills.map(item => ({ label: item.name, value: item._id }));
         })
         .catch(error => {
-            console.error('Error fetching data: ', error);
+            console.error('Error fetching skills: ', error);
             return [];
         });
     };
@@ -177,8 +252,18 @@ const Projects = (props) => {
     };
 
     const handleHourlyRateChange = values => {
-        setMinHourlyRate(Math.round(values[0]));
-        setMaxHourlyRate(Math.round(values[1]));
+        console.log("values", values);
+        const newMinHourlyRate = Math.round(values[0]);
+        const newMaxHourlyRate = Math.round(values[1]);
+        /* handleHourlyRateChange gets called on page load as well.
+            So, we need to check if the values have actually changed.
+            If not, then not need to set the state, othrwise, it will
+            update the URL.
+        */
+        if (minHourlyRate !== null || newMinHourlyRate !== 0 || maxHourlyRate !== null || newMaxHourlyRate !== 50) {
+            setMinHourlyRate(newMinHourlyRate);
+            setMaxHourlyRate(newMaxHourlyRate);
+        }
     }
 
     const handlePaginationPageChange = pageNumber => {
@@ -197,8 +282,8 @@ const Projects = (props) => {
         setSelectedPricingType(null);
         setSelectedSkills([]);
         setSelectedExperienceLevels([]);
-        setMinHourlyRate(15);
-        setMaxHourlyRate(35);
+        setMinHourlyRate(null);
+        setMaxHourlyRate(null);
         setTypedKeywords("");
         setAppliedKeywords("");
     };
@@ -230,10 +315,10 @@ const Projects = (props) => {
                 setSelectedExperienceLevels(prevSelectedExperienceLevels => prevSelectedExperienceLevels.filter(experienceLevel => experienceLevel.value !== filterValue));
                 break;
             case 'minHourlyRate':
-                setMinHourlyRate(15);
+                setMinHourlyRate(null);
                 break;
             case 'maxHourlyRate':
-                setMaxHourlyRate(35);
+                setMaxHourlyRate(null);
                 break;
             case 'appliedKeywords':
                 setAppliedKeywords("");
@@ -340,11 +425,11 @@ const Projects = (props) => {
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Hourly Rate</h4>
-                                            <Nouislider range={{ min: 0, max: 50 }} start={[minHourlyRate, maxHourlyRate]} step={1} connect onUpdate={handleHourlyRateChange} />
+                                            <Nouislider range={{ min: 0, max: 50 }} start={[minHourlyRate || 0, maxHourlyRate || 50]} step={1} connect onUpdate={handleHourlyRateChange} />
                                             <div id="slider-range" />
                                             <div className="row slider-labels">
                                                 <div className="col-xs-12 caption">
-                                                    <span id="slider-range-value1" />{minHourlyRate} -{" "}<span id="slider-range-value2" />{maxHourlyRate}
+                                                    <span id="slider-range-value1" />{minHourlyRate !== null ? minHourlyRate : 0} -{" "}<span id="slider-range-value2" />{maxHourlyRate !== null ? maxHourlyRate : 50}
                                                 </div>
                                             </div>
                                         </div>
@@ -357,6 +442,7 @@ const Projects = (props) => {
                                                     className="form-control react-select-like-placeholder"
                                                     placeholder="Enter Keywords"
                                                     onChange={event => setTypedKeywords(event.target.value)}
+                                                    onKeyDown={event => { if (event.key === 'Enter') { searchProjects(); }}}
                                                 />
                                             </div>
                                         </div>
@@ -384,7 +470,10 @@ const Projects = (props) => {
                                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                             <div className="d-flex justify-content-sm-end">
                                                 <Select
-                                                    value={selectedSortingType}
+                                                    value={selectedSortingType || {
+                                                        value: enumsState.RelevanceTypes[0].value,
+                                                        label: enumsState.RelevanceTypes[0].text,
+                                                    }}
                                                     options={(enumsState.RelevanceTypes || []).map(item => ({ value: item.value, label: item.text }))}
                                                     className="react-select"
                                                     classNamePrefix="react-select"
@@ -437,19 +526,22 @@ const Projects = (props) => {
                                             </span>
                                         </span>
                                     ))}
-                                    <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                        <span className="text-truncate d-inline-block">Min rate: {minHourlyRate}{" "}</span>
-                                        <span className="tag-close flex-shrink-0" data-role="remove" data-type="minHourlyRate" data-value={minHourlyRate} onClick={removeAppliedFilter}>
-                                            <i className="fas fa-times" />
+                                    {(minHourlyRate !== null) && (
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Min rate: {minHourlyRate}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="minHourlyRate" data-value={minHourlyRate} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span className="badge badge-pill badge-skills d-inline-flex mw-100">
-                                        <span className="text-truncate d-inline-block">Max rate: {maxHourlyRate}{" "}</span>
-                                        <span className="tag-close flex-shrink-0" data-role="remove" data-type="maxHourlyRate" data-value={maxHourlyRate} onClick={removeAppliedFilter}>
-                                            <i className="fas fa-times" />
+                                    )}
+                                    {(maxHourlyRate !== null) && (
+                                        <span className="badge badge-pill badge-skills d-inline-flex mw-100">
+                                            <span className="text-truncate d-inline-block">Max rate: {maxHourlyRate}{" "}</span>
+                                            <span className="tag-close flex-shrink-0" data-role="remove" data-type="maxHourlyRate" data-value={maxHourlyRate} onClick={removeAppliedFilter}>
+                                                <i className="fas fa-times" />
+                                            </span>
                                         </span>
-                                    </span>
-                                    
+                                    )}
                                     {appliedKeywords && (
                                         <span className="badge badge-pill badge-skills d-inline-flex mw-100">
                                             <span className="text-truncate d-inline-block">Keywords: {appliedKeywords}{" "}</span>
