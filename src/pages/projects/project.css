@@ -27,6 +27,9 @@
   border-radius: 6px;
 	padding: 6px;
 }
+.react-select .react-select__menu-list {
+	max-height: 200px;
+}
 .react-select .react-select__option--is-focused, .react-select .react-select__option--is-focused:active {
 	background-color: #161c2d;
 	color: #ffffff;

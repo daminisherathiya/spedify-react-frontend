@@ -27,6 +27,8 @@ const Projects = (props) => {
     const { enumsState } = useEnumsContext();
     console.log("enumsState", enumsState);
 
+    const [statesLoadedFromURL, setStatesLoadedFromURL] = useState(false);
+
     const [isFetchingProjects, setIsFetchingProjects] = useState(true);
     const [projects, setProjects] = useState([]);
     const [projectsFetchingError, setProjectsFetchingError] = useState("");
@@ -46,6 +48,7 @@ const Projects = (props) => {
     const [activePage, setActivePage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
 
+    console.log("statesLoadedFromURL", statesLoadedFromURL);
     console.log("selectedSupportType", selectedSupportType);
     console.log("typedLocation", typedLocation);
     console.log("selectedPricingType", selectedPricingType);
@@ -62,6 +65,10 @@ const Projects = (props) => {
     const endIndex = Math.min(activePage * pageSize, projects.length) - 1;  // Inclusive
 
     useEffect(() => {
+        if (Object.keys(enumsState).length === 0) {
+            return;
+        }
+
         const loadStateFromURL = (skillsData) => {
             const queryParams = new URLSearchParams(location.search);
 
@@ -85,32 +92,43 @@ const Projects = (props) => {
             console.log("appliedKeywordsFromURL", appliedKeywordsFromURL);
             console.log("selectedSortingTypeFromURL", selectedSortingTypeFromURL);
     
-            setSelectedSupportType(
-                selectedSupportTypeFromURL
-                ? { value: selectedSupportTypeFromURL, label: enumsState.SupportTypes.find(item => item.value == selectedSupportTypeFromURL).text}
-                : null
-            );
-            setTypedLocation(typedLocationFromURL || "");
-            setSelectedPricingType(
-                selectedPricingTypeFromURL
-                ? { value: selectedPricingTypeFromURL, label: enumsState.PricingTypes.find(item => item.value == selectedPricingTypeFromURL).text}
-                : null
-            );
-            console.log("allSkills", allSkills);
-            setSelectedSkills(
-                selectedSkillsFromURL.map(skill => ({ value: skill, label: skillsData.find(item => item.value == skill).label })),
-            );
-            setSelectedExperienceLevels(
-                selectedExperienceLevelsFromURL.map(experienceLevel => ({ value: experienceLevel, label: enumsState.ExperienceLevels.find(item => item.value == experienceLevel).text})),
-            );
-            setMinHourlyRate(minHourlyRateFromURL || null);
-            setMaxHourlyRate(maxHourlyRateFromURL || null);
-            setAppliedKeywords(appliedKeywordsFromURL || "");
-            setSelectedSortingType(
-                selectedSortingTypeFromURL
-                ? { value: selectedSortingTypeFromURL, label: enumsState.RelevanceTypes.find(item => item.value == selectedSortingTypeFromURL).text } 
-                : null
-            );
+            if (selectedSupportTypeFromURL) {
+                setSelectedSupportType(
+                    { value: selectedSupportTypeFromURL, label: enumsState.SupportTypes.find(item => item.value == selectedSupportTypeFromURL).text}
+                );
+            }
+            if (typedLocationFromURL) {
+                setTypedLocation(typedLocationFromURL);
+            }
+            if (selectedPricingTypeFromURL) {
+                setSelectedPricingType(
+                    { value: selectedPricingTypeFromURL, label: enumsState.PricingTypes.find(item => item.value == selectedPricingTypeFromURL).text}
+                );
+            }
+            if (selectedSkillsFromURL.length > 0) {
+                setSelectedSkills(
+                    selectedSkillsFromURL.map(skill => ({ value: skill, label: skillsData.find(item => item.value == skill).label })),
+                );
+            }
+            if (selectedExperienceLevelsFromURL.length > 0) {
+                setSelectedExperienceLevels(
+                    selectedExperienceLevelsFromURL.map(experienceLevel => ({ value: experienceLevel, label: enumsState.ExperienceLevels.find(item => item.value == experienceLevel).text})),
+                );
+            }
+            if (minHourlyRateFromURL) {
+                setMinHourlyRate(minHourlyRateFromURL);
+            }
+            if (maxHourlyRateFromURL) {
+                setMaxHourlyRate(maxHourlyRateFromURL);
+            }
+            if (appliedKeywordsFromURL) {
+                setAppliedKeywords(appliedKeywordsFromURL);
+            }
+            if (selectedSortingTypeFromURL) {
+                setSelectedSortingType(
+                    { value: selectedSortingTypeFromURL, label: enumsState.RelevanceTypes.find(item => item.value == selectedSortingTypeFromURL).text } 
+                );
+            }
         };
 
         Axios.post('/api/v1/skill/search', {
@@ -120,6 +138,7 @@ const Projects = (props) => {
             const skillsData = response.data.doc.skills.map(item => ({ label: item.name, value: item._id }));
             setAllSkills(skillsData);
             loadStateFromURL(skillsData);
+            setStatesLoadedFromURL(true);
         })
         .catch(error => {
             console.error('Error fetching all skills: ', error);
@@ -185,17 +204,34 @@ const Projects = (props) => {
             return params;
         };
         const setURLAndFetchProjects = () => {
+            console.log("setURLAndFetchProjects");
             const projectsFilterQueryParamsString = getProjectsFilterQueryParamsString();
             const newUrl = new URL(window.location);
             newUrl.search = projectsFilterQueryParamsString;
             navigate(newUrl.pathname + newUrl.search, { replace: true });
             fetchProjects(projectsFilterQueryParamsString);
         };
-        setURLAndFetchProjects();
+        if (!statesLoadedFromURL) {
+            return; // Wait for the state to load from URL
+        }
+        const timeoutId = setTimeout(() => {
+            setURLAndFetchProjects();
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
     }, [
-        selectedSupportType, typedLocation, selectedPricingType, selectedSkills,
-        selectedExperienceLevels, minHourlyRate, maxHourlyRate, appliedKeywords,
-        selectedSortingType, navigate,
+        statesLoadedFromURL,
+        selectedSupportType,
+        typedLocation,
+        selectedPricingType,
+        allSkills,
+        selectedSkills,
+        selectedExperienceLevels,
+        minHourlyRate,
+        maxHourlyRate,
+        appliedKeywords,
+        selectedSortingType,
+        navigate,
     ]);
 
     const showErrorMessage = (message) => toast.error(message);
@@ -257,20 +293,38 @@ const Projects = (props) => {
 
     };
 
-    const handleHourlyRateChange = useCallback(_.debounce(values => {
+    const handleHourlyRateChange = (values) => {
         console.log("values", values);
         const newMinHourlyRate = Math.round(values[0]);
         const newMaxHourlyRate = Math.round(values[1]);
-        /* handleHourlyRateChange gets called on page load as well.
-            So, we need to check if the values have actually changed.
-            If not, then not need to set the state, othrwise, it will
-            update the URL.
-        */
-        if (minHourlyRate !== null || newMinHourlyRate !== 0 || maxHourlyRate !== null || newMaxHourlyRate !== 50) {
-            setMinHourlyRate(newMinHourlyRate);
-            setMaxHourlyRate(newMaxHourlyRate);
-        }
-    }, 300), []);
+        setMinHourlyRate(newMinHourlyRate);
+        setMaxHourlyRate(newMaxHourlyRate);
+    };
+
+    // const handleHourlyRateChange = useCallback(_.debounce(values => {
+    //     console.log("values", values);
+    //     console.log("statesLoadedFromURL", statesLoadedFromURL);
+    //     // if (!statesLoadedFromURL) {
+    //     //     // The library calls this function on initialization as well
+    //     //     // instead of just calling upon rate selection.
+    //     //     // Wait for the state to load from URL.
+    //     //     return;
+    //     // }
+    //     const newMinHourlyRate = Math.round(values[0]);
+    //     const newMaxHourlyRate = Math.round(values[1]);
+    //     setMinHourlyRate(newMinHourlyRate);
+    //     setMaxHourlyRate(newMaxHourlyRate);
+    //     // if (newMinHourlyRate != minHourlyRate) {
+    //     //     console.log("newMinHourlyRate", newMinHourlyRate);
+    //     //     console.log("minHourlyRate", minHourlyRate);
+    //     //     setMinHourlyRate(newMinHourlyRate === 0 ? null : newMinHourlyRate);
+    //     // }
+    //     // if (newMaxHourlyRate != maxHourlyRate) {
+    //     //     console.log("newMaxHourlyRate", newMaxHourlyRate);
+    //     //     console.log("maxHourlyRate", maxHourlyRate);
+    //     //     setMaxHourlyRate(newMaxHourlyRate === 50 ? null : newMaxHourlyRate);
+    //     // }
+    // }, 300), [statesLoadedFromURL, minHourlyRate, maxHourlyRate]);
 
     const handlePaginationPageChange = pageNumber => {
         setActivePage(pageNumber);
@@ -434,7 +488,7 @@ const Projects = (props) => {
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Hourly Rate</h4>
-                                            <Nouislider range={{ min: 0, max: 50 }} start={[minHourlyRate || 0, maxHourlyRate || 50]} step={1} connect onUpdate={handleHourlyRateChange} />
+                                            <Nouislider range={{ min: 0, max: 50 }} start={[minHourlyRate || 0, maxHourlyRate || 50]} step={1} connect onEnd={handleHourlyRateChange} />
                                             <div id="slider-range" />
                                             <div className="row slider-labels">
                                                 <div className="col-xs-12 caption">
