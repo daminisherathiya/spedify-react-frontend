@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import StickyBox from "react-sticky-box";
@@ -301,31 +301,6 @@ const Projects = (props) => {
         setMaxHourlyRate(newMaxHourlyRate);
     };
 
-    // const handleHourlyRateChange = useCallback(_.debounce(values => {
-    //     console.log("values", values);
-    //     console.log("statesLoadedFromURL", statesLoadedFromURL);
-    //     // if (!statesLoadedFromURL) {
-    //     //     // The library calls this function on initialization as well
-    //     //     // instead of just calling upon rate selection.
-    //     //     // Wait for the state to load from URL.
-    //     //     return;
-    //     // }
-    //     const newMinHourlyRate = Math.round(values[0]);
-    //     const newMaxHourlyRate = Math.round(values[1]);
-    //     setMinHourlyRate(newMinHourlyRate);
-    //     setMaxHourlyRate(newMaxHourlyRate);
-    //     // if (newMinHourlyRate != minHourlyRate) {
-    //     //     console.log("newMinHourlyRate", newMinHourlyRate);
-    //     //     console.log("minHourlyRate", minHourlyRate);
-    //     //     setMinHourlyRate(newMinHourlyRate === 0 ? null : newMinHourlyRate);
-    //     // }
-    //     // if (newMaxHourlyRate != maxHourlyRate) {
-    //     //     console.log("newMaxHourlyRate", newMaxHourlyRate);
-    //     //     console.log("maxHourlyRate", maxHourlyRate);
-    //     //     setMaxHourlyRate(newMaxHourlyRate === 50 ? null : newMaxHourlyRate);
-    //     // }
-    // }, 300), [statesLoadedFromURL, minHourlyRate, maxHourlyRate]);
-
     const handlePaginationPageChange = pageNumber => {
         setActivePage(pageNumber);
     }
@@ -488,11 +463,11 @@ const Projects = (props) => {
                                         </div>
                                         <div className="filter-widget">
                                             <h4>Hourly Rate</h4>
-                                            <Nouislider range={{ min: 0, max: 50 }} start={[minHourlyRate || 0, maxHourlyRate || 50]} step={1} connect onEnd={handleHourlyRateChange} />
+                                            <Nouislider range={{ min: 0, max: 200 }} start={[minHourlyRate || 0, maxHourlyRate || 200]} step={1} connect onEnd={handleHourlyRateChange} />
                                             <div id="slider-range" />
                                             <div className="row slider-labels">
                                                 <div className="col-xs-12 caption">
-                                                    <span id="slider-range-value1" />{minHourlyRate !== null ? minHourlyRate : 0} -{" "}<span id="slider-range-value2" />{maxHourlyRate !== null ? maxHourlyRate : 50}
+                                                    <span id="slider-range-value1" />{minHourlyRate !== null ? minHourlyRate : 0} -{" "}<span id="slider-range-value2" />{maxHourlyRate !== null ? maxHourlyRate : 200}
                                                 </div>
                                             </div>
                                         </div>
