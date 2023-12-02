@@ -554,7 +554,7 @@ const Projects = (props) => {
                             </div>                            
                             {isFetchingProjects && <InlineLoader />}
                             {projectsFetchingError && <Alert message={projectsFetchingError} />}
-                            <ProjectsList projects={projects.slice(startIndex, endIndex + 1)} />
+                            {!isFetchingProjects && <ProjectsList projects={projects.slice(startIndex, endIndex + 1)} />}
                             <div className="pagination-sticky-bottom py-3">
                                 <div className="d-flex py-3 justify-content-center">
                                     <div className="form-group mb-0 me-3 pagination-page-size">
