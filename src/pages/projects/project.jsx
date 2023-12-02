@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import StickyBox from "react-sticky-box";
@@ -9,6 +9,7 @@ import "nouislider/distribute/nouislider.css";
 import Select from 'react-select';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import Select2 from 'react-select2-wrapper';
+import _ from 'lodash';
 import Axios from "../../Axios";
 import { Alert } from "../../components/common/Alert";
 import { InlineLoader } from "../../components/common/InlineLoader";
@@ -183,11 +184,14 @@ const Projects = (props) => {
             console.log("params", params);
             return params;
         };
-        const projectsFilterQueryParamsString = getProjectsFilterQueryParamsString();
-        const newUrl = new URL(window.location);
-        newUrl.search = projectsFilterQueryParamsString;
-        navigate(newUrl.pathname + newUrl.search, { replace: true });
-        fetchProjects(projectsFilterQueryParamsString);
+        const setURLAndFetchProjects = () => {
+            const projectsFilterQueryParamsString = getProjectsFilterQueryParamsString();
+            const newUrl = new URL(window.location);
+            newUrl.search = projectsFilterQueryParamsString;
+            navigate(newUrl.pathname + newUrl.search, { replace: true });
+            fetchProjects(projectsFilterQueryParamsString);
+        };
+        setURLAndFetchProjects();
     }, [
         selectedSupportType, typedLocation, selectedPricingType, selectedSkills,
         selectedExperienceLevels, minHourlyRate, maxHourlyRate, appliedKeywords,
@@ -205,16 +209,10 @@ const Projects = (props) => {
 
     const loadSkillsOptions = (inputValue) => {
         console.log("loadOptions", inputValue);
-        return Axios.post('/api/v1/skill/search', {
-            searchQuery: inputValue
-        })
-        .then(response => {
-            return response.data.doc.skills.map(item => ({ label: item.name, value: item._id }));
-        })
-        .catch(error => {
-            console.error('Error fetching skills: ', error);
-            showErrorMessage("Something went wrong while fetching relavent skills. Please try again later.");
-            return [];
+        return new Promise((resolve) => {  // requires to return a promise
+            setTimeout(() => {
+                resolve(allSkills.filter(skill => skill.label.toLowerCase().includes(inputValue.toLowerCase())));
+            }, 0);
         });
     };
 
@@ -259,7 +257,7 @@ const Projects = (props) => {
 
     };
 
-    const handleHourlyRateChange = values => {
+    const handleHourlyRateChange = useCallback(_.debounce(values => {
         console.log("values", values);
         const newMinHourlyRate = Math.round(values[0]);
         const newMaxHourlyRate = Math.round(values[1]);
@@ -272,7 +270,7 @@ const Projects = (props) => {
             setMinHourlyRate(newMinHourlyRate);
             setMaxHourlyRate(newMaxHourlyRate);
         }
-    }
+    }, 300), []);
 
     const handlePaginationPageChange = pageNumber => {
         setActivePage(pageNumber);
@@ -404,6 +402,7 @@ const Projects = (props) => {
                                                 <AsyncCreatableSelect
                                                     value=""
                                                     loadOptions={loadSkillsOptions}
+                                                    defaultOptions={allSkills}
                                                     placeholder="Enter Skill"
                                                     noOptionsMessage={skillsNoOptionsMessage}
                                                     formatCreateLabel={formatSkillCreateLabel}
@@ -480,10 +479,12 @@ const Projects = (props) => {
                                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                             <div className="d-flex justify-content-sm-end">
                                                 <Select
-                                                    value={selectedSortingType || {
+                                                    value={selectedSortingType || (
+                                                        enumsState.RelevanceTypes ? {
                                                         value: enumsState.RelevanceTypes[0].value,
                                                         label: enumsState.RelevanceTypes[0].text,
-                                                    }}
+                                                        } : null
+                                                    )}
                                                     options={(enumsState.RelevanceTypes || []).map(item => ({ value: item.value, label: item.text }))}
                                                     className="react-select"
                                                     classNamePrefix="react-select"
