@@ -80,9 +80,9 @@ export const ProjectCard = ({project}) => {
         }
     }, [project.expiresIn]);
 
-    return <div key={project._id} className="col-md-6 col-lg-12 col-xl-6">
-        <div className="freelance-widget widget-author">
-            <div className="freelance-content">
+    return <div key={project._id} className="col-md-6 col-lg-12 col-xl-6 my-3">
+        <div className="freelance-widget widget-author h-100 d-flex flex-column pb-4">
+            <div className="freelance-content flex-grow-1 d-flex flex-column justify-content-between">
                 <Link
                     data-bs-toggle="modal"
                     to="#rating"
@@ -90,7 +90,7 @@ export const ProjectCard = ({project}) => {
                 >
                     <i className="fas fa-star" />
                 </Link>
-                <div className="author-heading">
+                <div className="author-heading d-flex flex-column justify-content-between flex-grow-1">
                     <div className="profile-img">
                         <Link to="#">
                             <img src={getFilePath(project.createdBy.picture, true)} alt="author" />
@@ -114,19 +114,22 @@ export const ProjectCard = ({project}) => {
                             {project.location}
                         </div>
                     </div>
-                    <div className="freelance-tags">
-                        {project.skills.map(skill => (
-                            <Link key={skill._id} to="">
-                                <span className="badge badge-pill badge-design">
-                                    {skill.name}
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
-                    <div className="freelancers-price">{project.fixedPrice ? `$${project.fixedPrice}` : `$${project.hourlyMin}-$${project.hourlyMax}`}</div>
+                    {project.length > 0 && (
+                            <div className="freelance-tags">
+                            {project.skills.map(skill => (
+                                <Link key={skill._id} to="">
+                                    <span className="badge badge-pill badge-design">
+                                        {skill.name}
+                                    </span>
+                                </Link>
+                            ))}
+                            </div>
+                        )
+                    }
+                    <div className="freelancers-price d-flex flex-grow-1 justify-content-center align-items-end">{project.fixedPrice ? `$${project.fixedPrice}` : `$${project.hourlyMin}-$${project.hourlyMax}`}</div>
                 </div>
                 <div className="counter-stats">
-                    <ul>
+                    <ul className="align-items-end">
                         <li>
                             <h3 className="counter-value">{expiryMessage}</h3>
                             <h5>Expiry</h5>

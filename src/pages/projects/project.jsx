@@ -143,6 +143,7 @@ const Projects = (props) => {
         .catch(error => {
             console.error('Error fetching all skills: ', error);
             showErrorMessage("Something went wrong while fetching all skills. Please try again later.");
+            setIsFetchingProjects(false);
         });
     }, [enumsState]);  /*
         - Don't include location.search in dependency array as it will cause infinite loop. We are using location.search only to load initial state.
