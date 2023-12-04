@@ -27,7 +27,7 @@ import Slider from "react-slick";
 import ProjectCategories from "./components/ProjectCategories";
 import Search from "./components/Search";
 
-const Home3 = () => {
+const Home = () => {
   const [scroll, setScroll] = useState(true);
   useEffect(() => {
     AOS.init({
@@ -811,4 +811,4 @@ const Home3 = () => {
     </>
   );
 };
-export default Home3;
+export default Home;

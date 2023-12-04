@@ -6,6 +6,7 @@ import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import { getSetUser } from '../../../helpers';
 import UserRoles from '../components/UserRoles';
 import { Post } from '../../../services/Api';
+import GoogleAuth from '../components/GoogleAuth';
 
 const Login = ({ history }) => {
   const { dispatch } = useUserContext();
@@ -85,26 +86,7 @@ const Login = ({ history }) => {
                       <div className="login-or">
                         <p>Or login with</p>
                       </div>
-                      <div className="row social-login">
-                        <div className="col-4">
-                          <Link to="#" className="btn btn-twitter btn-block">
-                            {" "}
-                            Twitter
-                          </Link>
-                        </div>
-                        <div className="col-4">
-                          <Link to="#" className="btn btn-facebook btn-block">
-                            {" "}
-                            Facebook
-                          </Link>
-                        </div>
-                        <div className="col-4">
-                          <Link to="#" className="btn btn-google btn-block">
-                            {" "}
-                            Google
-                          </Link>
-                        </div>
-                      </div>
+                      <GoogleAuth />
                       <div className="row">
                         <div className="col-6 text-start">
                           <Link className="forgot-link" to="/forgot-password">

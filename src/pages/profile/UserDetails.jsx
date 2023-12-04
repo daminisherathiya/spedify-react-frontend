@@ -122,15 +122,6 @@ const DeveloperDetails = (props) => {
                                             </Link>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link" to="#project">
-                                                <img
-                                                    src={Tab_icon_16}
-                                                    alt="User Image"
-                                                />
-                                                <p className="bg-blue">Projects</p>
-                                            </Link>
-                                        </li>
-                                        <li className="nav-item">
                                             <Link className="nav-link" to="#experience">
                                                 <img
                                                     src={Tab_icon_17}
@@ -478,7 +469,7 @@ const DeveloperDetails = (props) => {
                                     className="pro-post project-widget widget-box technical-skill"
                                     id="skill"
                                 >
-                                    <h3 className="pro-title">Technical Skills</h3>
+                                    <h3 className="pro-title">Areas Of Expertise</h3>
                                     <div className="pro-content">
                                         <div className="tags">
                                             <span className="badge badge-pill badge-skills">
@@ -503,7 +494,7 @@ const DeveloperDetails = (props) => {
                                     id="feedback"
                                 >
                                     <div className="widget-title-box clearfix d-flex">
-                                        <h3 className="pro-title mb-0">Feedbacks</h3>
+                                        <h3 className="pro-title mb-0">Reviews</h3>
                                         <Link to="review.html" className="feedback-view">
                                             View All
                                         </Link>
@@ -618,8 +609,12 @@ const DeveloperDetails = (props) => {
                                     <table className="table">
                                         <tbody>
                                             <tr>
-                                                <td>Gender</td>
-                                                <td>Male</td>
+                                                <td>certifications</td>
+                                                <td>certificat one</td>
+                                            </tr>
+                                            <tr>
+                                                <td>languages</td>
+                                                <td>language one</td>
                                             </tr>
                                             <tr>
                                                 <td>Experience</td>
@@ -633,95 +628,8 @@ const DeveloperDetails = (props) => {
                                     </table>
                                 </div>
                                 {/* /About Widget */}
-                                {/* Language Widget */}
-                                <div className="pro-post widget-box language-widget">
-                                    <h4 className="pro-title mb-0">Language Skills</h4>
-                                    <ul className="latest-posts pro-content">
-                                        <li>
-                                            <p>English</p>
-                                            <div className="progress progress-md mb-0">
-                                                <div
-                                                    className="progress-bar"
-                                                    role="progressbar"
-                                                    style={{ width: "50%" }}
-                                                    aria-valuenow={75}
-                                                    aria-valuemin={0}
-                                                    aria-valuemax={100}
-                                                />
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <p>Russian</p>
-                                            <div className="progress progress-md mb-0">
-                                                <div
-                                                    className="progress-bar bg-success"
-                                                    role="progressbar"
-                                                    style={{ width: "65%" }}
-                                                    aria-valuenow={25}
-                                                    aria-valuemin={0}
-                                                    aria-valuemax={100}
-                                                />
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <p>German</p>
-                                            <div className="progress progress-md mb-0">
-                                                <div
-                                                    className="progress-bar bg-warning"
-                                                    role="progressbar"
-                                                    style={{ width: "85%" }}
-                                                    aria-valuenow={75}
-                                                    aria-valuemin={0}
-                                                    aria-valuemax={100}
-                                                />
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                {/* /Language Widget */}
-                                {/* Follow Widget */}
-                                <div className="pro-post widget-box follow-widget">
-                                    <ul className="follow-posts pro-post">
-                                        <li>
-                                            <p>Following</p>
-                                            <h6>49</h6>
-                                        </li>
-                                        <li>
-                                            <p>Followers</p>
-                                            <h6>422</h6>
-                                        </li>
-                                    </ul>
-                                    <div className="text-center">
-                                        <Link to="#" className="btn follow-btn">
-                                            + Follow
-                                        </Link>
-                                    </div>
-                                </div>
-                                {/* /Follow Widget */}
-                                {/* Categories */}
-                                <div className="pro-post category-widget link-box">
-                                    <div className="widget-title-box">
-                                        <h4 className="pro-title">Social Links</h4>
-                                    </div>
-                                    <ul className="latest-posts pro-content mb-3">
-                                        <li>
-                                            <Link to="#">http://www.facebook.com/john...</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#">http://www.Twitter.com/john...</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#">Http://www.googleplus.com/john... </Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#"> Http://www.behance.com/john...</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="#"> Http://www.pinterest.com/john...</Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                                {/* /Categories */}
+                               
+                            
                                 {/* LInk Widget */}
                                 <div className="pro-post widget-box post-widget profile-link">
                                     <h3 className="pro-title">Profile Link</h3>
