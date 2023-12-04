@@ -114,7 +114,7 @@ export const ProjectCard = ({project}) => {
                             {project.location}
                         </div>
                     </div>
-                    {project.length > 0 && (
+                    {project.skills.length > 0 && (
                             <div className="freelance-tags">
                             {project.skills.map(skill => (
                                 <Link key={skill._id} to="">
