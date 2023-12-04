@@ -110,7 +110,7 @@ const ProjectDetails = (props) => {
                   <ul className="develope-list-rate project-rate align-items-center">
                     <li>
                       <i className="fas fa-clock" />
-                      Poster {new Date(details?.createdAt).getHours()} hours ago
+                      Posted {new Date(details?.createdAt).getHours()} hours ago
                     </li>
                     <li className="full-time">
                       {enumsState?.SupportTypes[details?.supportType]?.text}
@@ -132,7 +132,7 @@ const ProjectDetails = (props) => {
                       data-bs-toggle="modal"
                       to="#file"
                       className="btn proposal-btn btn-primary"
-                      // onClick={showModal(true)}
+                    // onClick={showModal(true)}
                     >
                       Send Proposal{" "}
                       <i className="fas fa-long-arrow-alt-right" />{" "}
@@ -202,7 +202,8 @@ const ProjectDetails = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="post-widget project-duration">
+
+                  {/* <div className="post-widget project-duration">
                     <div className="pro-content">
                       <div className="row">
                         <div className="col-12 col-sm-6 col-md-4 d-flex">
@@ -227,6 +228,8 @@ const ProjectDetails = (props) => {
                             </div>
                           </div>
                         </div>
+
+
                         <div className="col-12 col-sm-6 col-md-4 d-flex">
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
@@ -309,10 +312,11 @@ const ProjectDetails = (props) => {
                             </div>
                           </div>
                         </div>
+
                         <div className="col-12 col-sm-6 col-md-4 d-flex">
                           <div className="pro-post job-type d-flex align-items-center">
                             <div className="pro-post-head">
-                              <p>Qualifications</p>
+                              <p>Areas of specialty</p>
                               <h6>
                                 {
                                   enumsState?.QualificationTypes[
@@ -332,20 +336,23 @@ const ProjectDetails = (props) => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   {/* /Job Detail */}
                   {/* Senior Animator  */}
                   <div className="pro-post widget-box">
-                    <h3 className="pro-title">Senior Animator</h3>
+                    <h3 className="pro-title">Providers Taglines</h3>
+                    <div className="pro-content">
+                      {
+                        details?.createdBy?.tagline
+                        // enumsState?.ProviderTypes?.find(p => p.value === details?.providerType)?.text
+                      }
+                    </div>
+                  </div>
+                  <div className="pro-post widget-box">
+                    <h3 className="pro-title">Description of Support Request</h3>
                     <div className="pro-content">
                       <p>{details?.description}</p>
-                      {/* <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Quisque tempor aliquam felis, nec condimentum ipsum
-                        commodo id. Vivamus sit amet augue nec urna efficitur
-                        tincidunt. Vivamus consectetur aliquam lectus commodo
-                        viverra. Nunc eu augue nec arcu efficitur faucibus.{" "}
-                      </p> */}
+
                     </div>
                   </div>
                   {/* /Senior Animator  */}
@@ -366,7 +373,7 @@ const ProjectDetails = (props) => {
                   </div>
                   {/* /Skills Required  */}
                   {/* Project Requirements  */}
-                  <div className="pro-post project-widget widget-box">
+                  {/* <div className="pro-post project-widget widget-box">
                     <h3 className="pro-title">project requirements</h3>
                     <div className="pro-content">
                       <div className="row">
@@ -402,7 +409,7 @@ const ProjectDetails = (props) => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   {/* Project Requirements  */}
                 </div>
               </div>
@@ -428,14 +435,14 @@ const ProjectDetails = (props) => {
                       </div>
                       <div className="freelance-info">
                         <h4>{details?.createdBy?.tagline}</h4>
-                        <div className="rating">
+                        {/* <div className="rating">
                           <i className="fas fa-star filled" />
                           <i className="fas fa-star filled" />
                           <i className="fas fa-star filled" />
                           <i className="fas fa-star " />
                           <i className="fas fa-star" />
                           <span className="average-rating">4.7 (32)</span>
-                        </div>
+                        </div> */}
                         <div className="freelance-location">
                           <i className="fas fa-map-marker-alt me-1" />
                           {details?.location}
@@ -477,7 +484,7 @@ const ProjectDetails = (props) => {
                             <span>January 1, 2021</span>
                           </div>
                         </div>
-                        <hr className="my-3" />
+                        {/* <hr className="my-3" />
                         <div className="row align-items-center">
                           <div className="col">
                             <h6 className=" text-start mb-0">Total Jobs</h6>
@@ -498,7 +505,7 @@ const ProjectDetails = (props) => {
                             <span>@{details?.createdBy?.username}</span>
                           </div>
                         </div>
-                        <hr className="my-3" />
+                        <hr className="my-3" /> */}
                         {details?.createdBy?.likedin && (
                           <div className="row align-items-center">
                             <div className="col">
