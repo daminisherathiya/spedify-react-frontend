@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Logo_01 } from "../../../components/imagepath";
-import Axios from '../../../Axios';
 import { PreferencesKeys, setItem } from '../../../preferences/Preferences';
 import { useUserContext } from '../../../context/UserContext';
 import { getSetUser } from '../../../helpers';
 import UserRoles from '../components/UserRoles';
 import { Post } from '../../../services/Api';
+import GoogleAuth from '../components/GoogleAuth';
+
 
 const Register = (props) => {
   // console.log('[props]', props);
@@ -118,24 +119,7 @@ const Register = (props) => {
                             <p>Or login with</p>
                           </div>
                           <div className="row social-login">
-                            <div className="col-4">
-                              <Link to="#" className="btn btn-twitter btn-block">
-                                {" "}
-                                Twitter
-                              </Link>
-                            </div>
-                            <div className="col-4">
-                              <Link to="#" className="btn btn-facebook btn-block">
-                                {" "}
-                                Facebook
-                              </Link>
-                            </div>
-                            <div className="col-4">
-                              <Link to="#" className="btn btn-google btn-block">
-                                {" "}
-                                Google
-                              </Link>
-                            </div>
+                            <GoogleAuth />
                           </div>
                           <div className="row">
                             <div className="col-6 text-start">

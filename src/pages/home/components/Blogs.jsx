@@ -90,7 +90,7 @@ return (
               <ul className="entry-meta meta-item mb-0">
                 <li>
                   <div className="post-author blog-hover-img">
-                    <Link to="provider-details">
+                    <Link to="userDetails">
                       <img src={Img_02} alt="Post Author" />{" "}
                       <span> Rihana madonna</span>
                     </Link>
@@ -124,7 +124,7 @@ return (
               <ul className="entry-meta meta-item mb-0">
                 <li>
                   <div className="post-author blog-hover-img post-author-three">
-                    <Link to="provider-details">
+                    <Link to="userDetails">
                       <img src={Img_03} alt="Post Author" />{" "}
                       <span> Rahul tiwatiya</span>
                     </Link>
@@ -158,7 +158,7 @@ return (
               <ul className="entry-meta meta-item mb-0">
                 <li>
                   <div className="post-author blog-hover-img">
-                    <Link to="provider-details">
+                    <Link to="userDetails">
                       <img src={Img_04} alt="Post Author" />{" "}
                       <span> John Gabriel</span>
                     </Link>
@@ -192,7 +192,7 @@ return (
               <ul className="entry-meta meta-item mb-0">
                 <li>
                   <div className="post-author blog-hover-img">
-                    <Link to="provider-details">
+                    <Link to="userDetails">
                       <img src={Img_05} alt="Post Author" />{" "}
                       <span> John Gabriel</span>
                     </Link>
